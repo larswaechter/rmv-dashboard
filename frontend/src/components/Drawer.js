@@ -12,6 +12,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import RouteIcon from "@mui/icons-material/Route";
+import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
 
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -65,12 +66,20 @@ export const Drawer = ({ open, handleDrawerClose }) => {
             <ListItemText primary="Dashboard" />
           </ListItemButton>
         </ListItem>
+        <ListItem key="stationboard" disablePadding>
+          <ListItemButton onClick={() => navigate("/stationboard")}>
+            <ListItemIcon>
+              <DepartureBoardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Stationboard" />
+          </ListItemButton>
+        </ListItem>
         <ListItem key="tripsearch" disablePadding>
           <ListItemButton onClick={() => navigate("/tripsearch")}>
             <ListItemIcon>
               <RouteIcon />
             </ListItemIcon>
-            <ListItemText primary="Trip Search" />
+            <ListItemText primary="Trips" />
           </ListItemButton>
         </ListItem>
         <ListItem key="locationsearch" disablePadding>
@@ -78,7 +87,7 @@ export const Drawer = ({ open, handleDrawerClose }) => {
             <ListItemIcon>
               <LocationOnIcon />
             </ListItemIcon>
-            <ListItemText primary="Location Search" />
+            <ListItemText primary="Locations" />
           </ListItemButton>
         </ListItem>
       </List>
