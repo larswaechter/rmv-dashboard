@@ -2,7 +2,7 @@ import { useRoutes } from "react-router-dom";
 import PagesDashboard from "./Dashboard";
 import PagesLocationSearch from "./Locationsearch";
 import PagesSettings from "./Settings";
-import PagesStationboards from "./Stationboards";
+import PagesDepartures from "./Departures";
 import PagesTripsearch from "./Tripsearch";
 
 const Router = () => {
@@ -12,8 +12,8 @@ const Router = () => {
       element: <PagesDashboard />,
     },
     {
-      path: "/stationboard",
-      element: <PagesStationboards />,
+      path: "/departures",
+      element: <PagesDepartures />,
     },
     {
       path: "/tripsearch",

@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS stations;
+
+CREATE TABLE stations (
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    station_id VARCHAR(255) UNIQUE NOT NULL
+);

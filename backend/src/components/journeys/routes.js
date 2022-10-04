@@ -1,8 +1,17 @@
 const { Router } = require("express");
 
-const { findAll } = require("../db/query");
+const { getJourney } = require("../../services/rmv");
 
 router = Router();
+
+router.get("/search", async (req, res) => {
+  const { id } = req.query;
+  if (!id) return res.sendStatus(400);
+
+  const journey = await getJourney(id);
+
+  res.json(journey);
+});
 
 router.get("", (req, res) => {
   res.json({

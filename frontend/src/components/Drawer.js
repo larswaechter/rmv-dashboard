@@ -66,12 +66,12 @@ export const Drawer = ({ open, handleDrawerClose }) => {
             <ListItemText primary="Dashboard" />
           </ListItemButton>
         </ListItem>
-        <ListItem key="stationboard" disablePadding>
-          <ListItemButton onClick={() => navigate("/stationboard")}>
+        <ListItem key="departures" disablePadding>
+          <ListItemButton onClick={() => navigate("/departures")}>
             <ListItemIcon>
               <DepartureBoardIcon />
             </ListItemIcon>
-            <ListItemText primary="Stationboard" />
+            <ListItemText primary="Departures" />
           </ListItemButton>
         </ListItem>
         <ListItem key="tripsearch" disablePadding>

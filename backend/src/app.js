@@ -1,13 +1,15 @@
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
+const { json } = require("express");
 
-const tripRouter = require("./routes/trip");
-const locationRouter = require("./routes/location");
-const stationboardsRouter = require("./routes/stationboard");
+const boardsRouter = require("./components/boards/routes");
+const journeysRouter = require("./components/journeys/routes");
+const stationsRouter = require("./components/stations/routes");
 
 const app = express();
 
+// Middleware
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -15,8 +17,11 @@ app.use(
   })
 );
 app.use(helmet());
-app.use("/stationboards", stationboardsRouter);
-app.use("/trips", tripRouter);
-app.use("/locations", locationRouter);
+app.use(json());
+
+// Routes
+app.use("/boards/", boardsRouter);
+app.use("/journeys/", journeysRouter);
+app.use("/stations/", stationsRouter);
 
 module.exports = app;
