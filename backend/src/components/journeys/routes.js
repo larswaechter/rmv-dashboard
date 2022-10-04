@@ -9,7 +9,6 @@ router.get("/search", async (req, res) => {
   if (!id) return res.sendStatus(400);
 
   const journey = await getJourney(id);
-
   res.json(journey);
 });
 

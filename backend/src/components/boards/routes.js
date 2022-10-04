@@ -21,6 +21,7 @@ router.get("/arrival", async (req, res) => {
       time: departure.time,
       direction: departure.direction,
       track: departure.track,
+      journeyRef: departure.JourneyDetailRef,
     })),
   }));
 
@@ -43,6 +44,7 @@ router.get("/departure", async (req, res) => {
         time: departure.time,
         direction: departure.direction,
         track: departure.track,
+        journeyRef: departure.JourneyDetailRef.ref,
       })),
     }));
 

@@ -11,6 +11,7 @@ if (!existsSync(logDir)) {
 
 const errorLog = join(logDir, "error.log");
 const exceptionsLog = join(logDir, "exceptions.log");
+const rejectionsLog = join(logDir, "rejections.log");
 
 const logger = createLogger({
   silent: process.env.NODE_ENV === "test",
@@ -35,6 +36,7 @@ const logger = createLogger({
       filename: exceptionsLog,
     }),
   ],
+  rejectionHandlers: [new transports.File({ filename: rejectionsLog })],
 });
 
 module.exports = logger;

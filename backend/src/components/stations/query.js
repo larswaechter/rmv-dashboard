@@ -6,7 +6,7 @@ const findAllStations = () =>
     db.all("SELECT * FROM stations;", (err, rows) => {
       if (err) {
         logger.error(err.stack);
-        return reject(err);
+        return reject("Failed to create stations");
       }
       resolve(rows);
     })
@@ -20,7 +20,7 @@ const createStation = ({ name, station_id }) =>
       (err) => {
         if (err) {
           logger.error(err.stack);
-          return reject(err);
+          return reject("Failed to create station");
         }
         resolve();
       }
@@ -32,7 +32,7 @@ const deleteStation = (id) =>
     db.run("DELETE FROM stations WHERE id = ?", [id], (err) => {
       if (err) {
         logger.error(err.stack);
-        return reject(err);
+        return reject("Failed to delete station");
       }
       resolve();
     })
