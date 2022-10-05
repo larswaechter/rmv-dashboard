@@ -83,7 +83,7 @@ const JourneyStepper = ({ journeyRef }) => {
   return (
     <Box sx={{ maxWidth: 400 }}>
       <Stepper activeStep={activeStep} orientation="vertical">
-        {Stops.Stop.map((stop, index) => (
+        {Stops.Stop.map((stop, i) => (
           <Step key={stop.name}>
             <StepLabel>{stop.name}</StepLabel>
             <StepContent>
@@ -95,44 +95,48 @@ const JourneyStepper = ({ journeyRef }) => {
                 }}
               >
                 <List>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <TrainIcon />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary="Arrival"
-                      style={{
-                        color:
-                          hasRealtimeValue(stop.arrDate, stop.rtArrDate) ||
-                          hasRealtimeValue(stop.arrTime, stop.rtArrTime)
-                            ? "red"
-                            : "",
-                      }}
-                      secondary={`${getRealtimeValue(
-                        stop.arrDate,
-                        stop.rtArrDate
-                      )} / ${getRealtimeValue(stop.arrTime, stop.rtArrTime)}`}
-                    ></ListItemText>
-                  </ListItem>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <DepartureBoardIcon />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary="Departure"
-                      style={{
-                        color:
-                          hasRealtimeValue(stop.depDate, stop.rtDepDate) ||
-                          hasRealtimeValue(stop.depTime, stop.rtDepTime)
-                            ? "red"
-                            : "",
-                      }}
-                      secondary={`${getRealtimeValue(
-                        stop.depDate,
-                        stop.rtDepDate
-                      )} / ${getRealtimeValue(stop.depTime, stop.rtDepTime)}`}
-                    ></ListItemText>
-                  </ListItem>
+                  {i > 0 && (
+                    <ListItem>
+                      <ListItemAvatar>
+                        <TrainIcon />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary="Arrival"
+                        style={{
+                          color:
+                            hasRealtimeValue(stop.arrDate, stop.rtArrDate) ||
+                            hasRealtimeValue(stop.arrTime, stop.rtArrTime)
+                              ? "red"
+                              : "",
+                        }}
+                        secondary={`${getRealtimeValue(
+                          stop.arrDate,
+                          stop.rtArrDate
+                        )} / ${getRealtimeValue(stop.arrTime, stop.rtArrTime)}`}
+                      ></ListItemText>
+                    </ListItem>
+                  )}
+                  {i < Stops.Stop.length - 1 && (
+                    <ListItem>
+                      <ListItemAvatar>
+                        <DepartureBoardIcon />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary="Departure"
+                        style={{
+                          color:
+                            hasRealtimeValue(stop.depDate, stop.rtDepDate) ||
+                            hasRealtimeValue(stop.depTime, stop.rtDepTime)
+                              ? "red"
+                              : "",
+                        }}
+                        secondary={`${getRealtimeValue(
+                          stop.depDate,
+                          stop.rtDepDate
+                        )} / ${getRealtimeValue(stop.depTime, stop.rtDepTime)}`}
+                      ></ListItemText>
+                    </ListItem>
+                  )}
                   <ListItem>
                     <ListItemAvatar>
                       <TagIcon />

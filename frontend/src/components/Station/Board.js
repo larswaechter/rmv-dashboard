@@ -18,42 +18,69 @@ import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
+import TrainIcon from "@mui/icons-material/Train";
+import TramIcon from "@mui/icons-material/Tram";
+import SubwayIcon from "@mui/icons-material/Subway";
+import CommuteIcon from "@mui/icons-material/Commute";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+
 import { visuallyHidden } from "@mui/utils";
 
 import { deleteStation } from "../../services/station";
 import JourneyStepper from "../Journey/Stepper";
 
-function descendingComparator(a, b, orderBy) {
+const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) return -1;
   if (b[orderBy] > a[orderBy]) return 1;
   return 0;
-}
+};
 
-function getComparator(order, orderBy) {
+const getComparator = (order, orderBy) => {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
-}
+};
+
+const categoryToIcon = (category) => {
+  switch (category) {
+    case "Bus":
+      return <DirectionsBusIcon />;
+    case "U-Bahn":
+      return <SubwayIcon />;
+    case "Tram":
+      return <TramIcon />;
+    default:
+      return <TrainIcon />;
+  }
+};
 
 const headCells = [
+  {
+    id: "type",
+    numberic: false,
+    label: "Type",
+  },
   {
     id: "direction",
     numeric: false,
     label: "Direction",
   },
   {
-    id: "name",
+    id: "train",
     numeric: false,
-    label: "Train",
+    label: "Product",
   },
   {
     id: "date",
-    numeric: false,
+    numeric: true,
     label: "Departure Date",
   },
   {
     id: "time",
-    numeric: false,
+    numeric: true,
     label: "Departure Time",
   },
   {
@@ -121,11 +148,12 @@ const Row = ({ row }) => {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.direction}
+          {categoryToIcon(row.catOut)}
         </TableCell>
+        <TableCell>{row.direction}</TableCell>
         <TableCell>{row.name}</TableCell>
-        <TableCell>{row.date}</TableCell>
-        <TableCell>{row.time}</TableCell>
+        <TableCell align="right">{row.date}</TableCell>
+        <TableCell align="right">{row.time}</TableCell>
         <TableCell align="right">{row.track}</TableCell>
       </TableRow>
       <TableRow>
@@ -146,7 +174,12 @@ const StationBoard = ({ station, afterDelete }) => {
   const [orderBy, setOrderBy] = React.useState("calories");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [departures, setDepartures] = React.useState(
+    station.departures.slice()
+  );
+
+  const open = Boolean(anchorEl);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -163,6 +196,23 @@ const StationBoard = ({ station, afterDelete }) => {
     setPage(0);
   };
 
+  const openMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const closeMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuSelect = (category) => {
+    console.log(category);
+    if (!category) setDepartures(station.departures.slice());
+    else
+      setDepartures(
+        station.departures.filter((dep) => dep.catOut === category)
+      );
+    closeMenu();
+  };
+
   const handleDelete = async () => {
     await deleteStation(station.id);
     afterDelete(station.id);
@@ -170,9 +220,11 @@ const StationBoard = ({ station, afterDelete }) => {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - station.departures.length)
-      : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - departures.length) : 0;
+
+  const categories = Array.from(
+    new Set(station.departures.map((dep) => dep.catOut))
+  );
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -191,11 +243,48 @@ const StationBoard = ({ station, afterDelete }) => {
           >
             {station.name}
           </Typography>
+          <Tooltip title="Filter Type">
+            <IconButton size="small" onClick={openMenu}>
+              <FilterAltIcon />
+            </IconButton>
+          </Tooltip>
           <Tooltip title="Delete">
             <IconButton size="small" onClick={handleDelete}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={closeMenu}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem key="all" onClick={() => handleMenuSelect()}>
+              <CommuteIcon style={{ marginRight: 10 }} /> All
+            </MenuItem>
+            {categories.map((category) => (
+              <MenuItem
+                key={category}
+                onClick={() => handleMenuSelect(category)}
+              >
+                <div style={{ marginRight: 10 }}>
+                  {categoryToIcon(category)}
+                </div>
+                {category}
+              </MenuItem>
+            ))}
+          </Menu>
         </Toolbar>
         <TableContainer>
           <Table
@@ -207,10 +296,10 @@ const StationBoard = ({ station, afterDelete }) => {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={station.departures.length}
+              rowCount={departures.length}
             />
             <TableBody>
-              {station.departures
+              {departures
                 .slice()
                 .sort(getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -228,7 +317,7 @@ const StationBoard = ({ station, afterDelete }) => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={station.departures.length}
+          count={departures.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
