@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-
-import MUIDrawer from "@mui/material/Drawer";
 import { styled, useTheme } from "@mui/material/styles";
+import MUIDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -10,7 +9,6 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import SettingsIcon from "@mui/icons-material/Settings";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import RouteIcon from "@mui/icons-material/Route";
 import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
 
@@ -80,14 +78,6 @@ export const Drawer = ({ open, handleDrawerClose }) => {
               <RouteIcon />
             </ListItemIcon>
             <ListItemText primary="Trips" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key="locationsearch" disablePadding>
-          <ListItemButton onClick={() => navigate("/locationsearch")}>
-            <ListItemIcon>
-              <LocationOnIcon />
-            </ListItemIcon>
-            <ListItemText primary="Locations" />
           </ListItemButton>
         </ListItem>
       </List>

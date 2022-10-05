@@ -5,6 +5,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import DirectionsRailwayIcon from "@mui/icons-material/DirectionsRailway";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import InfoIcon from "@mui/icons-material/Info";
+
 import { drawerWidth } from "./Drawer";
 
 const AppBar = styled(MuiAppBar, {
@@ -37,9 +41,26 @@ const Navbar = ({ open, handleDrawerOpen }) => {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" noWrap component="div">
+        <DirectionsRailwayIcon
+          sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+        />
+        <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
           RMV Dashboard
         </Typography>
+        <IconButton
+          color="inherit"
+          href="https://github.com/larswaechter/rmv-dashboard"
+          target="_blank"
+        >
+          <GitHubIcon />
+        </IconButton>
+        <IconButton
+          color="inherit"
+          href="https://opendata.rmv.de/site/start.html"
+          target="_blank"
+        >
+          <InfoIcon />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

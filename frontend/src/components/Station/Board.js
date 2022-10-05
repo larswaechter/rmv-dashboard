@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -26,11 +26,13 @@ import CommuteIcon from "@mui/icons-material/Commute";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-
+import ClearIcon from "@mui/icons-material/Clear";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
 import { visuallyHidden } from "@mui/utils";
 
 import { deleteStation } from "../../services/station";
-import JourneyStepper from "../Journey/Stepper";
+import JourneyDetails from "../Journey/Details";
 
 const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) return -1;
@@ -47,13 +49,13 @@ const getComparator = (order, orderBy) => {
 const categoryToIcon = (category) => {
   switch (category) {
     case "Bus":
-      return <DirectionsBusIcon />;
+      return <DirectionsBusIcon titleAccess={category} />;
     case "U-Bahn":
-      return <SubwayIcon />;
+      return <SubwayIcon titleAccess={category} />;
     case "Tram":
-      return <TramIcon />;
+      return <TramIcon titleAccess={category} />;
     default:
-      return <TrainIcon />;
+      return <TrainIcon titleAccess={category} />;
   }
 };
 
@@ -133,7 +135,7 @@ EnhancedTableHead.propTypes = {
 };
 
 const Row = ({ row }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -160,7 +162,7 @@ const Row = ({ row }) => {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <JourneyStepper journeyRef={row.journeyRef} />
+              <JourneyDetails journeyRef={row.journeyRef} />
             </Box>
           </Collapse>
         </TableCell>
@@ -170,14 +172,14 @@ const Row = ({ row }) => {
 };
 
 const StationBoard = ({ station, afterDelete }) => {
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [departures, setDepartures] = React.useState(
-    station.departures.slice()
-  );
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("calories");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const [category, setCategory] = useState("");
+  const [search, setSearch] = useState("");
 
   const open = Boolean(anchorEl);
 
@@ -204,12 +206,8 @@ const StationBoard = ({ station, afterDelete }) => {
   };
 
   const handleMenuSelect = (category) => {
-    console.log(category);
-    if (!category) setDepartures(station.departures.slice());
-    else
-      setDepartures(
-        station.departures.filter((dep) => dep.catOut === category)
-      );
+    if (category) setCategory(category);
+    else setCategory("");
     closeMenu();
   };
 
@@ -218,12 +216,28 @@ const StationBoard = ({ station, afterDelete }) => {
     afterDelete(station.id);
   };
 
-  // Avoid a layout jump when reaching the last page with empty rows.
+  const departures = useMemo(() => {
+    let clone = station.departures.slice();
+    if (category)
+      clone = station.departures.filter((dep) => dep.catOut === category);
+    if (search)
+      clone = clone.filter((dep) =>
+        dep.direction.toLowerCase().includes(search)
+      );
+
+    return clone;
+  }, [station, category, search]);
+
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - departures.length) : 0;
 
   const categories = Array.from(
-    new Set(station.departures.map((dep) => dep.catOut))
+    new Set(
+      station.departures
+        .filter((dep) => dep.catOut.length)
+        .map((dep) => dep.catOut)
+        .sort()
+    )
   );
 
   return (
@@ -243,14 +257,33 @@ const StationBoard = ({ station, afterDelete }) => {
           >
             {station.name}
           </Typography>
+          <TextField
+            label="Search"
+            variant="outlined"
+            size="small"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setSearch("")} edge="end">
+                    <ClearIcon
+                      color={search ? "primary" : "action"}
+                      style={{ visibility: search ? "" : "hidden" }}
+                    />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
           <Tooltip title="Filter Type">
             <IconButton size="small" onClick={openMenu}>
-              <FilterAltIcon />
+              <FilterAltIcon color={category ? "primary" : "action"} />
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete">
             <IconButton size="small" onClick={handleDelete}>
-              <DeleteIcon />
+              <DeleteIcon color="error" />
             </IconButton>
           </Tooltip>
           <Menu

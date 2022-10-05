@@ -46,7 +46,7 @@ router.get("/departure", async (req, res) => {
         direction: departure.direction,
         track: departure.track,
         journeyRef: departure.JourneyDetailRef.ref,
-        catOut: departure.Product[0].catOut,
+        catOut: departure.Product ? departure.Product[0].catOut : "",
       })),
     }));
 

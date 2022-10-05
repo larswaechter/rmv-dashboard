@@ -57,7 +57,7 @@ const calcActiveStep = (stops) => {
   return idx;
 };
 
-const JourneyStepper = ({ journeyRef }) => {
+const JourneyDetails = ({ journeyRef }) => {
   const [journey, setJourney] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [activeStep, setActiveStep] = useState(8);
@@ -164,4 +164,4 @@ const JourneyStepper = ({ journeyRef }) => {
   );
 };
 
-export default JourneyStepper;
+export default JourneyDetails;
