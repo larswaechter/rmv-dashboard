@@ -1,23 +1,17 @@
 import { useState, useMemo } from "react";
-import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import TrainIcon from "@mui/icons-material/Train";
 import TramIcon from "@mui/icons-material/Tram";
@@ -26,13 +20,11 @@ import CommuteIcon from "@mui/icons-material/Commute";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ClearIcon from "@mui/icons-material/Clear";
 import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import { visuallyHidden } from "@mui/utils";
 
-import { deleteStation } from "../../services/station";
-import JourneyDetails from "../Journey/Details";
+import StationBoardTableRow from "./TableRow";
+import StationBoardTableHead from "./TableHead";
+import { deleteStation } from "../../../services/station";
 
 const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) return -1;
@@ -46,7 +38,7 @@ const getComparator = (order, orderBy) => {
     : (a, b) => -descendingComparator(a, b, orderBy);
 };
 
-const categoryToIcon = (category) => {
+export const categoryToIcon = (category) => {
   switch (category) {
     case "Bus":
       return <DirectionsBusIcon titleAccess={category} />;
@@ -57,118 +49,6 @@ const categoryToIcon = (category) => {
     default:
       return <TrainIcon titleAccess={category} />;
   }
-};
-
-const headCells = [
-  {
-    id: "type",
-    numberic: false,
-    label: "Type",
-  },
-  {
-    id: "direction",
-    numeric: false,
-    label: "Direction",
-  },
-  {
-    id: "train",
-    numeric: false,
-    label: "Product",
-  },
-  {
-    id: "date",
-    numeric: true,
-    label: "Departure Date",
-  },
-  {
-    id: "time",
-    numeric: true,
-    label: "Departure Time",
-  },
-  {
-    id: "track",
-    numeric: true,
-    label: "Track",
-  },
-];
-
-function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell />
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-
-const Row = ({ row }) => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <>
-      <TableRow hover tabIndex={-1} key={row.name}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {categoryToIcon(row.catOut)}
-        </TableCell>
-        <TableCell>{row.direction}</TableCell>
-        <TableCell>{row.name}</TableCell>
-        <TableCell align="right">{row.date}</TableCell>
-        <TableCell align="right">{row.time}</TableCell>
-        <TableCell align="right">{row.track}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <JourneyDetails journeyRef={row.journeyRef} />
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </>
-  );
 };
 
 const StationBoard = ({ station, afterDelete }) => {
@@ -222,7 +102,7 @@ const StationBoard = ({ station, afterDelete }) => {
       clone = station.departures.filter((dep) => dep.catOut === category);
     if (search)
       clone = clone.filter((dep) =>
-        dep.direction.toLowerCase().includes(search)
+        dep.direction?.toLowerCase().includes(search)
       );
 
     return clone;
@@ -263,18 +143,7 @@ const StationBoard = ({ station, afterDelete }) => {
             size="small"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => setSearch("")} edge="end">
-                    <ClearIcon
-                      color={search ? "primary" : "action"}
-                      style={{ visibility: search ? "" : "hidden" }}
-                    />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
+            type="search"
           />
           <Tooltip title="Filter Type">
             <IconButton size="small" onClick={openMenu}>
@@ -325,7 +194,7 @@ const StationBoard = ({ station, afterDelete }) => {
             aria-labelledby="tableTitle"
             size="medium"
           >
-            <EnhancedTableHead
+            <StationBoardTableHead
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
@@ -337,7 +206,7 @@ const StationBoard = ({ station, afterDelete }) => {
                 .sort(getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, i) => {
-                  return <Row row={row} key={i} />;
+                  return <StationBoardTableRow row={row} key={i} />;
                 })}
               {emptyRows > 0 && (
                 <TableRow>

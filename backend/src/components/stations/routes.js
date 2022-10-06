@@ -1,7 +1,12 @@
 const { Router } = require("express");
 
 const { searchStations } = require("../../services/rmv");
-const { findAllStations, createStation, deleteStation } = require("./query");
+const {
+  findAllStations,
+  createStation,
+  deleteStation,
+  findStation,
+} = require("./query");
 
 router = Router();
 
@@ -48,7 +53,10 @@ router.post("", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    if (!id) res.sendStatus(400);
+    if (!id) return res.sendStatus(400);
+
+    const station = await findStation(+id);
+    if (!station) return res.sendStatus(404);
 
     await deleteStation(+id);
     res.sendStatus(204);

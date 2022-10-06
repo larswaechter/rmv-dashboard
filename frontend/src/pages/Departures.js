@@ -6,7 +6,7 @@ import Modal from "@mui/material/Modal";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 
-import Stationboard from "../components/Station/Board";
+import Stationboard from "../components/Station/Board/";
 import StationAdd from "../components/Station/Add";
 import { getDepartures } from "../services/api";
 

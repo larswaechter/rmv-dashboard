@@ -6,28 +6,17 @@ const { getArrivalBoard, getDepartureBoard } = require("../../services/rmv");
 
 router = Router();
 
-router.get("/arrival", async (req, res) => {
-  const stations = await findAllStations();
-  const arrivals = await Promise.all(
-    stations.map((board) => getArrivalBoard(board.station_id))
-  );
-
-  const prepared = stations.map((board, i) => ({
-    id: board.id,
-    name: board.name,
-    departures: arrivals[i].Departure.map((departure) => ({
-      name: departure.name,
-      date: departure.date,
-      time: departure.time,
-      direction: departure.direction,
-      track: departure.track,
-      journeyRef: departure.JourneyDetailRef,
-      catOut: departure.Product[0].catOut,
-    })),
-  }));
-
-  res.json(prepared);
-});
+const parseDeparture = (departure) => {
+  return {
+    name: departure.name,
+    date: departure.date,
+    time: departure.time,
+    direction: departure.direction,
+    track: departure.track,
+    journeyRef: departure.JourneyDetailRef.ref,
+    catOut: departure.Product ? departure.Product[0].catOut : "",
+  };
+};
 
 router.get("/departure", async (req, res) => {
   try {
@@ -39,20 +28,12 @@ router.get("/departure", async (req, res) => {
     const prepared = stations.map((board, i) => ({
       id: board.id,
       name: board.name,
-      departures: departures[i].Departure.map((departure) => ({
-        name: departure.name,
-        date: departure.date,
-        time: departure.time,
-        direction: departure.direction,
-        track: departure.track,
-        journeyRef: departure.JourneyDetailRef.ref,
-        catOut: departure.Product ? departure.Product[0].catOut : "",
-      })),
+      departures: departures[i].Departure.map(parseDeparture),
     }));
 
     res.json(prepared);
   } catch (err) {
-    logger.error(err.stack);
+    logger.error(err);
     res.sendStatus(500);
   }
 });

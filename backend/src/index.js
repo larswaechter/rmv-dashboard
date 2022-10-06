@@ -1,8 +1,8 @@
+require("dotenv").config();
+
 const app = require("./app");
 const db = require("./config/db");
 const logger = require("./config/logger");
-
-require("dotenv").config();
 
 db.serialize(() => {
   app.listen(8080, () => {

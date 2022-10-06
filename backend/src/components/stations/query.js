@@ -6,9 +6,20 @@ const findAllStations = () =>
     db.all("SELECT * FROM stations;", (err, rows) => {
       if (err) {
         logger.error(err.stack);
-        return reject("Failed to create stations");
+        return reject("Failed to fetch stations");
       }
       resolve(rows);
+    })
+  );
+
+const findStation = (id) =>
+  new Promise((resolve, reject) =>
+    db.all("SELECT * FROM stations WHERE id = ?;", [id], (err, rows) => {
+      if (err) {
+        logger.error(err.stack);
+        return reject("Failed to fetch station");
+      }
+      resolve(rows?.[0]);
     })
   );
 
@@ -38,4 +49,4 @@ const deleteStation = (id) =>
     })
   );
 
-module.exports = { findAllStations, createStation, deleteStation };
+module.exports = { findAllStations, findStation, createStation, deleteStation };
