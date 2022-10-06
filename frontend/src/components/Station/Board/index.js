@@ -16,6 +16,7 @@ import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import TrainIcon from "@mui/icons-material/Train";
 import TramIcon from "@mui/icons-material/Tram";
 import SubwayIcon from "@mui/icons-material/Subway";
+import DirectionsRailwayIcon from "@mui/icons-material/DirectionsRailway";
 import CommuteIcon from "@mui/icons-material/Commute";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Menu from "@mui/material/Menu";
@@ -46,6 +47,8 @@ export const categoryToIcon = (category) => {
       return <SubwayIcon titleAccess={category} />;
     case "Tram":
       return <TramIcon titleAccess={category} />;
+    case "ICE":
+      return <DirectionsRailwayIcon titleAccess={category} />;
     default:
       return <TrainIcon titleAccess={category} />;
   }
@@ -99,7 +102,7 @@ const StationBoard = ({ station, afterDelete }) => {
   const departures = useMemo(() => {
     let clone = station.departures.slice();
     if (category)
-      clone = station.departures.filter((dep) => dep.catOut === category);
+      clone = station.departures.filter((dep) => dep.category === category);
     if (search)
       clone = clone.filter((dep) =>
         dep.direction?.toLowerCase().includes(search)
@@ -114,8 +117,8 @@ const StationBoard = ({ station, afterDelete }) => {
   const categories = Array.from(
     new Set(
       station.departures
-        .filter((dep) => dep.catOut.length)
-        .map((dep) => dep.catOut)
+        .filter((dep) => dep.category.length)
+        .map((dep) => dep.category)
         .sort()
     )
   );

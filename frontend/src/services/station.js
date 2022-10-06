@@ -3,6 +3,19 @@ const headers = {
   Accept: "application/json",
 };
 
+export const getDepartures = () =>
+  fetch(`${BASE_URL}/stations/departures`, {
+    headers,
+  })
+    .then((response) => {
+      if (response.ok) return response.json();
+      throw new Error(response.statusText);
+    })
+    .catch((err) => {
+      console.error(err);
+      return Promise.reject("Failed to fetch departures!");
+    });
+
 export const searchStations = (stop) =>
   fetch(
     `${BASE_URL}/stations/search?` +
@@ -12,18 +25,40 @@ export const searchStations = (stop) =>
     {
       headers,
     }
-  ).then((response) => response.json());
+  )
+    .then((response) => {
+      if (response.ok) return response.json();
+      throw new Error(response.statusText);
+    })
+    .catch((err) => {
+      console.error(err);
+      return Promise.reject("Failed to fetch stations!");
+    });
 
-export const saveStation = (station) =>
+export const createStation = (station) =>
   fetch(`${BASE_URL}/stations`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(station),
-  });
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error(response.statusText);
+    })
+    .catch((err) => {
+      console.error(err);
+      return Promise.reject("Failed to save station!");
+    });
 
 export const deleteStation = (id) =>
   fetch(`${BASE_URL}/stations/${id}`, {
     method: "DELETE",
-  });
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error(response.statusText);
+    })
+    .catch((err) => {
+      console.error(err);
+      return Promise.reject("Failed to delete station!");
+    });

@@ -8,6 +8,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import TrainIcon from "@mui/icons-material/Train";
 import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
 import TagIcon from "@mui/icons-material/Tag";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import { orange } from "@mui/material/colors";
 
 import { searchJourney } from "../../services/journey";
 import { List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
@@ -58,15 +61,25 @@ const calcActiveStep = (stops) => {
 const JourneyDetails = ({ journeyRef }) => {
   const [journey, setJourney] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [activeStep, setActiveStep] = useState(8);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
       const data = await searchJourney(journeyRef);
       setJourney(data);
+      setError(null);
       setActiveStep(calcActiveStep(data.Stops.Stop));
+    } catch (err) {
+      console.error(err);
+      setError(err);
+    } finally {
       setIsLoading(false);
-    };
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, [journeyRef]);
 
@@ -76,6 +89,21 @@ const JourneyDetails = ({ journeyRef }) => {
         <CircularProgress size={30} />
       </div>
     );
+
+  if (error)
+    return (
+      <Alert
+        severity="error"
+        action={
+          <Button color="inherit" size="small" onClick={() => fetchData()}>
+            Retry
+          </Button>
+        }
+      >
+        {error}
+      </Alert>
+    );
+
   const { Stops } = journey;
 
   return (
@@ -104,7 +132,7 @@ const JourneyDetails = ({ journeyRef }) => {
                           color:
                             hasRealtimeValue(stop.arrDate, stop.rtArrDate) ||
                             hasRealtimeValue(stop.arrTime, stop.rtArrTime)
-                              ? "red"
+                              ? orange[900]
                               : "",
                         }}
                         secondary={`${getRealtimeValue(
@@ -125,7 +153,7 @@ const JourneyDetails = ({ journeyRef }) => {
                           color:
                             hasRealtimeValue(stop.depDate, stop.rtDepDate) ||
                             hasRealtimeValue(stop.depTime, stop.rtDepTime)
-                              ? "red"
+                              ? orange[900]
                               : "",
                         }}
                         secondary={`${getRealtimeValue(
@@ -143,7 +171,7 @@ const JourneyDetails = ({ journeyRef }) => {
                       primary="Track"
                       style={{
                         color: hasRealtimeValue(stop.depTrack, stop.rtDepTrack)
-                          ? "red"
+                          ? orange[900]
                           : "",
                       }}
                       secondary={getRealtimeValue(

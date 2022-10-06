@@ -1,8 +1,10 @@
 const db = require("../../config/db");
 const logger = require("../../config/logger");
 
-const findAllStations = () =>
-  new Promise((resolve, reject) =>
+const findAllStations = () => {
+  logger.debug("DB Call findAllStations()");
+
+  return new Promise((resolve, reject) =>
     db.all("SELECT * FROM stations;", (err, rows) => {
       if (err) {
         logger.error(err.stack);
@@ -11,9 +13,12 @@ const findAllStations = () =>
       resolve(rows);
     })
   );
+};
 
-const findStation = (id) =>
-  new Promise((resolve, reject) =>
+const findStation = (id) => {
+  logger.debug("DB Call findStation()");
+
+  return new Promise((resolve, reject) =>
     db.all("SELECT * FROM stations WHERE id = ?;", [id], (err, rows) => {
       if (err) {
         logger.error(err.stack);
@@ -22,9 +27,12 @@ const findStation = (id) =>
       resolve(rows?.[0]);
     })
   );
+};
 
-const createStation = ({ name, station_id }) =>
-  new Promise((resolve, reject) =>
+const createStation = ({ name, station_id }) => {
+  logger.debug("DB Call createStation()");
+
+  return new Promise((resolve, reject) =>
     db.run(
       "INSERT INTO stations (name, station_id) VALUES(?,?);",
       [name, station_id],
@@ -37,9 +45,12 @@ const createStation = ({ name, station_id }) =>
       }
     )
   );
+};
 
-const deleteStation = (id) =>
-  new Promise((resolve, reject) =>
+const deleteStation = (id) => {
+  logger.debug("DB Call deleteStation()");
+
+  return new Promise((resolve, reject) =>
     db.run("DELETE FROM stations WHERE id = ?", [id], (err) => {
       if (err) {
         logger.error(err.stack);
@@ -48,5 +59,6 @@ const deleteStation = (id) =>
       resolve();
     })
   );
+};
 
 module.exports = { findAllStations, findStation, createStation, deleteStation };

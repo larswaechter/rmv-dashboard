@@ -6,9 +6,9 @@ const headers = {
 export const getArrivals = (stop) =>
   fetch(`${BASE_URL}/boards/arrival`, {
     headers,
-  }).then((response) => response.json());
-
-export const getDepartures = (stop) =>
-  fetch(`${BASE_URL}/boards/departure`, {
-    headers,
-  }).then((response) => response.json());
+  })
+    .then((response) => response.json())
+    .catch((err) => {
+      console.log(err);
+      Promise.reject("Failed to fetch arrivals");
+    });

@@ -3,7 +3,6 @@ const helmet = require("helmet");
 const cors = require("cors");
 const { json } = require("express");
 
-const boardsRouter = require("./components/boards/routes");
 const journeysRouter = require("./components/journeys/routes");
 const stationsRouter = require("./components/stations/routes");
 
@@ -20,7 +19,6 @@ app.use(helmet());
 app.use(json());
 
 // Routes
-app.use("/boards/", boardsRouter);
 app.use("/journeys/", journeysRouter);
 app.use("/stations/", stationsRouter);
 

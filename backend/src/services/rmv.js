@@ -4,30 +4,12 @@ const headers = {
   Accept: "application/json",
 };
 
-const getArrivalBoard = (stop_id) =>
-  fetch(
-    `${process.env.RMV_URL}/arrivalBoard?` +
-      new URLSearchParams({
-        accessId: process.env.RMV_KEY,
-        id: stop_id,
-      }),
-    {
-      headers,
-    }
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      logger.debug(data);
-      return Promise.resolve(data);
-    })
-    .catch((err) => {
-      logger.error(err.stack);
-      return Promise.reject("API call /arrivalBoard failed");
-    });
+const getDepartureBoard = (stop_id) => {
+  const url = `${process.env.RMV_URL}/departureBoard?`;
+  logger.debug(`API Call ${url}`);
 
-const getDepartureBoard = (stop_id) =>
-  fetch(
-    `${process.env.RMV_URL}/departureBoard?` +
+  return fetch(
+    url +
       new URLSearchParams({
         accessId: process.env.RMV_KEY,
         id: stop_id,
@@ -37,18 +19,18 @@ const getDepartureBoard = (stop_id) =>
     }
   )
     .then((response) => response.json())
-    .then((data) => {
-      logger.debug(data);
-      return Promise.resolve(data);
-    })
     .catch((err) => {
       logger.error(err.stack);
       return Promise.reject("API call /departureBoard failed");
     });
+};
 
-const searchStations = (name) =>
-  fetch(
-    `${process.env.RMV_URL}/location.name?` +
+const searchStations = (name) => {
+  const url = `${process.env.RMV_URL}/location.name?`;
+  logger.debug(`API Call ${url}`);
+
+  return fetch(
+    url +
       new URLSearchParams({
         accessId: process.env.RMV_KEY,
         input: name,
@@ -59,18 +41,18 @@ const searchStations = (name) =>
     }
   )
     .then((response) => response.json())
-    .then((data) => {
-      logger.debug(data);
-      return Promise.resolve(data);
-    })
     .catch((err) => {
       logger.error(err.stack);
       return Promise.reject("API call /location.name failed");
     });
+};
 
-const getJourney = (id) =>
-  fetch(
-    `${process.env.RMV_URL}/journeyDetails?` +
+const getJourney = (id) => {
+  const url = `${process.env.RMV_URL}/journeyDetails?`;
+  logger.debug(`API Call ${url}`);
+
+  return fetch(
+    url +
       new URLSearchParams({
         accessId: process.env.RMV_KEY,
         id,
@@ -80,17 +62,13 @@ const getJourney = (id) =>
     }
   )
     .then((response) => response.json())
-    .then((data) => {
-      logger.debug(data);
-      return Promise.resolve(data);
-    })
     .catch((err) => {
       logger.error(err.stack);
       return Promise.reject("API call /journeyDetails failed");
     });
+};
 
 module.exports = {
-  getArrivalBoard,
   getDepartureBoard,
   searchStations,
   getJourney,

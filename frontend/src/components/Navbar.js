@@ -5,7 +5,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import DirectionsRailwayIcon from "@mui/icons-material/DirectionsRailway";
+import TrainIcon from "@mui/icons-material/Train";
+
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InfoIcon from "@mui/icons-material/Info";
 
@@ -41,9 +42,7 @@ const Navbar = ({ open, handleDrawerOpen }) => {
         >
           <MenuIcon />
         </IconButton>
-        <DirectionsRailwayIcon
-          sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-        />
+        <TrainIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
           RMV Dashboard
         </Typography>

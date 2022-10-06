@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 
 import StationSearch from "./Search";
-import { saveStation } from "../../services/station";
+import { createStation } from "../../services/station";
 
 const style = {
   position: "absolute",
@@ -25,7 +25,7 @@ const StationAdd = ({ handleClose }) => {
   const handleSave = async () => {
     try {
       if (!station) return;
-      await saveStation(station);
+      await createStation(station);
       handleClose(true);
     } catch (err) {
       console.log(err);

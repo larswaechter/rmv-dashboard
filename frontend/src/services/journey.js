@@ -12,4 +12,12 @@ export const searchJourney = (id) =>
     {
       headers,
     }
-  ).then((response) => response.json());
+  )
+    .then((response) => {
+      if (response.ok) return response.json();
+      throw new Error(response.statusText);
+    })
+    .catch((err) => {
+      console.log(err);
+      return Promise.reject("Failed to fetch journey!");
+    });

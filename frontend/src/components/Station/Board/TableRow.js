@@ -7,11 +7,15 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
+import { orange } from "@mui/material/colors";
+
 import JourneyDetails from "../../Journey/Details";
 import { categoryToIcon } from ".";
 
 const StationBoardTableRow = ({ row }) => {
   const [open, setOpen] = useState(false);
+
+  const { category, direction, name, date, time, track, journeyRef } = row;
 
   return (
     <>
@@ -26,19 +30,37 @@ const StationBoardTableRow = ({ row }) => {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {categoryToIcon(row.catOut)}
+          {categoryToIcon(category)}
         </TableCell>
-        <TableCell>{row.direction}</TableCell>
-        <TableCell>{row.name}</TableCell>
-        <TableCell align="right">{row.date}</TableCell>
-        <TableCell align="right">{row.time}</TableCell>
-        <TableCell align="right">{row.track}</TableCell>
+        <TableCell>{direction}</TableCell>
+        <TableCell>{name}</TableCell>
+        <TableCell
+          title={date.changed ? date.original : ""}
+          align="right"
+          style={{ color: date.changed ? orange[900] : "" }}
+        >
+          {date.value}
+        </TableCell>
+        <TableCell
+          title={time.changed ? time.original : ""}
+          align="right"
+          style={{ color: time.changed ? orange[900] : "" }}
+        >
+          {time.value}
+        </TableCell>
+        <TableCell
+          title={track.changed ? track.original : ""}
+          align="right"
+          style={{ color: track.changed ? orange[900] : "" }}
+        >
+          {track.value}
+        </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <JourneyDetails journeyRef={row.journeyRef} />
+              <JourneyDetails journeyRef={journeyRef} />
             </Box>
           </Collapse>
         </TableCell>

@@ -1,21 +1,24 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
 
 import Stationboard from "../components/Station/Board/";
 import StationAdd from "../components/Station/Add";
-import { getDepartures } from "../services/api";
+import { getDepartures } from "../services/station";
 
 const PagesDepartures = () => {
-  const [showModal, setShowModal] = React.useState(false);
-  const [showSnack, setShowSnack] = React.useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showSnack, setShowSnack] = useState(false);
 
-  const [stations, setStations] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [stations, setStations] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const handleCloseModal = (refetch = false) => {
     if (refetch) fetchData();
@@ -23,10 +26,17 @@ const PagesDepartures = () => {
   };
 
   const fetchData = async () => {
-    setIsLoading(true);
-    const data = await getDepartures();
-    setStations(data);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const data = await getDepartures();
+      setStations(data);
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      setError(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDelete = (id) => {
@@ -34,7 +44,7 @@ const PagesDepartures = () => {
     setShowSnack(true);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -43,6 +53,20 @@ const PagesDepartures = () => {
       <div style={{ textAlign: "center", padding: "20vh 0px" }}>
         <CircularProgress />
       </div>
+    );
+
+  if (error)
+    return (
+      <Alert
+        severity="error"
+        action={
+          <Button color="inherit" size="small" onClick={() => fetchData()}>
+            Retry
+          </Button>
+        }
+      >
+        {error}
+      </Alert>
     );
 
   return (
@@ -56,7 +80,7 @@ const PagesDepartures = () => {
       <Fab
         color="primary"
         aria-label="add"
-        sx={{ position: "fixed", bottom: 32, right: 32 }}
+        sx={{ position: "fixed", bottom: 16, right: 16 }}
         onClick={() => setShowModal(true)}
       >
         <AddIcon />
