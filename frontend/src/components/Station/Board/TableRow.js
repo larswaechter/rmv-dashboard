@@ -1,21 +1,44 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
 import Collapse from "@mui/material/Collapse";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
+import InfoIcon from "@mui/icons-material/Info";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import RemoveIcon from "@mui/icons-material/Remove";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
 import { orange } from "@mui/material/colors";
 
 import JourneyDetails from "../../Journey/Details";
 import { categoryToIcon } from ".";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 600,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 const StationBoardTableRow = ({ row }) => {
   const [open, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const { category, direction, name, date, time, track, journeyRef } = row;
+  const { category, direction, name, date, time, track, journeyRef, notes } =
+    row;
 
   return (
     <>
@@ -55,9 +78,14 @@ const StationBoardTableRow = ({ row }) => {
         >
           {track.value}
         </TableCell>
+        <TableCell>
+          <IconButton size="small" onClick={() => setModalOpen(true)}>
+            <InfoIcon />
+          </IconButton>
+        </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <JourneyDetails journeyRef={journeyRef} />
@@ -65,6 +93,35 @@ const StationBoardTableRow = ({ row }) => {
           </Collapse>
         </TableCell>
       </TableRow>
+      <Modal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {direction}
+          </Typography>
+          <List>
+            {Array.isArray(notes) &&
+              notes.map((note, i) => (
+                <ListItem key={i}>
+                  <ListItemIcon>
+                    <RemoveIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={note.value} />
+                </ListItem>
+              ))}
+          </List>
+          <Button
+            onClick={() => setModalOpen(false)}
+            style={{ marginLeft: "auto", display: "block" }}
+          >
+            Close
+          </Button>
+        </Box>
+      </Modal>
     </>
   );
 };

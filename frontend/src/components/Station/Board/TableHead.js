@@ -68,6 +68,7 @@ const StationBoardTableHead = (props) => {
             </TableSortLabel>
           </TableCell>
         ))}
+        <TableCell />
       </TableRow>
     </TableHead>
   );

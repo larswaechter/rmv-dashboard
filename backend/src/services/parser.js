@@ -40,6 +40,7 @@ const parseDeparture = (departure) => {
     direction,
     JourneyDetailRef,
     Product,
+    Notes,
   } = departure;
 
   return {
@@ -50,6 +51,7 @@ const parseDeparture = (departure) => {
     track: getRealtimeValue(track, rtTrack, "-"),
     journeyRef: JourneyDetailRef.ref,
     category: Product ? Product[0].catOut : "",
+    notes: Notes.Note.map(({ key, value }) => ({ key, value })),
   };
 };
 
