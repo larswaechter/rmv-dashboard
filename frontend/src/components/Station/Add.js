@@ -28,7 +28,7 @@ const StationAdd = ({ handleClose }) => {
       await createStation(station);
       handleClose(true);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

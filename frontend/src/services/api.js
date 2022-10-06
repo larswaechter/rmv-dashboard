@@ -9,6 +9,6 @@ export const getArrivals = (stop) =>
   })
     .then((response) => response.json())
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       Promise.reject("Failed to fetch arrivals");
     });

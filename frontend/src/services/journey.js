@@ -18,6 +18,6 @@ export const searchJourney = (id) =>
       throw new Error(response.statusText);
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       return Promise.reject("Failed to fetch journey!");
     });

@@ -101,11 +101,15 @@ const StationBoard = ({ station, afterDelete }) => {
 
   const departures = useMemo(() => {
     let clone = station.departures.slice();
+    const lSearch = search.toLowerCase();
+
     if (category)
       clone = station.departures.filter((dep) => dep.category === category);
-    if (search)
-      clone = clone.filter((dep) =>
-        dep.direction?.toLowerCase().includes(search)
+    if (lSearch)
+      clone = clone.filter(
+        (dep) =>
+          dep.direction?.toLowerCase().includes(lSearch) ||
+          dep.name?.toLowerCase().includes(lSearch)
       );
 
     return clone;
