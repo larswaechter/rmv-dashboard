@@ -29,24 +29,14 @@ const parseDateTime = (date, time) => {
   );
 };
 
-const hasRealtimeValue = (value, rt) => rt !== undefined && rt !== value;
-
-const getRealtimeValue = (value, rt) =>
-  hasRealtimeValue(value, rt) ? rt : value;
-
 const calcActiveStep = (stops) => {
   let idx = stops.length;
   const now = Date.now();
 
   for (let i = 0; i < stops.length - 1; i++) {
     const stop = stops[i];
-    const { depDate, depTime, rtDepDate, rtDepTime } = stop;
-
-    let depParsed;
-
-    if (rtDepDate && rtDepTime)
-      depParsed = parseDateTime(rtDepDate, rtDepTime).valueOf();
-    else depParsed = parseDateTime(depDate, depTime).valueOf();
+    const { depDate, depTime } = stop;
+    const depParsed = parseDateTime(depDate.value, depTime.value);
 
     // Next stop
     if (now < depParsed) {
@@ -70,7 +60,7 @@ const JourneyDetails = ({ journeyRef }) => {
       const data = await searchJourney(journeyRef);
       setJourney(data);
       setError(null);
-      setActiveStep(calcActiveStep(data.Stops.Stop));
+      setActiveStep(calcActiveStep(data.stops));
     } catch (err) {
       console.error(err);
       setError(err);
@@ -104,87 +94,91 @@ const JourneyDetails = ({ journeyRef }) => {
       </Alert>
     );
 
-  const { Stops } = journey;
+  const { stops } = journey;
 
   return (
     <Box sx={{ maxWidth: 400 }}>
       <Stepper activeStep={activeStep} orientation="vertical">
-        {Stops.Stop.map((stop, i) => (
-          <Step key={stop.name}>
-            <StepLabel>{stop.name}</StepLabel>
-            <StepContent>
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: 360,
-                  bgcolor: "background.paper",
-                }}
-              >
-                <List>
-                  {i > 0 && (
+        {stops.map(
+          ({ name, arrDate, depDate, arrTime, depTime, depTrack }, i) => (
+            <Step key={name}>
+              <StepLabel>{name}</StepLabel>
+              <StepContent>
+                <Box
+                  sx={{
+                    width: "100%",
+                    maxWidth: 360,
+                    bgcolor: "background.paper",
+                  }}
+                >
+                  <List>
+                    {i > 0 && (
+                      <ListItem>
+                        <ListItemAvatar>
+                          <TrainIcon />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary="Arrival"
+                          title={
+                            arrDate.changed || arrTime.changed
+                              ? `${arrDate.original || arrDate.value} / ${
+                                  arrTime.original || arrTime.value
+                                }`
+                              : ""
+                          }
+                          style={{
+                            color:
+                              arrDate.changed || arrTime.changed
+                                ? orange[900]
+                                : "",
+                          }}
+                          secondary={`${arrDate.value} / ${arrTime.value}`}
+                        ></ListItemText>
+                      </ListItem>
+                    )}
+                    {i < stops.length - 1 && (
+                      <ListItem>
+                        <ListItemAvatar>
+                          <DepartureBoardIcon />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary="Departure"
+                          title={
+                            depDate.changed || depTime.changed
+                              ? `${depDate.original || depDate.value} / ${
+                                  depTime.original || depTime.value
+                                }`
+                              : ""
+                          }
+                          style={{
+                            color:
+                              depDate.changed || depTime.changed
+                                ? orange[900]
+                                : "",
+                          }}
+                          secondary={`${depDate.value} / ${depTime.value}`}
+                        ></ListItemText>
+                      </ListItem>
+                    )}
                     <ListItem>
                       <ListItemAvatar>
-                        <TrainIcon />
+                        <TagIcon />
                       </ListItemAvatar>
                       <ListItemText
-                        primary="Arrival"
+                        primary="Track"
+                        title={depTrack.original}
                         style={{
-                          color:
-                            hasRealtimeValue(stop.arrDate, stop.rtArrDate) ||
-                            hasRealtimeValue(stop.arrTime, stop.rtArrTime)
-                              ? orange[900]
-                              : "",
+                          color: depTrack.changed ? orange[900] : "",
                         }}
-                        secondary={`${getRealtimeValue(
-                          stop.arrDate,
-                          stop.rtArrDate
-                        )} / ${getRealtimeValue(stop.arrTime, stop.rtArrTime)}`}
+                        secondary={depTrack.value}
                       ></ListItemText>
                     </ListItem>
-                  )}
-                  {i < Stops.Stop.length - 1 && (
-                    <ListItem>
-                      <ListItemAvatar>
-                        <DepartureBoardIcon />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary="Departure"
-                        style={{
-                          color:
-                            hasRealtimeValue(stop.depDate, stop.rtDepDate) ||
-                            hasRealtimeValue(stop.depTime, stop.rtDepTime)
-                              ? orange[900]
-                              : "",
-                        }}
-                        secondary={`${getRealtimeValue(
-                          stop.depDate,
-                          stop.rtDepDate
-                        )} / ${getRealtimeValue(stop.depTime, stop.rtDepTime)}`}
-                      ></ListItemText>
-                    </ListItem>
-                  )}
-                  <ListItem>
-                    <ListItemAvatar>
-                      <TagIcon />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary="Track"
-                      style={{
-                        color: hasRealtimeValue(stop.depTrack, stop.rtDepTrack)
-                          ? orange[900]
-                          : "",
-                      }}
-                      secondary={getRealtimeValue(
-                        stop.depTrack,
-                        stop.rtDepTrack
-                      )}
-                    ></ListItemText>
-                  </ListItem>
-                </List>
-              </Box>
-            </StepContent>
-          </Step>
-        ))}
+                  </List>
+                </Box>
+              </StepContent>
+            </Step>
+          )
+        )}
       </Stepper>
     </Box>
   );

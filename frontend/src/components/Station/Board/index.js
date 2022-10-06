@@ -28,8 +28,11 @@ import StationBoardTableHead from "./TableHead";
 import { deleteStation } from "../../../services/station";
 
 const descendingComparator = (a, b, orderBy) => {
-  if (b[orderBy] < a[orderBy]) return -1;
-  if (b[orderBy] > a[orderBy]) return 1;
+  const valA = typeof a[orderBy] === "object" ? a[orderBy].value : a[orderBy];
+  const valB = typeof b[orderBy] === "object" ? b[orderBy].value : b[orderBy];
+
+  if (valB < valA) return -1;
+  if (valB > valA) return 1;
   return 0;
 };
 
@@ -56,7 +59,7 @@ export const categoryToIcon = (category) => {
 
 const StationBoard = ({ station, afterDelete }) => {
   const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("calories");
+  const [orderBy, setOrderBy] = useState("time");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [anchorEl, setAnchorEl] = useState(null);

@@ -1,39 +1,15 @@
 const { Router } = require("express");
 const logger = require("../../config/logger");
-const { getRealtimeValue } = require("../../services/helper");
 
+const { parseDeparture } = require("../../services/parser");
 const { searchStations, getDepartureBoard } = require("../../services/rmv");
+
 const {
   findAllStations,
   createStation,
   deleteStation,
   findStation,
 } = require("./query");
-
-const parseDeparture = (departure) => {
-  const {
-    name,
-    date,
-    rtDate,
-    time,
-    rtTime,
-    track,
-    rtTrack,
-    direction,
-    JourneyDetailRef,
-    Product,
-  } = departure;
-
-  return {
-    name,
-    direction,
-    date: getRealtimeValue(date, rtDate),
-    time: getRealtimeValue(time, rtTime),
-    track: getRealtimeValue(track, rtTrack, "-"),
-    journeyRef: JourneyDetailRef.ref,
-    category: Product ? Product[0].catOut : "",
-  };
-};
 
 router = Router();
 
@@ -42,7 +18,7 @@ router.get("", async (req, res) => {
     const stations = await findAllStations();
     res.json(stations);
   } catch (err) {
-    logger.error(err);
+    logger.error(err.stack || err);
     res.sendStatus(500);
   }
 });
@@ -52,8 +28,8 @@ router.get("/search", async (req, res) => {
     const { name } = req.query;
     if (!name) return res.sendStatus(400);
 
-    const stops = await searchStations(name);
-    const prepared = stops.stopLocationOrCoordLocation.map(
+    const stations = await searchStations(name);
+    const prepared = stations.stopLocationOrCoordLocation.map(
       ({ StopLocation }) => ({
         station_id: StopLocation.id,
         name: StopLocation.name,
@@ -62,7 +38,7 @@ router.get("/search", async (req, res) => {
 
     res.json(prepared);
   } catch (err) {
-    logger.error(err);
+    logger.error(err.stack || err);
     res.sendStatus(500);
   }
 });
@@ -75,7 +51,7 @@ router.post("", async (req, res) => {
     await createStation(station);
     res.sendStatus(201);
   } catch (err) {
-    logger.error(err);
+    logger.error(err.stack || err);
     res.sendStatus(500);
   }
 });
@@ -91,7 +67,7 @@ router.delete("/:id", async (req, res) => {
     await deleteStation(+id);
     res.sendStatus(204);
   } catch (err) {
-    logger.error(err);
+    logger.error(err.stack || err);
     res.sendStatus(500);
   }
 });
@@ -111,7 +87,7 @@ router.get("/departures", async (req, res) => {
 
     res.json(prepared);
   } catch (err) {
-    logger.error(err);
+    logger.error(err.stack || err);
     res.sendStatus(500);
   }
 });

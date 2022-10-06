@@ -7,7 +7,7 @@ import { visuallyHidden } from "@mui/utils";
 
 const headCells = [
   {
-    id: "type",
+    id: "category",
     numberic: false,
     label: "Type",
   },
@@ -17,7 +17,7 @@ const headCells = [
     label: "Direction",
   },
   {
-    id: "train",
+    id: "name",
     numeric: false,
     label: "Product",
   },
