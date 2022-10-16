@@ -4,6 +4,20 @@ A self-hosted web app for displaying public transport information like train & b
 
 ![Preview](https://user-images.githubusercontent.com/11744028/196059284-17f40ac5-c390-4168-b243-00bf539f55a1.png)
 
+## Description
+
+...
+
+## Technology
+
+- Backend
+  - Express.js
+  - SQLite
+- Frontend
+  - React
+  - MaterialUI
+- Docker
+
 ## Installation
 
 First of all, get your RMV API Key from [here](https://opendata.rmv.de/site/anmeldeseite.html).
@@ -21,7 +35,7 @@ And run it:
 ```bash
 docker run \
   -p 8080:8080 \
-  -v ~/rmvdata:/app/data \
+  -v /path/to/host/data:/app/data \
   -e RMV_KEY="YOUR_KEY" \
   -d \
   rmv-dashboard
@@ -45,6 +59,7 @@ services:
 ## Development
 
 ```bash
+# Clone Repo
 git clone https://github.com/larswaechter/rmv-dashboard
 cd rmv-dashboard
 
@@ -52,14 +67,18 @@ cd rmv-dashboard
 cd data
 touch db.sqlite
 
-# Setup Frontend
-cd frontend
-npm run i
-npm start
-
 # Setup Backend
 cd backend
-npm run i
+npm i
 mv .env.example .env  # Enter your RMV API Key
 npm run watch
+
+# Setup Frontend
+cd frontend
+npm i
+npm start
 ```
+
+## Features
+
+...

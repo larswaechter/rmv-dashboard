@@ -11,23 +11,14 @@ import TagIcon from "@mui/icons-material/Tag";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import { orange } from "@mui/material/colors";
-
-import { searchJourney } from "../../services/journey";
 import { List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 
-const parseDateTime = (date, time) => {
-  const [arrYear, arrMonth, arrDay] = date.split("-");
-  const [arrHours, arrMin, arrSec] = time.split(":");
-
-  return new Date(
-    +arrYear,
-    +arrMonth - 1,
-    +arrDay,
-    +arrHours,
-    +arrMin,
-    +arrSec
-  );
-};
+import { searchJourney } from "../../services/journey";
+import {
+  delayToColor,
+  getDelayInSeconds,
+  parseDateTime,
+} from "../../utils/helper";
 
 const calcActiveStep = (stops) => {
   let idx = stops.length;
@@ -100,84 +91,105 @@ const JourneyDetails = ({ journeyRef }) => {
     <Box sx={{ maxWidth: 400 }}>
       <Stepper activeStep={activeStep} orientation="vertical">
         {stops.map(
-          ({ name, arrDate, depDate, arrTime, depTime, depTrack }, i) => (
-            <Step key={name}>
-              <StepLabel>{name}</StepLabel>
-              <StepContent>
-                <Box
-                  sx={{
-                    width: "100%",
-                    maxWidth: 360,
-                    bgcolor: "background.paper",
-                  }}
-                >
-                  <List>
-                    {i > 0 && (
+          ({ name, arrDate, depDate, arrTime, depTime, depTrack }, i) => {
+            const arrDiff = getDelayInSeconds(arrDate, arrTime);
+            const depDiff = getDelayInSeconds(depDate, depTime);
+
+            return (
+              <Step key={name}>
+                <StepLabel>{name}</StepLabel>
+                <StepContent>
+                  <Box
+                    sx={{
+                      width: "100%",
+                      maxWidth: 360,
+                      bgcolor: "background.paper",
+                    }}
+                  >
+                    <List>
+                      {i > 0 && (
+                        <ListItem>
+                          <ListItemAvatar>
+                            <TrainIcon />
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary="Arrival"
+                            title={
+                              arrDiff > 0
+                                ? `${arrDate.original || arrDate.value} / ${
+                                    arrTime.original || arrTime.value
+                                  }`
+                                : ""
+                            }
+                            secondary={
+                              <>
+                                <span>{`${arrDate.value} / ${arrTime.value}`}</span>
+                                {arrDiff !== 0 && (
+                                  <span
+                                    style={{
+                                      color: delayToColor(arrDiff),
+                                      marginLeft: 8,
+                                    }}
+                                  >
+                                    {`${arrDiff > 0 ? "+" : "-"}${arrDiff} Min`}
+                                  </span>
+                                )}
+                              </>
+                            }
+                          ></ListItemText>
+                        </ListItem>
+                      )}
+                      {i < stops.length - 1 && (
+                        <ListItem>
+                          <ListItemAvatar>
+                            <DepartureBoardIcon />
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary="Departure"
+                            title={
+                              depDiff > 0
+                                ? `${depDate.original || depDate.value} / ${
+                                    depTime.original || depTime.value
+                                  }`
+                                : ""
+                            }
+                            secondary={
+                              <>
+                                <span>{`${depDate.value} / ${depTime.value}`}</span>
+                                {depDiff !== 0 && (
+                                  <span
+                                    style={{
+                                      color: delayToColor(depDiff),
+                                      marginLeft: 8,
+                                    }}
+                                  >
+                                    {`${depDiff > 0 ? "+" : "-"}${depDiff} Min`}
+                                  </span>
+                                )}
+                              </>
+                            }
+                          ></ListItemText>
+                        </ListItem>
+                      )}
                       <ListItem>
                         <ListItemAvatar>
-                          <TrainIcon />
+                          <TagIcon />
                         </ListItemAvatar>
                         <ListItemText
-                          primary="Arrival"
-                          title={
-                            arrDate.changed || arrTime.changed
-                              ? `${arrDate.original || arrDate.value} / ${
-                                  arrTime.original || arrTime.value
-                                }`
-                              : ""
-                          }
+                          primary="Track"
+                          title={depTrack.original}
                           style={{
-                            color:
-                              arrDate.changed || arrTime.changed
-                                ? orange[900]
-                                : "",
+                            color: depTrack.changed ? orange[900] : "",
                           }}
-                          secondary={`${arrDate.value} / ${arrTime.value}`}
+                          secondary={depTrack.value}
                         ></ListItemText>
                       </ListItem>
-                    )}
-                    {i < stops.length - 1 && (
-                      <ListItem>
-                        <ListItemAvatar>
-                          <DepartureBoardIcon />
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary="Departure"
-                          title={
-                            depDate.changed || depTime.changed
-                              ? `${depDate.original || depDate.value} / ${
-                                  depTime.original || depTime.value
-                                }`
-                              : ""
-                          }
-                          style={{
-                            color:
-                              depDate.changed || depTime.changed
-                                ? orange[900]
-                                : "",
-                          }}
-                          secondary={`${depDate.value} / ${depTime.value}`}
-                        ></ListItemText>
-                      </ListItem>
-                    )}
-                    <ListItem>
-                      <ListItemAvatar>
-                        <TagIcon />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary="Track"
-                        title={depTrack.original}
-                        style={{
-                          color: depTrack.changed ? orange[900] : "",
-                        }}
-                        secondary={depTrack.value}
-                      ></ListItemText>
-                    </ListItem>
-                  </List>
-                </Box>
-              </StepContent>
-            </Step>
-          )
+                    </List>
+                  </Box>
+                </StepContent>
+              </Step>
+            );
+          }
         )}
       </Stepper>
     </Box>
