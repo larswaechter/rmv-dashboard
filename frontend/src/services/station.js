@@ -1,11 +1,8 @@
-const BASE_URL = "http://localhost:8080";
-const headers = {
-  Accept: "application/json",
-};
-
 export const getDepartures = () =>
-  fetch(`${BASE_URL}/stations/departures`, {
-    headers,
+  fetch(`api/stations/departures`, {
+    headers: {
+      Accept: "application/json",
+    },
   })
     .then((response) => {
       if (response.ok) return response.json();
@@ -18,12 +15,14 @@ export const getDepartures = () =>
 
 export const searchStations = (stop) =>
   fetch(
-    `${BASE_URL}/stations/search?` +
+    `api/stations/search?` +
       new URLSearchParams({
         name: stop,
       }),
     {
-      headers,
+      headers: {
+        Accept: "application/json",
+      },
     }
   )
     .then((response) => {
@@ -36,7 +35,7 @@ export const searchStations = (stop) =>
     });
 
 export const createStation = (station) =>
-  fetch(`${BASE_URL}/stations`, {
+  fetch(`api/stations`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -52,7 +51,7 @@ export const createStation = (station) =>
     });
 
 export const deleteStation = (id) =>
-  fetch(`${BASE_URL}/stations/${id}`, {
+  fetch(`api/stations/${id}`, {
     method: "DELETE",
   })
     .then((response) => {

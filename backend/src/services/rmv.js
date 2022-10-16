@@ -1,11 +1,12 @@
 const logger = require("../config/logger");
 
+const RMV_URL = "https://www.rmv.de/hapi";
 const headers = {
   Accept: "application/json",
 };
 
 const getDepartureBoard = (stop_id) => {
-  const url = `${process.env.RMV_URL}/departureBoard?`;
+  const url = `${RMV_URL}/departureBoard?`;
   logger.debug(`API Call ${url}`);
 
   return fetch(
@@ -26,7 +27,7 @@ const getDepartureBoard = (stop_id) => {
 };
 
 const searchStations = (name) => {
-  const url = `${process.env.RMV_URL}/location.name?`;
+  const url = `${RMV_URL}/location.name?`;
   logger.debug(`API Call ${url}`);
 
   return fetch(
@@ -48,7 +49,7 @@ const searchStations = (name) => {
 };
 
 const getJourney = (id) => {
-  const url = `${process.env.RMV_URL}/journeyDetails?`;
+  const url = `${RMV_URL}/journeyDetails?`;
   logger.debug(`API Call ${url}`);
 
   return fetch(

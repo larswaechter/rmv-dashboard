@@ -1,7 +1,8 @@
 {
   "name": "rmv-frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "description": "A self-hosted web app for displaying train & bus information using the RMV Open Data API.",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -22,6 +23,19 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/larswaechter/rmv-dashboard.git"
+  },
+  "author": {
+    "name": "Lars Wächter",
+    "url": "https://larswaechter.dev/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/larswaechter/rmv-dashboard/issues"
+  },
+  "proxy": "http://localhost:8080",
   "eslintConfig": {
     "extends": [
       "react-app",

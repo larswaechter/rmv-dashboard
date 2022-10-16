@@ -64,33 +64,6 @@ export const Drawer = ({ open, handleDrawerClose }) => {
             <ListItemText primary="Dashboard" />
           </ListItemButton>
         </ListItem>
-        <ListItem key="departures" disablePadding>
-          <ListItemButton onClick={() => navigate("/departures")}>
-            <ListItemIcon>
-              <DepartureBoardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Departures" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key="tripsearch" disablePadding>
-          <ListItemButton onClick={() => navigate("/tripsearch")}>
-            <ListItemIcon>
-              <RouteIcon />
-            </ListItemIcon>
-            <ListItemText primary="Trips" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-      <Divider />
-      <List>
-        <ListItem key="settings" disablePadding>
-          <ListItemButton onClick={() => navigate("/settings")}>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItemButton>
-        </ListItem>
       </List>
     </MUIDrawer>
   );

@@ -11,7 +11,6 @@ const StationSearch = ({ handleChange }) => {
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      console.log(inputValue);
       doSearch();
     }, 750);
 

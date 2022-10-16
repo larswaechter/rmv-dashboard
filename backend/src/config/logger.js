@@ -2,7 +2,7 @@ const { join } = require("path");
 const { existsSync, mkdirSync } = require("fs");
 const { createLogger, format, transports } = require("winston");
 
-const logDir = "logs";
+const logDir = join(__dirname, "../../logs");
 const isDevEnv = process.env.NODE_ENV === "develop";
 
 // Create the log directory if it does not exist

@@ -110,7 +110,7 @@ const StationBoardTableRow = ({ row }) => {
                   <ListItemIcon>
                     <RemoveIcon />
                   </ListItemIcon>
-                  <ListItemText primary={note.value} />
+                  <ListItemText primary={note} />
                 </ListItem>
               ))}
           </List>

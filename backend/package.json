@@ -1,7 +1,8 @@
 {
   "name": "rmv-backend",
   "version": "1.0.0",
-  "description": "",
+  "private": "true",
+  "description": "A self-hosted web app for displaying train & bus information using the RMV Open Data API.",
   "main": "index.js",
   "scripts": {
     "start": "node ./src/index.js",
@@ -13,7 +14,10 @@
     "type": "git",
     "url": "git+https://github.com/larswaechter/rmv-dashboard.git"
   },
-  "author": "Lars Wächter",
+  "author": {
+    "name": "Lars Wächter",
+    "url": "https://larswaechter.dev/"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/larswaechter/rmv-dashboard/issues"

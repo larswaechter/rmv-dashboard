@@ -51,7 +51,7 @@ const parseDeparture = (departure) => {
     track: getRealtimeValue(track, rtTrack, "-"),
     journeyRef: JourneyDetailRef.ref,
     category: Product ? Product[0].catOut : "",
-    notes: Notes.Note.map(({ key, value }) => ({ key, value })),
+    notes: Array.from(new Set(Notes.Note.map(({ value }) => value))),
   };
 };
 

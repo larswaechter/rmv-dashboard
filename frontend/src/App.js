@@ -28,7 +28,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 );
 
 export default function PersistentDrawerLeft() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
