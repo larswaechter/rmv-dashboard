@@ -58,7 +58,8 @@ export const createStation = (station) =>
     body: JSON.stringify(station),
   })
     .then((response) => {
-      if (!response.ok) throw new Error(response.statusText);
+      if (response.ok) return response.json();
+      throw new Error(response.statusText);
     })
     .catch((err) => {
       console.error(err);

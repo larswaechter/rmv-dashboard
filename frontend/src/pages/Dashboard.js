@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 
 import Stationboard from "../components/Station/Board";
 import StationAdd from "../components/Station/Add";
+
 import { getStations } from "../services/station";
 
 const PagesDashboard = () => {
@@ -20,8 +21,8 @@ const PagesDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const handleCloseModal = (refetch = false) => {
-    if (refetch) fetchData();
+  const handleCloseModal = (newStation = null) => {
+    if (newStation) setStations([...stations, newStation]);
     setShowModal(false);
   };
 
@@ -39,10 +40,13 @@ const PagesDashboard = () => {
     }
   };
 
-  const handleDelete = (id) => {
-    setStations(stations.filter((dept) => dept.id !== id));
-    setShowSnack(true);
-  };
+  const handleDelete = useCallback(
+    (id) => {
+      setStations(stations.filter((dept) => dept.id !== id));
+      setShowSnack(true);
+    },
+    [stations]
+  );
 
   useEffect(() => {
     fetchData();

@@ -25,8 +25,8 @@ const StationAdd = ({ handleClose }) => {
   const handleSave = async () => {
     try {
       if (!station) return;
-      await createStation(station);
-      handleClose(true);
+      const newStation = await createStation(station);
+      handleClose(newStation);
     } catch (err) {
       console.error(err);
     }

@@ -1,6 +1,12 @@
 const { join } = require("path");
-const sqlite3 = require("sqlite3").verbose();
+const { Sequelize } = require("sequelize");
 
-const db = new sqlite3.Database(join(__dirname, "../../../data/db.sqlite"));
+const sequelize = new Sequelize({
+  logging: process.env.NODE_ENV === "develop",
+  dialect: "sqlite",
+  storage: join(__dirname, "../../../data/db.sqlite"),
+});
 
-module.exports = db;
+sequelize.sync();
+
+module.exports = sequelize;

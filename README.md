@@ -12,7 +12,7 @@ A self-hosted web app for displaying public transport information like train & b
 
 - Backend
   - Express.js
-  - SQLite
+  - Sequelize + SQLite
 - Frontend
   - React
   - MaterialUI

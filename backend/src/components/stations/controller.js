@@ -2,12 +2,13 @@ const logger = require("../../config/logger");
 const rmv = require("../../services/rmv");
 const { parseDeparture } = require("../../services/parser");
 
-const StationsRepo = require("./repository");
+const Station = require("./model");
 
 const StationsController = {
   getStations: async (req, res) => {
     try {
-      const stations = await StationsRepo.findAll();
+      const stations = await Station.findAll();
+
       res.json(stations);
     } catch (err) {
       logger.error(err.stack || err);
@@ -20,7 +21,8 @@ const StationsController = {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
 
-      const stations = await StationsRepo.find(id);
+      const stations = await Station.findByPk(+id);
+
       res.json(stations);
     } catch (err) {
       logger.error(err.stack || err);
@@ -33,7 +35,7 @@ const StationsController = {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
 
-      const station = await StationsRepo.find(+id);
+      const station = await Station.findByPk(+id);
       if (!station) return res.sendStatus(404);
 
       const departures = await rmv.getDepartureBoard(station.station_id);
@@ -74,8 +76,9 @@ const StationsController = {
       const station = req.body;
       if (!station) res.sendStatus(400);
 
-      await StationsRepo.create(station);
-      res.sendStatus(201);
+      const newStation = await Station.create(station);
+
+      res.status(201).json(newStation);
     } catch (err) {
       logger.error(err.stack || err);
       res.sendStatus(500);
@@ -87,10 +90,15 @@ const StationsController = {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
 
-      const station = await StationsRepo.find(+id);
+      const station = await Station.findByPk(+id);
       if (!station) return res.sendStatus(404);
 
-      await StationsRepo.delete(+id);
+      await Station.destroy({
+        where: {
+          id,
+        },
+      });
+
       res.sendStatus(204);
     } catch (err) {
       logger.error(err.stack || err);
