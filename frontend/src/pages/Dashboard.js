@@ -79,7 +79,20 @@ const PagesDashboard = () => {
           <Stationboard key={i} station={station} afterDelete={handleDelete} />
         ))
       ) : (
-        <Alert severity="info">This is an info alert — check it out!</Alert>
+        <Alert
+          severity="info"
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              onClick={() => setShowModal(true)}
+            >
+              Add
+            </Button>
+          }
+        >
+          No station created yet!
+        </Alert>
       )}
       <Fab
         color="primary"
