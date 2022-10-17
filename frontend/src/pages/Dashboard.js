@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 
 import Stationboard from "../components/Station/Board";
 import StationAdd from "../components/Station/Add";
-import { getDepartures } from "../services/station";
+import { getStations } from "../services/station";
 
 const PagesDashboard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -28,7 +28,7 @@ const PagesDashboard = () => {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const data = await getDepartures();
+      const data = await getStations();
       setStations(data);
       setError(null);
     } catch (err) {
@@ -75,8 +75,8 @@ const PagesDashboard = () => {
         Dashboard
       </Typography>
       {stations.length ? (
-        stations.map((board, i) => (
-          <Stationboard key={i} station={board} afterDelete={handleDelete} />
+        stations.map((station, i) => (
+          <Stationboard key={i} station={station} afterDelete={handleDelete} />
         ))
       ) : (
         <Alert severity="info">This is an info alert — check it out!</Alert>

@@ -48,7 +48,7 @@ const searchStations = (name) => {
     });
 };
 
-const getJourney = (id) => {
+const getJourneyDetails = (id) => {
   const url = `${RMV_URL}/journeyDetails?`;
   logger.debug(`API Call ${url}`);
 
@@ -72,5 +72,5 @@ const getJourney = (id) => {
 module.exports = {
   getDepartureBoard,
   searchStations,
-  getJourney,
+  getJourneyDetails,
 };
