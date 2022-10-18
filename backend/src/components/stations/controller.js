@@ -21,9 +21,9 @@ const StationsController = {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
 
-      const stations = await Station.findByPk(+id);
+      const station = await Station.findByPk(+id);
 
-      res.json(stations);
+      res.json(station);
     } catch (err) {
       logger.error(err.stack || err);
       res.sendStatus(500);

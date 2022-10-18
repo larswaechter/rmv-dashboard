@@ -1,53 +1,45 @@
 import { useCallback, useEffect, useState } from "react";
-import Snackbar from "@mui/material/Snackbar";
-import CircularProgress from "@mui/material/CircularProgress";
+
 import Typography from "@mui/material/Typography";
+import CircularProgress from "@mui/material/CircularProgress";
 import Modal from "@mui/material/Modal";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Unstable_Grid2";
 
-import Stationboard from "../components/Station/Board";
-import StationAdd from "../components/Station/Add";
+import DelayAlarmAdd from "../components/DelayAlarm/Add";
+import { getAlarms } from "../services/delayAlarm";
+import DelayAlarmCard from "../components/DelayAlarm/Card";
 
-import { getStations } from "../services/station";
-
-const PagesDashboard = () => {
+const PagesDelayAlarm = () => {
   const [showModal, setShowModal] = useState(false);
-  const [showSnack, setShowSnack] = useState(false);
 
-  const [stations, setStations] = useState([]);
+  const [alarms, setAlarms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const data = await getStations();
-      setStations(data);
+      const data = await getAlarms();
+      setAlarms(data);
       setError(null);
     } catch (err) {
       console.error(err);
       setError(err);
-      setStations([]);
+      setAlarms([]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleCloseModal = (newStation = null) => {
-    if (newStation) setStations([...stations, newStation]);
+  const handleCloseModal = (newAlarm = null) => {
+    if (newAlarm) setAlarms([...alarms, newAlarm]);
     setShowModal(false);
   };
-
-  const handleDelete = useCallback(
-    (id) => {
-      setStations(stations.filter((dept) => dept.id !== id));
-      setShowSnack(true);
-    },
-    [stations]
-  );
 
   useEffect(() => {
     fetchData();
@@ -75,30 +67,17 @@ const PagesDashboard = () => {
     );
 
   return (
-    <div className="PagesDashboard">
+    <div className="PagesDelayAlarm">
       <Typography variant="h5" component="h1" marginBottom={"16px"}>
-        Dashboard
+        Delay Alarm
       </Typography>
-      {stations.length ? (
-        stations.map((station, i) => (
-          <Stationboard key={i} station={station} afterDelete={handleDelete} />
-        ))
-      ) : (
-        <Alert
-          severity="info"
-          action={
-            <Button
-              color="inherit"
-              size="small"
-              onClick={() => setShowModal(true)}
-            >
-              Add
-            </Button>
-          }
-        >
-          No station created yet!
-        </Alert>
-      )}
+      <Grid container spacing={2}>
+        {alarms.map((alarm, i) => (
+          <Grid key={i} xs={4}>
+            <DelayAlarmCard alarm={alarm} />
+          </Grid>
+        ))}
+      </Grid>
       <Fab
         color="primary"
         aria-label="add"
@@ -114,17 +93,11 @@ const PagesDashboard = () => {
         aria-describedby="modal-modal-description"
       >
         <>
-          <StationAdd handleClose={handleCloseModal} />
+          <DelayAlarmAdd handleClose={handleCloseModal} />
         </>
       </Modal>
-      <Snackbar
-        open={showSnack}
-        onClose={() => setShowSnack(false)}
-        autoHideDuration={3000}
-        message="Station deleted"
-      />
     </div>
   );
 };
 
-export default PagesDashboard;
+export default PagesDelayAlarm;

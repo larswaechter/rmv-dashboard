@@ -15,6 +15,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 import { orange } from "@mui/material/colors";
 
@@ -114,6 +116,23 @@ const StationBoardTableRow = ({ row }) => {
                 </ListItem>
               ))}
           </List>
+          <Alert
+            severity="info"
+            action={
+              <Button
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  navigator.clipboard.writeText(journeyRef);
+                }}
+              >
+                Copy
+              </Button>
+            }
+          >
+            <AlertTitle>JourneyRef</AlertTitle>
+            {journeyRef}
+          </Alert>
           <Button
             onClick={() => setModalOpen(false)}
             style={{ marginLeft: "auto", display: "block" }}

@@ -30,6 +30,12 @@ Pull the Docker image from [DockerHub](https://hub.docker.com/r/larswaechter/rmv
 docker pull larswaechter/rmv-dashboard
 ```
 
+or build it on your own:
+
+```bash
+docker build . -t larswaechter/rmv-dashboard
+```
+
 And run it:
 
 ```bash
@@ -38,7 +44,7 @@ docker run \
   -v /path/to/host/data:/app/data \
   -e RMV_KEY="YOUR_KEY" \
   -d \
-  rmv-dashboard
+  larswaechter/rmv-dashboard
 ```
 
 ### Docker Compose
@@ -54,6 +60,21 @@ services:
     ports:
       - 8080:8080
     restart: unless-stopped
+```
+
+### Debugging
+
+If there occur any errors on the backend you can check the log files:
+
+```bash
+# Connect to container
+docker exec -it <ContainerID> bash
+
+# Open logs dir
+cd backend/logs
+
+# View logs
+cat errors.log
 ```
 
 ## Development
@@ -81,4 +102,5 @@ npm start
 
 ## Features
 
-...
+- Station Departure Board
+- Train connection details

@@ -10,7 +10,7 @@ if (!existsSync(logDir)) {
   mkdirSync(logDir);
 }
 const debugLog = join(logDir, "debug.log");
-const errorLog = join(logDir, "error.log");
+const errorsLog = join(logDir, "errors.log");
 const exceptionsLog = join(logDir, "exceptions.log");
 const rejectionsLog = join(logDir, "rejections.log");
 
@@ -50,7 +50,7 @@ if (isDevEnv) {
 } else {
   logger.add(
     new transports.File({
-      filename: errorLog,
+      filename: errorsLog,
       level: "error",
       format: format.json(),
     })

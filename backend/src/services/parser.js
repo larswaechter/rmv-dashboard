@@ -1,10 +1,13 @@
 const { getRealtimeValue } = require("./helper");
 
 const parseJourney = (journey) => {
-  const { Stops } = journey;
+  const { Stops, Directions, Product } = journey;
   return {
+    direction: Directions ? Directions.Direction[0].value : "",
+    product: Product ? Product[0].name : "",
     stops: Stops.Stop.map(
       ({
+        id,
         name,
         arrDate,
         rtArrDate,
@@ -17,6 +20,7 @@ const parseJourney = (journey) => {
         depTrack,
         rtDepTrack,
       }) => ({
+        id,
         name,
         arrDate: getRealtimeValue(arrDate, rtArrDate),
         arrTime: getRealtimeValue(arrTime, rtArrTime),
