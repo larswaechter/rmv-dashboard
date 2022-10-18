@@ -8,9 +8,13 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Alert from "@mui/material/Alert";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 
 import { searchJourney } from "../../services/journey";
-import { createAlarm } from "../../services/delayAlarm";
+import { createAlarm } from "../../services/alarm";
 
 const style = {
   position: "absolute",
@@ -24,62 +28,81 @@ const style = {
   p: 4,
 };
 
-const DelayAlarmAdd = ({ handleClose }) => {
+const AlarmAdd = ({ handleClose }) => {
   const [stop, setStop] = useState("");
   const [stops, setStops] = useState([]);
+  const [autoremove, setAutoremove] = useState(true);
   const [journeyRef, setJourneyRef] = useState("");
 
-  const handleSave = async () => {
+  const [error, setError] = useState(null);
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+
     try {
       if (!journeyRef || !stop) return;
-      const newAlarm = await createAlarm({ journeyRef, station_id: stop });
+      const newAlarm = await createAlarm({
+        journeyRef,
+        station_id: stop,
+        autoremove,
+      });
       handleClose(newAlarm);
     } catch (err) {
       console.error(err);
     }
   };
 
+  const handleInputChange = (e) => {
+    setJourneyRef(e.target.value);
+    setStop("");
+    setStops([]);
+  };
+
   const search = async () => {
     if (!journeyRef) return;
 
-    const data = await searchJourney(journeyRef);
-
-    if (data.stops) {
-      setStops(
-        data.stops.map(({ id, name }) => ({
-          id,
-          name,
-        }))
-      );
+    try {
+      const data = await searchJourney(journeyRef);
+      if (data.stops)
+        setStops(
+          data.stops.map(({ id, name }) => ({
+            id,
+            name,
+          }))
+        );
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      setError(err);
     }
-
-    console.log(data);
   };
 
   return (
-    <Box sx={style} component="form">
+    <Box sx={style} component="form" onSubmit={handleSave}>
       <Typography
         id="modal-modal-title"
         variant="h6"
         component="h2"
         marginBottom={"16px"}
       >
-        Add delay ticker
+        Add alarm
       </Typography>
       <Stack spacing={4}>
         <TextField
+          required
           id="outlined-basic"
           label="JourneyRef"
           variant="outlined"
           value={journeyRef}
           onBlur={search}
-          onChange={(e) => setJourneyRef(e.target.value)}
+          onChange={handleInputChange}
         />
 
         {stops.length > 0 && (
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Stops</InputLabel>
             <Select
+              required
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={stop}
@@ -97,6 +120,20 @@ const DelayAlarmAdd = ({ handleClose }) => {
           </FormControl>
         )}
 
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={autoremove}
+                onChange={(e) => setAutoremove(e.target.checked)}
+              />
+            }
+            label="Autoremove"
+          />
+        </FormGroup>
+
+        {error && <Alert severity="error">{error}</Alert>}
+
         <div style={{ textAlign: "right" }}>
           <Button
             style={{ marginRight: "4px" }}
@@ -104,7 +141,7 @@ const DelayAlarmAdd = ({ handleClose }) => {
           >
             Close
           </Button>
-          <Button variant="contained" onClick={handleSave}>
+          <Button variant="contained" type="submit">
             Save
           </Button>
         </div>
@@ -113,4 +150,4 @@ const DelayAlarmAdd = ({ handleClose }) => {
   );
 };
 
-export default DelayAlarmAdd;
+export default AlarmAdd;

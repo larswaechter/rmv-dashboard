@@ -118,6 +118,7 @@ const StationBoardTableRow = ({ row }) => {
           </List>
           <Alert
             severity="info"
+            style={{ whiteSpace: "nowrap" }}
             action={
               <Button
                 color="inherit"

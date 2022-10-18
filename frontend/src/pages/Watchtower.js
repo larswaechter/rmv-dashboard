@@ -7,14 +7,14 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 
-import DelayAlarmAdd from "../components/DelayAlarm/Add";
-import { getAlarms } from "../services/delayAlarm";
-import DelayAlarmCard from "../components/DelayAlarm/Card";
+import AlarmAdd from "../components/Alarm/Add";
+import AlarmCard from "../components/Alarm/Card";
 
-const PagesDelayAlarm = () => {
+import { getAlarms } from "../services/alarm";
+
+const PagesWatchtower = () => {
   const [showModal, setShowModal] = useState(false);
 
   const [alarms, setAlarms] = useState([]);
@@ -35,6 +35,13 @@ const PagesDelayAlarm = () => {
       setIsLoading(false);
     }
   };
+
+  const handleDelete = useCallback(
+    (id) => {
+      setAlarms(alarms.filter((dept) => dept.id !== id));
+    },
+    [alarms]
+  );
 
   const handleCloseModal = (newAlarm = null) => {
     if (newAlarm) setAlarms([...alarms, newAlarm]);
@@ -67,14 +74,14 @@ const PagesDelayAlarm = () => {
     );
 
   return (
-    <div className="PagesDelayAlarm">
+    <div className="PagesWatchtower">
       <Typography variant="h5" component="h1" marginBottom={"16px"}>
-        Delay Alarm
+        Watchtower
       </Typography>
       <Grid container spacing={2}>
         {alarms.map((alarm, i) => (
           <Grid key={i} xs={4}>
-            <DelayAlarmCard alarm={alarm} />
+            <AlarmCard alarm={alarm} afterDelete={handleDelete} />
           </Grid>
         ))}
       </Grid>
@@ -93,11 +100,11 @@ const PagesDelayAlarm = () => {
         aria-describedby="modal-modal-description"
       >
         <>
-          <DelayAlarmAdd handleClose={handleCloseModal} />
+          <AlarmAdd handleClose={handleCloseModal} />
         </>
       </Modal>
     </div>
   );
 };
 
-export default PagesDelayAlarm;
+export default PagesWatchtower;

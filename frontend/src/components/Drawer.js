@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import CellTowerIcon from "@mui/icons-material/CellTower";
 
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -63,11 +63,11 @@ export const Drawer = ({ open, handleDrawerClose }) => {
           </ListItemButton>
         </ListItem>
         <ListItem key="delay-alarm" disablePadding>
-          <ListItemButton onClick={() => navigate("/delay-alarm")}>
+          <ListItemButton onClick={() => navigate("/watchtower")}>
             <ListItemIcon>
-              <AccessAlarmIcon />
+              <CellTowerIcon />
             </ListItemIcon>
-            <ListItemText primary="Delay Alarm" />
+            <ListItemText primary="Watchtower" />
           </ListItemButton>
         </ListItem>
       </List>

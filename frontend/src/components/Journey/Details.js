@@ -5,22 +5,13 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import StepContent from "@mui/material/StepContent";
 import CircularProgress from "@mui/material/CircularProgress";
-import TrainIcon from "@mui/icons-material/Train";
-import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
-import TagIcon from "@mui/icons-material/Tag";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
-import { orange } from "@mui/material/colors";
-import { List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 
 import JourneyStopTimes from "./StopTimes";
 
 import { searchJourney } from "../../services/journey";
-import {
-  delayToColor,
-  getDelayInSeconds,
-  parseDateTime,
-} from "../../utils/helper";
+import { parseDateTime } from "../../utils/helper";
 
 const calcActiveStep = (stops) => {
   let idx = stops.length;

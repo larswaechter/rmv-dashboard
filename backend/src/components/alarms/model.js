@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../config/db");
 
-const DelayAlarm = sequelize.define("DelayAlarm", {
+const Alarm = sequelize.define("Alarm", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -15,6 +15,10 @@ const DelayAlarm = sequelize.define("DelayAlarm", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  autoremove: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
 });
 
-module.exports = DelayAlarm;
+module.exports = Alarm;

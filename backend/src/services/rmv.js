@@ -19,7 +19,10 @@ const getDepartureBoard = (stop_id) => {
       headers,
     }
   )
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) return response.json();
+      throw new Error(response.statusText);
+    })
     .catch((err) => {
       logger.error(err.stack);
       return Promise.reject("API call /departureBoard failed");
@@ -41,7 +44,10 @@ const searchStations = (name) => {
       headers,
     }
   )
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) return response.json();
+      throw new Error(response.statusText);
+    })
     .catch((err) => {
       logger.error(err.stack);
       return Promise.reject("API call /location.name failed");
@@ -62,7 +68,10 @@ const getJourneyDetails = (id) => {
       headers,
     }
   )
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) return response.json();
+      throw new Error(response.statusText);
+    })
     .catch((err) => {
       logger.error(err.stack);
       return Promise.reject("API call /journeyDetails failed");

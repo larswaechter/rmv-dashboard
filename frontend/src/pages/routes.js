@@ -1,7 +1,7 @@
 import { useRoutes } from "react-router-dom";
 
 import PagesDashboard from "./Dashboard";
-import PagesDelayAlarm from "./DelayAlarm";
+import PagesWatchtower from "./Watchtower";
 
 const Router = () => {
   const routes = useRoutes([
@@ -10,8 +10,8 @@ const Router = () => {
       element: <PagesDashboard />,
     },
     {
-      path: "/delay-alarm",
-      element: <PagesDelayAlarm />,
+      path: "/watchtower",
+      element: <PagesWatchtower />,
     },
   ]);
 

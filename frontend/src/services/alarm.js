@@ -1,5 +1,5 @@
 export const getAlarms = () =>
-  fetch(`api/delay-alarms`, {
+  fetch(`api/alarms`, {
     headers: {
       Accept: "application/json",
     },
@@ -10,11 +10,11 @@ export const getAlarms = () =>
     })
     .catch((err) => {
       console.error(err);
-      return Promise.reject("Failed to fetch delay alarms!");
+      return Promise.reject("Failed to fetch alarms!");
     });
 
 export const getAlarmDetails = (id) =>
-  fetch(`api/delay-alarms/${id}/details`, {
+  fetch(`api/alarms/${id}/details`, {
     headers: {
       Accept: "application/json",
     },
@@ -25,11 +25,11 @@ export const getAlarmDetails = (id) =>
     })
     .catch((err) => {
       console.error(err);
-      return Promise.reject("Failed to fetch delay alarm details!");
+      return Promise.reject("Failed to fetch alarm details!");
     });
 
 export const createAlarm = (alarm) =>
-  fetch(`api/delay-alarms`, {
+  fetch(`api/alarms`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -42,5 +42,17 @@ export const createAlarm = (alarm) =>
     })
     .catch((err) => {
       console.error(err);
-      return Promise.reject("Failed to save delay alarm!");
+      return Promise.reject("Failed to save alarm!");
+    });
+
+export const deleteAlarm = (id) =>
+  fetch(`api/alarms/${id}`, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error(response.statusText);
+    })
+    .catch((err) => {
+      console.error(err);
+      return Promise.reject("Failed to delete alarm!");
     });

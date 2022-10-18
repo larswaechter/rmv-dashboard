@@ -7,6 +7,6 @@ const sequelize = new Sequelize({
   storage: join(__dirname, "../../../data/db.sqlite"),
 });
 
-sequelize.sync();
+sequelize.sync({ force: process.env.NODE_ENV === "production" });
 
 module.exports = sequelize;

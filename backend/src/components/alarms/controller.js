@@ -2,12 +2,12 @@ const logger = require("../../config/logger");
 const rmv = require("../../services/rmv");
 const { parseJourney } = require("../../services/parser");
 
-const DelayAlarm = require("./model");
+const Alarm = require("./model");
 
-const DelayAlarmsController = {
+const AlarmsController = {
   getAlarms: async (req, res) => {
     try {
-      const alarms = await DelayAlarm.findAll();
+      const alarms = await Alarm.findAll();
 
       res.json(alarms);
     } catch (err) {
@@ -21,7 +21,7 @@ const DelayAlarmsController = {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
 
-      const alarm = await DelayAlarm.findByPk(+id);
+      const alarm = await Alarm.findByPk(+id);
 
       res.json(alarm);
     } catch (err) {
@@ -35,7 +35,7 @@ const DelayAlarmsController = {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
 
-      const alarm = await DelayAlarm.findByPk(+id);
+      const alarm = await Alarm.findByPk(+id);
       if (!alarm) return res.sendStatus(404);
 
       const journey = await rmv.getJourneyDetails(alarm.journeyRef);
@@ -59,7 +59,7 @@ const DelayAlarmsController = {
       const alarm = req.body;
       if (!alarm) res.sendStatus(400);
 
-      const newAlarm = await DelayAlarm.create(alarm);
+      const newAlarm = await Alarm.create(alarm);
 
       res.status(201).json(newAlarm);
     } catch (err) {
@@ -73,10 +73,10 @@ const DelayAlarmsController = {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
 
-      const alarm = await DelayAlarm.findByPk(+id);
+      const alarm = await Alarm.findByPk(+id);
       if (!alarm) return res.sendStatus(404);
 
-      await DelayAlarm.destroy({
+      await Alarm.destroy({
         where: {
           id,
         },
@@ -90,4 +90,4 @@ const DelayAlarmsController = {
   },
 };
 
-module.exports = DelayAlarmsController;
+module.exports = AlarmsController;

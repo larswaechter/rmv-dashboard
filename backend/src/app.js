@@ -5,7 +5,7 @@ const { json } = require("express");
 
 const journeysRouter = require("./components/journeys/routes");
 const stationsRouter = require("./components/stations/routes");
-const delayAlarmsRouter = require("./components/delay-alarms/routes");
+const alarmsRouter = require("./components/alarms/routes");
 
 const app = express();
 
@@ -22,6 +22,6 @@ app.get(/^\/(?!api)/, (req, res) => {
 // Routes
 app.use("/api/journeys/", journeysRouter);
 app.use("/api/stations/", stationsRouter);
-app.use("/api/delay-alarms/", delayAlarmsRouter);
+app.use("/api/alarms/", alarmsRouter);
 
 module.exports = app;

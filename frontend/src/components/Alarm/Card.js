@@ -10,10 +10,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 import ReplayIcon from "@mui/icons-material/Replay";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { getAlarmDetails } from "../../services/delayAlarm";
+import { deleteAlarm, getAlarmDetails } from "../../services/alarm";
 import JourneyStopTimes from "../Journey/StopTimes";
 
-const DelayAlarmCard = ({ alarm }) => {
+const AlarmCard = ({ alarm, afterDelete }) => {
   const [details, setDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,20 +35,31 @@ const DelayAlarmCard = ({ alarm }) => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteAlarm(alarm.id);
+      afterDelete(alarm.id);
+    } catch (err) {
+      console.error(err);
+      setError(err);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, [alarm]);
 
   if (isLoading)
     return (
-      <Card sx={{ minHeight: 415 }}>
-        <CardContent
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+      <Card
+        sx={{
+          minHeight: 415,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CardContent>
           <CircularProgress />
         </CardContent>
       </Card>
@@ -89,7 +100,7 @@ const DelayAlarmCard = ({ alarm }) => {
           <IconButton size="small" onClick={() => fetchData()}>
             <ReplayIcon />
           </IconButton>
-          <IconButton size="small" color="error">
+          <IconButton size="small" color="error" onClick={handleDelete}>
             <DeleteIcon />
           </IconButton>
         </CardActions>
@@ -98,4 +109,4 @@ const DelayAlarmCard = ({ alarm }) => {
   );
 };
 
-export default DelayAlarmCard;
+export default AlarmCard;
