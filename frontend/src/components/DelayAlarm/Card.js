@@ -2,17 +2,23 @@ import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
+import ReplayIcon from "@mui/icons-material/Replay";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { getAlarmDetails } from "../../services/delayAlarm";
+import JourneyStopTimes from "../Journey/StopTimes";
 
 const DelayAlarmCard = ({ alarm }) => {
   const [details, setDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  console.log(details);
 
   const fetchData = async () => {
     try {
@@ -35,16 +41,22 @@ const DelayAlarmCard = ({ alarm }) => {
 
   if (isLoading)
     return (
-      <Card>
-        <div style={{ textAlign: "center", padding: "2vh 0px" }}>
-          <CircularProgress size={30} />
-        </div>
+      <Card sx={{ minHeight: 415 }}>
+        <CardContent
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </CardContent>
       </Card>
     );
 
   if (error)
     return (
-      <Card>
+      <Card sx={{ minHeight: 415 }}>
         <Alert
           severity="error"
           action={
@@ -59,7 +71,7 @@ const DelayAlarmCard = ({ alarm }) => {
     );
 
   return (
-    <Card>
+    <Card sx={{ minHeight: 415 }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {details.product}
@@ -67,17 +79,21 @@ const DelayAlarmCard = ({ alarm }) => {
         <Typography variant="h5" component="div">
           {details.stop.name}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary"></Typography>
-        <Typography variant="body2">{details.direction}</Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          Direction: {details.direction}
+        </Typography>
+        <JourneyStopTimes stop={details.stop} />
       </CardContent>
-      <CardActions>
-        <Button size="small" onClick={() => fetchData()}>
-          Refresh
-        </Button>
-        <Button size="small" color="error">
-          Delete
-        </Button>
-      </CardActions>
+      <div style={{ display: "flex", justifyContent: "end" }}>
+        <CardActions>
+          <IconButton size="small" onClick={() => fetchData()}>
+            <ReplayIcon />
+          </IconButton>
+          <IconButton size="small" color="error">
+            <DeleteIcon />
+          </IconButton>
+        </CardActions>
+      </div>
     </Card>
   );
 };

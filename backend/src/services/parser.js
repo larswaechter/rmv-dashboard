@@ -6,20 +6,24 @@ const parseJourney = (journey) => {
     direction: Directions ? Directions.Direction[0].value : "",
     product: Product ? Product[0].name : "",
     stops: Stops.Stop.map(
-      ({
-        id,
-        name,
-        arrDate,
-        rtArrDate,
-        depDate,
-        rtDepDate,
-        arrTime,
-        rtArrTime,
-        depTime,
-        rtDepTime,
-        depTrack,
-        rtDepTrack,
-      }) => ({
+      (
+        {
+          id,
+          name,
+          arrDate,
+          rtArrDate,
+          depDate,
+          rtDepDate,
+          arrTime,
+          rtArrTime,
+          depTime,
+          rtDepTime,
+          depTrack,
+          rtDepTrack,
+          routeIdx,
+        },
+        i
+      ) => ({
         id,
         name,
         arrDate: getRealtimeValue(arrDate, rtArrDate),
@@ -27,6 +31,9 @@ const parseJourney = (journey) => {
         depDate: getRealtimeValue(depDate, rtDepDate),
         depTime: getRealtimeValue(depTime, rtDepTime),
         depTrack: getRealtimeValue(depTrack, rtDepTrack),
+        routeIdx,
+        isFirst: i === 0,
+        isLast: i === Stops.Stop.length - 1,
       })
     ),
   };
