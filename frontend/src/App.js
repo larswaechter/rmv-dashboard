@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -7,6 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Drawer, DrawerHeader, drawerWidth } from "./components/Drawer";
 import Navbar from "./components/Navbar";
 import Router from "./pages/routes";
+import useWebsocket from "./utils/useWebsocket";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -27,16 +28,17 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   })
 );
 
-export default function PersistentDrawerLeft() {
-  const [open, setOpen] = React.useState(false);
+const App = () => {
+  const [open, setOpen] = useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleMessage = (msg) => {
+    console.log(msg);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const { ws } = useWebsocket(handleMessage);
+
+  const handleDrawerOpen = () => setOpen(true);
+  const handleDrawerClose = () => setOpen(false);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -49,4 +51,6 @@ export default function PersistentDrawerLeft() {
       </Main>
     </Box>
   );
-}
+};
+
+export default App;
