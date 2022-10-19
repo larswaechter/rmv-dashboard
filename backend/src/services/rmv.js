@@ -7,7 +7,7 @@ const headers = {
 
 const getDepartureBoard = (stop_id) => {
   const url = `${RMV_URL}/departureBoard?`;
-  logger.debug(`API Call ${url}`);
+  logger.debug(`[RMV] GET ${url}`);
 
   return fetch(
     url +
@@ -25,13 +25,13 @@ const getDepartureBoard = (stop_id) => {
     })
     .catch((err) => {
       logger.error(err.stack);
-      return Promise.reject("API call /departureBoard failed");
+      return Promise.reject("[RMV] GET /departureBoard failed");
     });
 };
 
 const searchStations = (name) => {
   const url = `${RMV_URL}/location.name?`;
-  logger.debug(`API Call ${url}`);
+  logger.debug(`[RMV] GET ${url}`);
 
   return fetch(
     url +
@@ -50,13 +50,13 @@ const searchStations = (name) => {
     })
     .catch((err) => {
       logger.error(err.stack);
-      return Promise.reject("API call /location.name failed");
+      return Promise.reject("[RMV] GET /location.name failed");
     });
 };
 
 const getJourneyDetails = (id) => {
   const url = `${RMV_URL}/journeyDetails?`;
-  logger.debug(`API Call ${url}`);
+  logger.debug(`[RMV] GET ${url}`);
 
   return fetch(
     url +
@@ -74,7 +74,7 @@ const getJourneyDetails = (id) => {
     })
     .catch((err) => {
       logger.error(err.stack);
-      return Promise.reject("API call /journeyDetails failed");
+      return Promise.reject("[RMV] GET /journeyDetails failed");
     });
 };
 

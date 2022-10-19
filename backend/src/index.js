@@ -1,12 +1,13 @@
 require("dotenv").config();
 
-const app = require("./app");
+const { app } = require("./app");
 const db = require("./config/db");
 const logger = require("./config/logger");
 
 db.authenticate()
   .then(() => {
     app.listen(3000, () => {
+      require("./services/cronjob");
       logger.info("rmv-backend is listening on port 3000");
     });
   })
