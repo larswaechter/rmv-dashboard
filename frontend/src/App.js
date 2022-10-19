@@ -1,4 +1,4 @@
-import { useEffect, useState, forwardRef } from "react";
+import { useEffect, useState, forwardRef, useCallback } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -37,6 +37,10 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   })
 );
 
+const onFocus = () => {
+  document.title = "RMV Dashboard";
+};
+
 const App = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [snackOpen, setSnackOpen] = useState(false);
@@ -45,13 +49,19 @@ const App = () => {
   const { eventEmitter } = useWebsocketProvider();
 
   useEffect(() => {
+    window.addEventListener("focus", onFocus);
+
     eventEmitter.subscribe("message/cronjob-timetable", "App", (msg) => {
       console.log(msg);
       setSnackContent({ title: msg.title, data: msg.changes });
       setSnackOpen(true);
+      if (!document.hasFocus()) document.title = "• RMV Dashboard";
     });
 
-    return () => eventEmitter.unsubscribe("message", "App");
+    return () => {
+      eventEmitter.unsubscribe("message", "App");
+      window.removeEventListener("focus", onFocus);
+    };
   }, []);
 
   return (

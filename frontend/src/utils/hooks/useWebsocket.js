@@ -13,7 +13,7 @@ const useWebsocket = (onMessage) => {
   const connect = () => {
     if (ws.current?.CONNECTING || ws.current?.OPEN) return;
 
-    ws.current = new WebSocket(`ws://localhost:3001/rofl`);
+    ws.current = new WebSocket(`ws://localhost:3001`);
 
     ws.current.onopen = () => {
       console.log("Connected to WS");
