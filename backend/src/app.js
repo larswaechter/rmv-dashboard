@@ -2,16 +2,17 @@ const express = require("express");
 const helmet = require("helmet");
 const { join } = require("path");
 const { json } = require("express");
-
 const { WebSocketServer } = require("ws");
-const wss = new WebSocketServer({ port: 5001, path: "/websocket" });
 
-const app = express();
-
+const logger = require("./config/logger");
 const journeysRouter = require("./components/journeys/routes");
 const stationsRouter = require("./components/stations/routes");
 const alarmsRouter = require("./components/alarms/routes");
-const logger = require("./config/logger");
+
+const app = express();
+const server = require("http").createServer(app);
+
+const wss = new WebSocketServer({ path: "/websocket", server });
 
 // Middleware
 app.use(helmet());
@@ -40,4 +41,4 @@ wss.on("connection", function connection(ws) {
   });
 });
 
-module.exports = { app, wss };
+module.exports = { server, wss };
