@@ -13,9 +13,10 @@ const useWebsocket = (onMessage) => {
   const connect = () => {
     if (ws.current?.CONNECTING || ws.current?.OPEN) return;
 
-    ws.current = new WebSocket(`ws://localhost:3001`);
+    ws.current = new WebSocket(`ws://${window.location.host}/websocket`);
 
     ws.current.onopen = () => {
+      console.log(ws.current);
       console.log("Connected to WS");
       setIsConnected(true);
     };
@@ -31,6 +32,7 @@ const useWebsocket = (onMessage) => {
     };
 
     ws.current.onmessage = ({ data }) => {
+      console.log(data);
       const { event, body } = JSON.parse(data);
       onMessage(event, body);
     };
@@ -38,7 +40,7 @@ const useWebsocket = (onMessage) => {
 
   useEffect(() => {
     connect();
-  }, [ws.current, isConnected]);
+  }, [ws, isConnected]);
 
   return {
     ws,

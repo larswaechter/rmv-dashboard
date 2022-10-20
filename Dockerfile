@@ -24,6 +24,6 @@ RUN cd backend \
 RUN rm -rf frontend/
 
 # Run
-EXPOSE 8080
+EXPOSE 5000
 ENV NODE_ENV=production
 CMD ["node", "backend/src/index.js"]

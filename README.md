@@ -40,7 +40,7 @@ And run it:
 
 ```bash
 docker run \
-  -p 8080:8080 \
+  -p 5000:5000 \
   -v /path/to/host/data:/app/data \
   -e RMV_KEY="YOUR_KEY" \
   -d \

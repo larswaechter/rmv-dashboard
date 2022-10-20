@@ -4,7 +4,7 @@ const { join } = require("path");
 const { json } = require("express");
 
 const { WebSocketServer } = require("ws");
-const wss = new WebSocketServer({ port: 3001 });
+const wss = new WebSocketServer({ port: 5001, path: "/websocket" });
 
 const app = express();
 
