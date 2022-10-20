@@ -39,8 +39,8 @@ const StationBoardTableRow = ({ row }) => {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const { category, direction, name, date, time, track, journeyRef, notes } =
-    row;
+  const { category, direction, name, departure, journeyRef, notes } = row;
+  const { date, time, track } = departure;
 
   return (
     <>
@@ -60,23 +60,23 @@ const StationBoardTableRow = ({ row }) => {
         <TableCell>{direction}</TableCell>
         <TableCell>{name}</TableCell>
         <TableCell
-          title={date.changed ? date.original : ""}
+          title={date.original ? date.original : ""}
           align="right"
-          style={{ color: date.changed ? orange[900] : "" }}
+          style={{ color: date.original ? orange[900] : "" }}
         >
           {date.value}
         </TableCell>
         <TableCell
-          title={time.changed ? time.original : ""}
+          title={time.original ? time.original : ""}
           align="right"
-          style={{ color: time.changed ? orange[900] : "" }}
+          style={{ color: time.original ? orange[900] : "" }}
         >
           {time.value}
         </TableCell>
         <TableCell
-          title={track.changed ? track.original : ""}
+          title={track.original ? track.original : ""}
           align="right"
-          style={{ color: track.changed ? orange[900] : "" }}
+          style={{ color: track.original ? orange[900] : "" }}
         >
           {track.value}
         </TableCell>

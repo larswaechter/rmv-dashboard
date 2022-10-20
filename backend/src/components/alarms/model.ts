@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../config/db");
+import { DataTypes } from "sequelize";
+import sequelize from "../../config/db";
 
 const Alarm = sequelize.define("Alarm", {
   id: {
@@ -21,4 +21,4 @@ const Alarm = sequelize.define("Alarm", {
   },
 });
 
-module.exports = Alarm;
+export default Alarm;

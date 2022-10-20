@@ -1,5 +1,5 @@
-const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = require("../../config/db");
+import { Sequelize, DataTypes } from "sequelize";
+import sequelize from "../../config/db";
 
 const Station = sequelize.define("Station", {
   id: {
@@ -17,4 +17,4 @@ const Station = sequelize.define("Station", {
   },
 });
 
-module.exports = Station;
+export default Station;

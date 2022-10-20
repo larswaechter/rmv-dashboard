@@ -4,14 +4,11 @@ import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
 import TagIcon from "@mui/icons-material/Tag";
 import { orange } from "@mui/material/colors";
 
-import { delayToColor, getDelayInSeconds } from "../../utils/helper";
+import { delayToColor } from "../../utils/helper";
 
 const JourneyStopTimes = ({ stop }) => {
-  const { arrDate, depDate, arrTime, depTime, depTrack, isFirst, isLast } =
-    stop;
-
-  const arrDiff = getDelayInSeconds(arrDate, arrTime);
-  const depDiff = getDelayInSeconds(depDate, depTime);
+  const { arrival, departure, isFirst, isLast } = stop;
+  const { track } = departure;
 
   return (
     <List dense disablePadding>
@@ -23,23 +20,23 @@ const JourneyStopTimes = ({ stop }) => {
           <ListItemText
             primary="Arrival"
             title={
-              arrDiff > 0
-                ? `${arrDate.original || arrDate.value} / ${
-                    arrTime.original || arrTime.value
+              arrival.delay > 0
+                ? `${arrival.date.original || arrival.date.value} / ${
+                    arrival.time.original || arrival.time.value
                   }`
                 : ""
             }
             secondary={
               <>
-                <span>{`${arrDate.value} / ${arrTime.value}`}</span>
-                {arrDiff !== 0 && (
+                <span>{`${arrival.date.value} / ${arrival.time.value}`}</span>
+                {arrival.delay !== 0 && (
                   <span
                     style={{
-                      color: delayToColor(arrDiff),
+                      color: delayToColor(arrival.delay),
                       marginLeft: 8,
                     }}
                   >
-                    {`${arrDiff > 0 ? "+" : "-"}${arrDiff} Min`}
+                    {`${arrival.delay > 0 ? "+" : "-"}${arrival.delay} Min`}
                   </span>
                 )}
               </>
@@ -55,23 +52,23 @@ const JourneyStopTimes = ({ stop }) => {
           <ListItemText
             primary="Departure"
             title={
-              depDiff > 0
-                ? `${depDate.original || depDate.value} / ${
-                    depTime.original || depTime.value
+              departure.delay > 0
+                ? `${departure.date.original || departure.date.value} / ${
+                    departure.time.original || departure.time.value
                   }`
                 : ""
             }
             secondary={
               <>
-                <span>{`${depDate.value} / ${depTime.value}`}</span>
-                {depDiff !== 0 && (
+                <span>{`${departure.date.value} / ${departure.time.value}`}</span>
+                {departure.delay !== 0 && (
                   <span
                     style={{
-                      color: delayToColor(depDiff),
+                      color: delayToColor(departure.delay),
                       marginLeft: 8,
                     }}
                   >
-                    {`${depDiff > 0 ? "+" : "-"}${depDiff} Min`}
+                    {`${departure.delay > 0 ? "+" : "-"}${departure.delay} Min`}
                   </span>
                 )}
               </>
@@ -79,18 +76,18 @@ const JourneyStopTimes = ({ stop }) => {
           ></ListItemText>
         </ListItem>
       )}
-      {depTrack.value && (
+      {track.value && (
         <ListItem>
           <ListItemAvatar>
             <TagIcon />
           </ListItemAvatar>
           <ListItemText
             primary="Track"
-            title={depTrack.original}
+            title={track.original}
             style={{
-              color: depTrack.changed ? orange[900] : "",
+              color: track.orignial ? orange[900] : "",
             }}
-            secondary={depTrack.value}
+            secondary={track.value}
           ></ListItemText>
         </ListItem>
       )}

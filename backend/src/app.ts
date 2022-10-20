@@ -1,18 +1,19 @@
-const express = require("express");
-const helmet = require("helmet");
-const { join } = require("path");
-const { json } = require("express");
-const { WebSocketServer } = require("ws");
+import express from "express";
+import helmet from "helmet";
+import { join } from "path";
+import { json } from "express";
+import { WebSocketServer } from "ws";
 
-const logger = require("./config/logger");
-const journeysRouter = require("./components/journeys/routes");
-const stationsRouter = require("./components/stations/routes");
-const alarmsRouter = require("./components/alarms/routes");
+import logger from "./config/logger";
+
+import journeysRouter from "./components/journeys/routes";
+import stationsRouter from "./components/stations/routes";
+import alarmsRouter from "./components/alarms/routes";
 
 const app = express();
-const server = require("http").createServer(app);
+export const server = require("http").createServer(app);
 
-const wsserver = new WebSocketServer({ path: "/websocket", server });
+export const wsserver = new WebSocketServer({ path: "/websocket", server });
 
 // Middleware
 app.use(helmet());
@@ -40,5 +41,3 @@ wsserver.on("connection", function connection(ws) {
     logger.debug("[WS] Client disconnected");
   });
 });
-
-module.exports = { server, wsserver };

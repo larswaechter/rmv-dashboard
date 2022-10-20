@@ -1,8 +1,8 @@
 require("dotenv").config();
 
-const { server } = require("./app");
-const db = require("./config/db");
-const logger = require("./config/logger");
+import { server } from "./app";
+import db from "./config/db";
+import logger from "./config/logger";
 
 db.authenticate()
   .then(() => {

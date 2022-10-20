@@ -1,18 +1,19 @@
-const cron = require("node-cron");
-const WebSocket = require("ws");
+import cron from "node-cron";
+import WebSocket from "ws";
 
-const { wsserver } = require("../app");
-const logger = require("../config/logger");
-const { WebSocketEvents } = require("../config/ws");
-const Alarm = require("../components/alarms/model");
+import { wsserver } from "../app";
 
-const { parseJourney } = require("./parser");
-const { getJourneyDetails } = require("./rmv");
+import logger from "../config/logger";
+import { WebSocketEvents } from "../config/ws";
+
+import Alarm from "../components/alarms/model";
+import { RMVApi } from "../components/rmv/api";
+import { Journey } from "../components/rmv/models/Journey";
 
 /**
  * Job for sending schedule changes via WS
  */
-cron.schedule("*/10 * * * * *", async () => {
+cron.schedule("*/15 * * * *", async () => {
   if (!wsserver.clients.size) {
     logger.info("[CRONJOB] Skipped because there are no connected clients");
     return;
@@ -27,8 +28,8 @@ cron.schedule("*/10 * * * * *", async () => {
     for (const alarm of alarms) {
       const { journeyRef, station_id, autoremove } = alarm.get();
 
-      const journey = await getJourneyDetails(journeyRef);
-      const { direction, product, stops } = parseJourney(journey);
+      const journey = await RMVApi.getJourneyDetails(journeyRef);
+      const { direction, product, stops } = Journey.ofResponse(journey);
 
       const stop = stops.find((stop) => stop.id === station_id);
 

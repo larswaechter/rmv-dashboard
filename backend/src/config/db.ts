@@ -1,5 +1,5 @@
-const { join } = require("path");
-const { Sequelize } = require("sequelize");
+import { join } from "path";
+import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize({
   logging: false, // process.env.NODE_ENV === "develop",
@@ -9,4 +9,4 @@ const sequelize = new Sequelize({
 
 sequelize.sync();
 
-module.exports = sequelize;
+export default sequelize;

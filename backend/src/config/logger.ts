@@ -1,6 +1,6 @@
-const { join } = require("path");
-const { existsSync, mkdirSync } = require("fs");
-const { createLogger, format, transports } = require("winston");
+import { join } from "path";
+import { existsSync, mkdirSync } from "fs";
+import { createLogger, format, transports } from "winston";
 
 const logDir = join(__dirname, "../../logs");
 const isDevEnv = process.env.NODE_ENV === "develop";
@@ -71,4 +71,4 @@ if (isDevEnv) {
   );
 }
 
-module.exports = logger;
+export default logger;

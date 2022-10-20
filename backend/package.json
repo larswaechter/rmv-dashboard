@@ -5,9 +5,9 @@
   "description": "A self-hosted web app for displaying train & bus information using the RMV Open Data API.",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js",
-    "watch": "nodemon --exec \"npm run start\" --watch src --ext js",
-    "seed": "node ./db/index.js",
+    "start": "node ./dist/index.js",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -37,6 +37,7 @@
     "ws": "^8.9.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "typescript": "^4.8.4"
   }
 }

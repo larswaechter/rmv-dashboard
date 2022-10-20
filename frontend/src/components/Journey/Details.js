@@ -24,8 +24,10 @@ const calcActiveStep = (stops) => {
 
   for (let i = 0; i < stops.length - 1; i++) {
     const stop = stops[i];
-    const { depDate, depTime } = stop;
-    const depParsed = parseDateTime(depDate.value, depTime.value);
+    const { departure } = stop;
+    const { date, time } = departure;
+
+    const depParsed = parseDateTime(date.value, time.value);
 
     // Next stop
     if (now < depParsed) {
@@ -94,14 +96,12 @@ const JourneyDetails = ({ journeyRef }) => {
 
     return (
       <Chip
-        title="Next stop"
+        title="Current stop"
         label="Live •"
         color="success"
         variant="outlined"
       />
     );
-
-    return null;
   };
 
   useEffect(() => {
@@ -148,11 +148,7 @@ const JourneyDetails = ({ journeyRef }) => {
                 >
                   <JourneyStopTimes stop={stop} />
                   <div>
-                    <IconButton
-                      disabled={i === 0}
-                      onClick={handleBack}
-                      sx={{ mr: 1 }}
-                    >
+                    <IconButton disabled={i === 0} onClick={handleBack}>
                       <KeyboardArrowUpIcon />
                     </IconButton>
                     <IconButton
@@ -164,10 +160,10 @@ const JourneyDetails = ({ journeyRef }) => {
                     </IconButton>
                     {getChip(i)}
                     <IconButton
+                      title="Go to current stop"
                       variant="contained"
                       onClick={() => setActiveStep(activeStepLive)}
                       sx={{ ml: 1 }}
-                      color="info"
                     >
                       {i !== activeStepLive && <GpsFixedIcon />}
                     </IconButton>

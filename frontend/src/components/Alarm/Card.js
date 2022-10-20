@@ -9,9 +9,11 @@ import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import ReplayIcon from "@mui/icons-material/Replay";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Chip from "@mui/material/Chip";
 
 import { deleteAlarm, getAlarmDetails } from "../../services/alarm";
 import JourneyStopTimes from "../Journey/StopTimes";
+import { hasStopDelay } from "../../utils/helper";
 
 const AlarmCard = ({ alarm, afterDelete }) => {
   const [details, setDetails] = useState(null);
@@ -45,6 +47,16 @@ const AlarmCard = ({ alarm, afterDelete }) => {
     }
   };
 
+  const getChip = () => {
+    if (hasStopDelay(details.stop))
+      return <Chip label="DELAY" color="error" variant="outlined" />;
+
+    if (details.stop.departure.track.original)
+      return <Chip label="TRACK CHANGE" color="warning" variant="outlined" />;
+
+    return <Chip label="ONTIME" color="success" variant="outlined" />;
+  };
+
   useEffect(() => {
     fetchData();
   }, [alarm]);
@@ -53,7 +65,7 @@ const AlarmCard = ({ alarm, afterDelete }) => {
     return (
       <Card
         sx={{
-          minHeight: 415,
+          minHeight: 390,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -67,7 +79,7 @@ const AlarmCard = ({ alarm, afterDelete }) => {
 
   if (error)
     return (
-      <Card sx={{ minHeight: 415 }}>
+      <Card sx={{ minHeight: 390 }}>
         <Alert
           severity="error"
           action={
@@ -82,29 +94,27 @@ const AlarmCard = ({ alarm, afterDelete }) => {
     );
 
   return (
-    <Card sx={{ minHeight: 415 }}>
+    <Card sx={{ minHeight: 390 }}>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {details.product}
-        </Typography>
         <Typography variant="h5" component="div">
           {details.stop.name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Direction: {details.direction}
+          {details.product} {details.direction}
         </Typography>
         <JourneyStopTimes stop={details.stop} />
       </CardContent>
-      <div style={{ display: "flex", justifyContent: "end" }}>
-        <CardActions>
+      <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
+        {getChip()}
+        <div>
           <IconButton size="small" onClick={() => fetchData()}>
             <ReplayIcon />
           </IconButton>
           <IconButton size="small" color="error" onClick={handleDelete}>
             <DeleteIcon />
           </IconButton>
-        </CardActions>
-      </div>
+        </div>
+      </CardActions>
     </Card>
   );
 };

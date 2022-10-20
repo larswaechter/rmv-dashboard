@@ -18,10 +18,12 @@ RUN cd frontend \
 
 # Backend
 RUN cd backend \
-    && npm i
+    && npm i \
+    && npm run build
 
 # Cleanup
 RUN rm -rf frontend/
+RUN rm -rf backend/src
 
 # Run
 EXPOSE 5000
