@@ -9,7 +9,7 @@ export class JourneysController {
       if (!id) return res.sendStatus(400);
 
       const journey = await RMVApi.getJourneyDetails(id);
-      const parsed = Journey.ofResponse(journey);
+      const parsed = Journey.ofJourneyDetails(journey);
 
       res.json(parsed);
     } catch (err) {

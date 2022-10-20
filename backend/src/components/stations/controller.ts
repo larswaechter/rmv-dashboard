@@ -2,6 +2,7 @@ import logger from "../../config/logger";
 
 import { RMVApi } from "../rmv/api";
 import { Departure } from "../rmv/models/Departure";
+import { Station as RMVStation } from "../rmv/models/Station";
 
 import Station from "./model";
 
@@ -39,14 +40,11 @@ export class StationsController {
       const station = await Station.findByPk(+id);
       if (!station) return res.sendStatus(404);
 
-      const departures = await RMVApi.getDepartureBoard(
+      const board = await RMVApi.getDepartureBoard(
         station.getDataValue("station_id")
       );
 
-      const prepared =
-        "Departure" in departures
-          ? departures.Departure.map((dep) => Departure.ofResponse(dep))
-          : [];
+      const prepared = Departure.ofDepartureBoard(board);
 
       res.json(prepared);
     } catch (err) {
@@ -61,11 +59,8 @@ export class StationsController {
       if (!name) return res.sendStatus(400);
 
       const stations = await RMVApi.searchStations(name);
-      const prepared = stations.stopLocationOrCoordLocation.map(
-        ({ StopLocation }) => ({
-          station_id: StopLocation.id,
-          name: StopLocation.name,
-        })
+      const prepared = stations.stopLocationOrCoordLocation.map((location) =>
+        RMVStation.ofResponse(location.StopLocation)
       );
 
       res.json(prepared);

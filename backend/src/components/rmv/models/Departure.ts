@@ -1,4 +1,22 @@
-import { RealtimeValue, RTDate, Timeservice } from "../../../services/time";
+import { RTDate, Timeservice } from "../../../services/time";
+import { IJourneyDetailRef, IProduct } from "./Misc";
+
+interface IDeparture {
+  name: string;
+  direction: string;
+  date: string;
+  rtDate: string;
+  time: string;
+  rtTime: string;
+  track: string;
+  rtTrack: string;
+  JourneyDetailRef: IJourneyDetailRef;
+  Product: IProduct[];
+}
+
+export interface IDepartureBoard {
+  Departure?: IDeparture[];
+}
 
 export class Departure {
   name: string;
@@ -8,7 +26,13 @@ export class Departure {
   category: string;
   notes: string[];
 
-  public static ofResponse(res: any): Departure {
+  public static ofDepartureBoard(departureBoard: IDepartureBoard): Departure[] {
+    if (departureBoard.Departure)
+      return departureBoard.Departure.map((dep) => Departure.ofResponse(dep));
+    return [];
+  }
+
+  public static ofResponse(res: IDeparture): Departure {
     const departure = new Departure();
     departure.name = res.name;
     departure.direction = res.direction;

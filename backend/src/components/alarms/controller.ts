@@ -42,7 +42,7 @@ export class AlarmsController {
       const journey = await RMVApi.getJourneyDetails(
         alarm.getDataValue("journeyRef")
       );
-      const parsed = Journey.ofResponse(journey);
+      const parsed = Journey.ofJourneyDetails(journey);
 
       parsed["stop"] = parsed.stops.find(
         (stop) => stop.id === alarm.getDataValue("station_id")

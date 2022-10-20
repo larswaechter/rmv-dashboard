@@ -1,4 +1,22 @@
-import { RealtimeValue, RTDate, Timeservice } from "../../../services/time";
+import { RTDate, Timeservice } from "../../../services/time";
+
+export interface IStop {
+  id: string;
+  name: string;
+  routeIdx: number;
+  arrDate: string;
+  rtArrDate: string;
+  arrTime: string;
+  rtArrTime: string;
+  arrTrack: string;
+  rtArrTrack: string;
+  depDate: string;
+  rtDepDate: string;
+  depTime: string;
+  rtDepTime: string;
+  depTrack: string;
+  rtDepTrack: string;
+}
 
 export class Stop {
   id: string;
@@ -9,18 +27,19 @@ export class Stop {
   isFirst: boolean;
   isLast: boolean;
 
-  public static ofResponse(res: any, numberOfStops: number): Stop {
+  public static ofResponse(res: IStop, numberOfStops: number): Stop {
     const stop = new Stop();
     stop.id = res.id;
     stop.name = res.name;
+    stop.index = res.routeIdx;
 
     stop.arrival = Timeservice.buildRTDate(
       res.arrDate,
       res.rtArrDate,
       res.arrTime,
       res.rtArrTime,
-      res.depTrack,
-      res.rtDepTrack
+      res.arrTrack,
+      res.rtArrTrack
     );
 
     stop.departure = Timeservice.buildRTDate(
@@ -28,11 +47,9 @@ export class Stop {
       res.rtDepDate,
       res.depTime,
       res.rtDepTime,
-      res.arrTrack,
-      res.rtArrTrack
+      res.depTrack,
+      res.rtDepTrack
     );
-
-    stop.index = res.routeIdx;
 
     stop.isFirst = stop.index === 0;
     stop.isLast = stop.index === numberOfStops - 1;

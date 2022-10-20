@@ -29,7 +29,7 @@ cron.schedule("*/15 * * * *", async () => {
       const { journeyRef, station_id, autoremove } = alarm.get();
 
       const journey = await RMVApi.getJourneyDetails(journeyRef);
-      const { direction, product, stops } = Journey.ofResponse(journey);
+      const { direction, product, stops } = Journey.ofJourneyDetails(journey);
 
       const stop = stops.find((stop) => stop.id === station_id);
 

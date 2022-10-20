@@ -1,4 +1,7 @@
 import logger from "../../config/logger";
+import { IDepartureBoard } from "./models/Departure";
+import { IJourneyDetails } from "./models/Journey";
+import { IStation } from "./models/Station";
 
 const headers = {
   Accept: "application/json",
@@ -7,7 +10,7 @@ const headers = {
 export class RMVApi {
   private static RMV_URL = "https://www.rmv.de/hapi";
 
-  static getDepartureBoard = (stop_id) => {
+  static getDepartureBoard = (stop_id): Promise<IDepartureBoard> => {
     const url = `${RMVApi.RMV_URL}/departureBoard?`;
     logger.debug(`[RMV] GET ${url}`);
 
@@ -31,7 +34,7 @@ export class RMVApi {
       });
   };
 
-  static searchStations = (name) => {
+  static searchStations = (name): Promise<IStation> => {
     const url = `${RMVApi.RMV_URL}/location.name?`;
     logger.debug(`[RMV] GET ${url}`);
 
@@ -56,7 +59,7 @@ export class RMVApi {
       });
   };
 
-  static getJourneyDetails = (id) => {
+  static getJourneyDetails = (id): Promise<IJourneyDetails> => {
     const url = `${RMVApi.RMV_URL}/journeyDetails?`;
     logger.debug(`[RMV] GET ${url}`);
 
