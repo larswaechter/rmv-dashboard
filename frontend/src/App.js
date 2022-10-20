@@ -1,22 +1,21 @@
 import { useEffect, useState, forwardRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import SnackbarContent from "@mui/material/SnackbarContent";
 
 import Navbar from "./components/Navbar";
 import { Drawer, DrawerHeader, drawerWidth } from "./components/Drawer";
-import JourneyStopTimes from "./components/Journey/StopTimes";
 
 import Router from "./pages/routes";
 
 import useWebsocketProvider from "./utils/hooks/useWebsocketProvider";
-
-const Alert = forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} {...props} />;
-});
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -44,7 +43,8 @@ const onFocus = () => {
 const App = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [snackOpen, setSnackOpen] = useState(false);
-  const [snackContent, setSnackContent] = useState({ title: "", data: [] });
+  const [snackContent, setSnackContent] = useState([]);
+  const navigate = useNavigate();
 
   const { eventEmitter } = useWebsocketProvider();
 
@@ -53,7 +53,7 @@ const App = () => {
 
     eventEmitter.subscribe("message/cronjob-timetable", "App", (msg) => {
       console.log(msg);
-      setSnackContent({ title: msg.title, data: msg.changes });
+      setSnackContent(msg);
       setSnackOpen(true);
       if (!document.hasFocus()) document.title = "• RMV Dashboard";
     });
@@ -63,6 +63,19 @@ const App = () => {
       window.removeEventListener("focus", onFocus);
     };
   }, []);
+
+  const action = (
+    <Button
+      color="primary"
+      size="small"
+      onClick={() => {
+        setSnackOpen(false);
+        navigate("/watchtower");
+      }}
+    >
+      VIEW
+    </Button>
+  );
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -75,20 +88,31 @@ const App = () => {
       <Main open={drawerOpen}>
         <DrawerHeader />
         <Router />
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={snackOpen}
+          onClose={() => setSnackOpen(false)}
+        >
+          <SnackbarContent
+            message={
+              <>
+                <div>
+                  Watchtower: There are {snackContent.length} schedule changes
+                  in:
+                  <ul>
+                    {snackContent.map((item, i) => (
+                      <li key={i}>
+                        {item.product} - {item.direction}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </>
+            }
+            action={action}
+          />
+        </Snackbar>
       </Main>
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        open={snackOpen}
-        autoHideDuration={30000}
-        onClose={() => setSnackOpen(false)}
-      >
-        <Alert severity="warning">
-          <AlertTitle>{snackContent.title}</AlertTitle>
-          {snackContent.data.map(({ stop }, i) => (
-            <JourneyStopTimes key={i} stop={stop} />
-          ))}
-        </Alert>
-      </Snackbar>
     </Box>
   );
 };

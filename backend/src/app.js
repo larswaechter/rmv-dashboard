@@ -12,7 +12,7 @@ const alarmsRouter = require("./components/alarms/routes");
 const app = express();
 const server = require("http").createServer(app);
 
-const wss = new WebSocketServer({ path: "/websocket", server });
+const wsserver = new WebSocketServer({ path: "/websocket", server });
 
 // Middleware
 app.use(helmet());
@@ -29,7 +29,7 @@ app.use("/api/journeys/", journeysRouter);
 app.use("/api/stations/", stationsRouter);
 app.use("/api/alarms/", alarmsRouter);
 
-wss.on("connection", function connection(ws) {
+wsserver.on("connection", function connection(ws) {
   logger.debug("[WS] Client connected");
 
   ws.on("message", function message(data) {
@@ -41,4 +41,4 @@ wss.on("connection", function connection(ws) {
   });
 });
 
-module.exports = { server, wss };
+module.exports = { server, wsserver };

@@ -102,5 +102,8 @@ npm start
 
 ## Features
 
-- Station Departure Board
-- Train connection details
+- Dashboard
+  - Station Departure Board
+  - Train connection details
+- Watchtower
+  - Delay notifications

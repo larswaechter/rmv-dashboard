@@ -1,7 +1,7 @@
 const cron = require("node-cron");
 const WebSocket = require("ws");
 
-const { wss } = require("../app");
+const { wsserver } = require("../app");
 const logger = require("../config/logger");
 const { WebSocketEvents } = require("../config/ws");
 const Alarm = require("../components/alarms/model");
@@ -10,9 +10,14 @@ const { parseJourney } = require("./parser");
 const { getJourneyDetails } = require("./rmv");
 
 /**
- * Job for sending timetable changes via WS
+ * Job for sending schedule changes via WS
  */
 cron.schedule("*/10 * * * * *", async () => {
+  if (!wsserver.clients.size) {
+    logger.info("[CRONJOB] Skipped because there are no connected clients");
+    return;
+  }
+
   try {
     logger.info("[CRONJOB] Starting");
 
@@ -27,28 +32,20 @@ cron.schedule("*/10 * * * * *", async () => {
 
       const stop = stops.find((stop) => stop.id === station_id);
 
-      if (stop)
-        data.push({
-          direction,
-          product,
-          stop,
-        });
+      if (stop) data.push({ direction, product });
       else logger.error(`[CRONJOB] Stop ${stop.id} not found in API response`);
     }
 
     logger.info(
-      `[CRONJOB] Sending ${data.length} messages to ${wss.clients.size} clients`
+      `[CRONJOB] Sending ${data.length} schedule changes to ${wsserver.clients.size} clients`
     );
 
-    wss.clients.forEach((client) => {
+    wsserver.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(
           JSON.stringify({
             event: WebSocketEvents.cronjob_timetable,
-            body: {
-              title: "Fahrplanänderungen",
-              changes: data,
-            },
+            body: data,
           })
         );
       }

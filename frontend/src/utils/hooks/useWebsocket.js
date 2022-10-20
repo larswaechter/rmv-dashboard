@@ -16,7 +16,7 @@ const useWebsocket = (onMessage) => {
     ws.current = new WebSocket(`ws://${window.location.host}/websocket`);
 
     ws.current.onopen = () => {
-      console.log(ws.current);
+      console.debug(ws.current);
       console.log("Connected to WS");
       setIsConnected(true);
     };
@@ -32,7 +32,6 @@ const useWebsocket = (onMessage) => {
     };
 
     ws.current.onmessage = ({ data }) => {
-      console.log(data);
       const { event, body } = JSON.parse(data);
       onMessage(event, body);
     };

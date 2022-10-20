@@ -7,11 +7,16 @@ import StepContent from "@mui/material/StepContent";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 
 import JourneyStopTimes from "./StopTimes";
 
 import { searchJourney } from "../../services/journey";
 import { parseDateTime } from "../../utils/helper";
+import { IconButton } from "@mui/material";
 
 const calcActiveStep = (stops) => {
   let idx = stops.length;
@@ -36,7 +41,9 @@ const JourneyDetails = ({ journeyRef }) => {
   const [journey, setJourney] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeStep, setActiveStep] = useState(8);
+
+  const [activeStep, setActiveStep] = useState(0);
+  const [activeStepLive, setActiveStepLive] = useState(0);
 
   const fetchData = async () => {
     try {
@@ -44,13 +51,57 @@ const JourneyDetails = ({ journeyRef }) => {
       const data = await searchJourney(journeyRef);
       setJourney(data);
       setError(null);
-      setActiveStep(calcActiveStep(data.stops));
+
+      const active = calcActiveStep(data.stops);
+      setActiveStep(active);
+      setActiveStepLive(active);
     } catch (err) {
       console.error(err);
       setError(err);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const getChip = (i) => {
+    if (i < activeStepLive)
+      return (
+        <Chip
+          title="Previous stop"
+          label="Previous"
+          color="warning"
+          variant="outlined"
+        />
+      );
+
+    if (i > activeStepLive)
+      return (
+        <Chip
+          title="Upcoming stop"
+          label="Upcoming"
+          color="info"
+          variant="outlined"
+        />
+      );
+
+    return (
+      <Chip
+        title="Next stop"
+        label="Live •"
+        color="success"
+        variant="outlined"
+      />
+    );
+
+    return null;
   };
 
   useEffect(() => {
@@ -83,7 +134,7 @@ const JourneyDetails = ({ journeyRef }) => {
   return (
     <Box sx={{ maxWidth: 400 }}>
       <Stepper activeStep={activeStep} orientation="vertical">
-        {stops.map((stop) => {
+        {stops.map((stop, i) => {
           return (
             <Step key={stop.name}>
               <StepLabel>{stop.name}</StepLabel>
@@ -96,6 +147,31 @@ const JourneyDetails = ({ journeyRef }) => {
                   }}
                 >
                   <JourneyStopTimes stop={stop} />
+                  <div>
+                    <IconButton
+                      disabled={i === 0}
+                      onClick={handleBack}
+                      sx={{ mr: 1 }}
+                    >
+                      <KeyboardArrowUpIcon />
+                    </IconButton>
+                    <IconButton
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ mr: 1 }}
+                    >
+                      <KeyboardArrowDownIcon />
+                    </IconButton>
+                    {getChip(i)}
+                    <IconButton
+                      variant="contained"
+                      onClick={() => setActiveStep(activeStepLive)}
+                      sx={{ ml: 1 }}
+                      color="info"
+                    >
+                      {i !== activeStepLive && <GpsFixedIcon />}
+                    </IconButton>
+                  </div>
                 </Box>
               </StepContent>
             </Step>
