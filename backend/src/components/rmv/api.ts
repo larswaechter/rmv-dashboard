@@ -10,7 +10,7 @@ const headers = {
 export class RMVApi {
   private static RMV_URL = "https://www.rmv.de/hapi";
 
-  static getDepartureBoard = (stop_id): Promise<IDepartureBoard> => {
+  static getDepartureBoard(stop_id): Promise<IDepartureBoard> {
     const url = `${RMVApi.RMV_URL}/departureBoard?`;
     logger.debug(`[RMV] GET ${url}`);
 
@@ -32,9 +32,9 @@ export class RMVApi {
         logger.error(err.stack);
         return Promise.reject("[RMV] GET /departureBoard failed");
       });
-  };
+  }
 
-  static searchStations = (name): Promise<IStation> => {
+  static searchStations(name): Promise<IStation> {
     const url = `${RMVApi.RMV_URL}/location.name?`;
     logger.debug(`[RMV] GET ${url}`);
 
@@ -57,9 +57,9 @@ export class RMVApi {
         logger.error(err.stack);
         return Promise.reject("[RMV] GET /location.name failed");
       });
-  };
+  }
 
-  static getJourneyDetails = (id): Promise<IJourneyDetails> => {
+  static getJourneyDetails(id): Promise<IJourneyDetails> {
     const url = `${RMVApi.RMV_URL}/journeyDetails?`;
     logger.debug(`[RMV] GET ${url}`);
 
@@ -81,5 +81,5 @@ export class RMVApi {
         logger.error(err.stack);
         return Promise.reject("[RMV] GET /journeyDetails failed");
       });
-  };
+  }
 }

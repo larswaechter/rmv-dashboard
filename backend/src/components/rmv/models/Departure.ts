@@ -1,17 +1,29 @@
 import { RTDate, Timeservice } from "../../../services/time";
-import { IJourneyDetailRef, IProduct } from "./Misc";
+
+import { IProduct } from "./Product";
+import { IJourneyDetailRef, IMessage, INote } from "./Misc";
 
 interface IDeparture {
   name: string;
   direction: string;
+  stop: string;
+  stopid: string;
   date: string;
   rtDate: string;
   time: string;
   rtTime: string;
   track: string;
   rtTrack: string;
+  reachable: boolean;
   JourneyDetailRef: IJourneyDetailRef;
+  JourneyStatus: string;
   Product: IProduct[];
+  Messages: {
+    Message: IMessage[];
+  };
+  Notes: {
+    Note: INote[];
+  };
 }
 
 export interface IDepartureBoard {
@@ -23,16 +35,17 @@ export class Departure {
   direction: string;
   departure: RTDate;
   journeyRef: string;
+  journeyStatus: string;
   category: string;
   notes: string[];
 
-  public static ofDepartureBoard(departureBoard: IDepartureBoard): Departure[] {
+  static ofDepartureBoard(departureBoard: IDepartureBoard): Departure[] {
     if (departureBoard.Departure)
       return departureBoard.Departure.map((dep) => Departure.ofResponse(dep));
     return [];
   }
 
-  public static ofResponse(res: IDeparture): Departure {
+  static ofResponse(res: IDeparture): Departure {
     const departure = new Departure();
     departure.name = res.name;
     departure.direction = res.direction;
@@ -47,6 +60,7 @@ export class Departure {
     );
 
     departure.journeyRef = res.JourneyDetailRef.ref;
+    departure.journeyStatus = res.JourneyStatus;
     departure.category = res.Product ? res.Product[0].catOut : "";
 
     return departure;

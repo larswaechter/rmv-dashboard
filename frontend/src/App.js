@@ -1,13 +1,10 @@
-import { useEffect, useState, forwardRef, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
 import SnackbarContent from "@mui/material/SnackbarContent";
 
 import Navbar from "./components/Navbar";
@@ -102,7 +99,7 @@ const App = () => {
                   <ul>
                     {snackContent.map((item, i) => (
                       <li key={i}>
-                        {item.product} - {item.direction}
+                        {item.product.name} - {item.direction.value}
                       </li>
                     ))}
                   </ul>

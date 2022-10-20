@@ -27,7 +27,7 @@ export class Stop {
   isFirst: boolean;
   isLast: boolean;
 
-  public static ofResponse(res: IStop, numberOfStops: number): Stop {
+  static ofResponse(res: IStop, numberOfStops: number): Stop {
     const stop = new Stop();
     stop.id = res.id;
     stop.name = res.name;

@@ -26,14 +26,18 @@ cron.schedule("*/15 * * * *", async () => {
     const alarms = await Alarm.findAll();
 
     for (const alarm of alarms) {
-      const { journeyRef, station_id, autoremove } = alarm.get();
+      const { journeyRef, station_id } = alarm.get();
 
-      const journey = await RMVApi.getJourneyDetails(journeyRef);
-      const { direction, product, stops } = Journey.ofJourneyDetails(journey);
+      const journeyDetails = await RMVApi.getJourneyDetails(journeyRef);
+      const journey = Journey.ofJourneyDetails(journeyDetails);
 
-      const stop = stops.find((stop) => stop.id === station_id);
+      const stop = journey.getStopByID(station_id);
 
-      if (stop) data.push({ direction, product });
+      if (stop)
+        data.push({
+          direction: journey.directions[0],
+          product: journey.products[0],
+        });
       else logger.error(`[CRONJOB] Stop ${stop.id} not found in API response`);
     }
 

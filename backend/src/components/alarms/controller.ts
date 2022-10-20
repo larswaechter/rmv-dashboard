@@ -6,7 +6,7 @@ import { Journey } from "../rmv/models/Journey";
 import Alarm from "./model";
 
 export class AlarmsController {
-  getAlarms = async (req, res) => {
+  async getAlarms(req, res) {
     try {
       const alarms = await Alarm.findAll();
 
@@ -15,9 +15,9 @@ export class AlarmsController {
       logger.error(err.stack || err);
       res.sendStatus(500);
     }
-  };
+  }
 
-  getAlarm = async (req, res) => {
+  async getAlarm(req, res) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
@@ -29,9 +29,9 @@ export class AlarmsController {
       logger.error(err.stack || err);
       res.sendStatus(500);
     }
-  };
+  }
 
-  getAlarmDetails = async (req, res) => {
+  async getAlarmDetails(req, res) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
@@ -55,9 +55,9 @@ export class AlarmsController {
       logger.error(err.stack || err);
       res.sendStatus(500);
     }
-  };
+  }
 
-  createAlarm = async (req, res) => {
+  async createAlarm(req, res) {
     try {
       const alarm = req.body;
       if (!alarm) res.sendStatus(400);
@@ -69,9 +69,9 @@ export class AlarmsController {
       logger.error(err.stack || err);
       res.sendStatus(500);
     }
-  };
+  }
 
-  deleteAlarm = async (req, res) => {
+  async deleteAlarm(req, res) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
@@ -90,5 +90,5 @@ export class AlarmsController {
       logger.error(err.stack || err);
       res.sendStatus(500);
     }
-  };
+  }
 }

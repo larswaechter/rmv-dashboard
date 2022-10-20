@@ -7,7 +7,7 @@ import { Station as RMVStation } from "../rmv/models/Station";
 import Station from "./model";
 
 export class StationsController {
-  getStations = async (req, res) => {
+  async getStations(req, res) {
     try {
       const stations = await Station.findAll();
 
@@ -16,9 +16,9 @@ export class StationsController {
       logger.error(err.stack || err);
       res.sendStatus(500);
     }
-  };
+  }
 
-  getStation = async (req, res) => {
+  async getStation(req, res) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
@@ -30,9 +30,9 @@ export class StationsController {
       logger.error(err.stack || err);
       res.sendStatus(500);
     }
-  };
+  }
 
-  getStationDepartures = async (req, res) => {
+  async getStationDepartures(req, res) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
@@ -51,9 +51,9 @@ export class StationsController {
       logger.error(err.stack || err);
       res.sendStatus(500);
     }
-  };
+  }
 
-  searchStations = async (req, res) => {
+  async searchStations(req, res) {
     try {
       const { name } = req.query;
       if (!name) return res.sendStatus(400);
@@ -68,9 +68,9 @@ export class StationsController {
       logger.error(err.stack || err);
       res.sendStatus(500);
     }
-  };
+  }
 
-  createStation = async (req, res) => {
+  async createStation(req, res) {
     try {
       const station = req.body;
       if (!station) res.sendStatus(400);
@@ -82,9 +82,9 @@ export class StationsController {
       logger.error(err.stack || err);
       res.sendStatus(500);
     }
-  };
+  }
 
-  deleteStation = async (req, res) => {
+  async deleteStation(req, res) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
@@ -103,5 +103,5 @@ export class StationsController {
       logger.error(err.stack || err);
       res.sendStatus(500);
     }
-  };
+  }
 }

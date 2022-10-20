@@ -2,6 +2,7 @@ import express from "express";
 import helmet from "helmet";
 import { join } from "path";
 import { json } from "express";
+import { createServer } from "http";
 import { WebSocketServer } from "ws";
 
 import logger from "./config/logger";
@@ -11,7 +12,7 @@ import stationsRouter from "./components/stations/routes";
 import alarmsRouter from "./components/alarms/routes";
 
 const app = express();
-export const server = require("http").createServer(app);
+export const server = createServer(app);
 
 export const wsserver = new WebSocketServer({ path: "/websocket", server });
 

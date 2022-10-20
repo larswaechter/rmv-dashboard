@@ -1,6 +1,9 @@
 export interface IStopLocation {
   id: string;
   name: string;
+  lat: string;
+  lon: string;
+  weight: number;
 }
 
 export interface IStation {

@@ -15,29 +15,7 @@ import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import JourneyStopTimes from "./StopTimes";
 
 import { searchJourney } from "../../services/journey";
-import { parseDateTime } from "../../utils/helper";
 import { IconButton } from "@mui/material";
-
-const calcActiveStep = (stops) => {
-  let idx = stops.length;
-  const now = Date.now();
-
-  for (let i = 0; i < stops.length - 1; i++) {
-    const stop = stops[i];
-    const { departure } = stop;
-    const { date, time } = departure;
-
-    const depParsed = parseDateTime(date.value, time.value);
-
-    // Next stop
-    if (now < depParsed) {
-      idx = i;
-      break;
-    }
-  }
-
-  return idx;
-};
 
 const JourneyDetails = ({ journeyRef }) => {
   const [journey, setJourney] = useState(null);
@@ -45,7 +23,6 @@ const JourneyDetails = ({ journeyRef }) => {
   const [error, setError] = useState(null);
 
   const [activeStep, setActiveStep] = useState(0);
-  const [activeStepLive, setActiveStepLive] = useState(0);
 
   const fetchData = async () => {
     try {
@@ -53,10 +30,7 @@ const JourneyDetails = ({ journeyRef }) => {
       const data = await searchJourney(journeyRef);
       setJourney(data);
       setError(null);
-
-      const active = calcActiveStep(data.stops);
-      setActiveStep(active);
-      setActiveStepLive(active);
+      setActiveStep(data.nextStop);
     } catch (err) {
       console.error(err);
       setError(err);
@@ -74,7 +48,7 @@ const JourneyDetails = ({ journeyRef }) => {
   };
 
   const getChip = (i) => {
-    if (i < activeStepLive)
+    if (i < journey.nextStop)
       return (
         <Chip
           title="Previous stop"
@@ -84,7 +58,7 @@ const JourneyDetails = ({ journeyRef }) => {
         />
       );
 
-    if (i > activeStepLive)
+    if (i > journey.nextStop)
       return (
         <Chip
           title="Upcoming stop"
@@ -129,7 +103,7 @@ const JourneyDetails = ({ journeyRef }) => {
       </Alert>
     );
 
-  const { stops } = journey;
+  const { stops, nextStop } = journey;
 
   return (
     <Box sx={{ maxWidth: 400 }}>
@@ -162,10 +136,10 @@ const JourneyDetails = ({ journeyRef }) => {
                     <IconButton
                       title="Go to current stop"
                       variant="contained"
-                      onClick={() => setActiveStep(activeStepLive)}
+                      onClick={() => setActiveStep(nextStop)}
                       sx={{ ml: 1 }}
                     >
-                      {i !== activeStepLive && <GpsFixedIcon />}
+                      {i !== nextStop && <GpsFixedIcon />}
                     </IconButton>
                   </div>
                 </Box>

@@ -28,4 +28,4 @@ RUN rm -rf backend/src
 # Run
 EXPOSE 5000
 ENV NODE_ENV=production
-CMD ["node", "backend/src/index.js"]
+CMD ["node", "backend/dist/index.js"]

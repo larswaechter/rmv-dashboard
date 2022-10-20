@@ -8,6 +8,13 @@ export interface IJourneyDetailRef {
   ref: string;
 }
 
-export interface IProduct {
-  catOut: string;
+export interface IMessage {
+  head: string;
+  lead: string;
+}
+
+export interface INote {
+  key: string;
+  value: string;
+  priority: number;
 }
