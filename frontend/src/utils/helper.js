@@ -14,8 +14,6 @@ export const parseDateTime = (date, time) => {
   );
 };
 
-export const addLeadingZero = (val) => (val < 10 ? `0${val}` : val);
-
 export const delayToColor = (delaySec) => {
   if (delaySec < 5) return green[500];
   if (delaySec < 10) return orange[500];

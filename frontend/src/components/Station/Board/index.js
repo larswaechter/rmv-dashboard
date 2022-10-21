@@ -33,7 +33,6 @@ import StationBoardTableRow from "./TableRow";
 import StationBoardTableHead from "./TableHead";
 
 import { deleteStation, getStationDepartures } from "../../../services/station";
-import { addLeadingZero } from "../../../utils/helper";
 
 const descendingComparator = (a, b, orderBy) => {
   const valA = typeof a[orderBy] === "object" ? a[orderBy].value : a[orderBy];
@@ -85,12 +84,8 @@ const StationBoard = ({ station, afterDelete }) => {
 
   const fetchData = async () => {
     try {
-      let { $y, $M, $D, $H, $m } = datetime;
-
-      $M = $M + 1 > 12 ? 1 : $M + 1;
-
-      const date = `${$y}-${addLeadingZero($M)}-${addLeadingZero($D)}`;
-      const time = `${addLeadingZero($H)}:${addLeadingZero($m)}`;
+      const date = dayjs(datetime).format("YYYY-MM-DD");
+      const time = dayjs(datetime).format("HH:mm");
 
       setIsLoading(true);
       const data = await getStationDepartures(station.id, date, time);
