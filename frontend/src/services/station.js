@@ -13,12 +13,19 @@ export const getStations = () =>
       return Promise.reject("Failed to fetch stations!");
     });
 
-export const getStationDepartures = (id) =>
-  fetch(`api/stations/${id}/departures`, {
-    headers: {
-      Accept: "application/json",
-    },
-  })
+export const getStationDepartures = (id, date, time) =>
+  fetch(
+    `api/stations/${id}/departures?` +
+      new URLSearchParams({
+        date,
+        time,
+      }),
+    {
+      headers: {
+        Accept: "application/json",
+      },
+    }
+  )
     .then((response) => {
       if (response.ok) return response.json();
       throw new Error(response.statusText);

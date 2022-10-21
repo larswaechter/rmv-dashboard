@@ -100,7 +100,7 @@ const AlarmCard = ({ alarm, afterDelete }) => {
           {details.stop.name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {details.product} {details.direction}
+          {details.products[0].name} {details.direction}
         </Typography>
         <JourneyStopTimes stop={details.stop} />
       </CardContent>

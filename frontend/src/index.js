@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import "./index.css";
 import App from "./App";
@@ -12,9 +14,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <WebSocketContextProvider>
-        <App />
-      </WebSocketContextProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <WebSocketContextProvider>
+          <App />
+        </WebSocketContextProvider>
+      </LocalizationProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

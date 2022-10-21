@@ -10,7 +10,7 @@ const headers = {
 export class RMVApi {
   private static RMV_URL = "https://www.rmv.de/hapi";
 
-  static getDepartureBoard(stop_id): Promise<IDepartureBoard> {
+  static getDepartureBoard(stop_id, date, time): Promise<IDepartureBoard> {
     const url = `${RMVApi.RMV_URL}/departureBoard?`;
     logger.debug(`[RMV] GET ${url}`);
 
@@ -19,6 +19,8 @@ export class RMVApi {
         new URLSearchParams({
           accessId: process.env.RMV_KEY,
           id: stop_id,
+          date,
+          time,
         }),
       {
         headers,

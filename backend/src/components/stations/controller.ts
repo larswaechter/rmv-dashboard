@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import logger from "../../config/logger";
 
 import { RMVApi } from "../rmv/api";
@@ -7,7 +8,7 @@ import { Station as RMVStation } from "../rmv/models/Station";
 import Station from "./model";
 
 export class StationsController {
-  async getStations(req, res) {
+  async getStations(req: Request, res: Response) {
     try {
       const stations = await Station.findAll();
 
@@ -18,7 +19,7 @@ export class StationsController {
     }
   }
 
-  async getStation(req, res) {
+  async getStation(req: Request, res: Response) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
@@ -32,16 +33,20 @@ export class StationsController {
     }
   }
 
-  async getStationDepartures(req, res) {
+  async getStationDepartures(req: Request, res: Response) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
+
+      const { date, time } = req.query;
 
       const station = await Station.findByPk(+id);
       if (!station) return res.sendStatus(404);
 
       const board = await RMVApi.getDepartureBoard(
-        station.getDataValue("station_id")
+        station.getDataValue("station_id"),
+        date,
+        time
       );
 
       const prepared = Departure.ofDepartureBoard(board);
@@ -53,7 +58,7 @@ export class StationsController {
     }
   }
 
-  async searchStations(req, res) {
+  async searchStations(req: Request, res: Response) {
     try {
       const { name } = req.query;
       if (!name) return res.sendStatus(400);
@@ -70,7 +75,7 @@ export class StationsController {
     }
   }
 
-  async createStation(req, res) {
+  async createStation(req: Request, res: Response) {
     try {
       const station = req.body;
       if (!station) res.sendStatus(400);
@@ -84,7 +89,7 @@ export class StationsController {
     }
   }
 
-  async deleteStation(req, res) {
+  async deleteStation(req: Request, res: Response) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);

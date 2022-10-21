@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import dayjs from "dayjs";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -26,11 +27,13 @@ import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 import StationBoardTableRow from "./TableRow";
 import StationBoardTableHead from "./TableHead";
 
 import { deleteStation, getStationDepartures } from "../../../services/station";
+import { addLeadingZero } from "../../../utils/helper";
 
 const descendingComparator = (a, b, orderBy) => {
   const valA = typeof a[orderBy] === "object" ? a[orderBy].value : a[orderBy];
@@ -76,12 +79,21 @@ const StationBoard = ({ station, afterDelete }) => {
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
 
+  const [datetime, setDatetime] = useState(dayjs());
+
   const open = Boolean(anchorEl);
 
   const fetchData = async () => {
     try {
+      let { $y, $M, $D, $H, $m } = datetime;
+
+      $M = $M + 1 > 12 ? 1 : $M + 1;
+
+      const date = `${$y}-${addLeadingZero($M)}-${addLeadingZero($D)}`;
+      const time = `${addLeadingZero($H)}:${addLeadingZero($m)}`;
+
       setIsLoading(true);
-      const data = await getStationDepartures(station.id);
+      const data = await getStationDepartures(station.id, date, time);
       setDepartures(data);
       setError(null);
     } catch (err) {
@@ -180,6 +192,18 @@ const StationBoard = ({ station, afterDelete }) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         type="search"
+        sx={{ marginRight: 1 }}
+      />
+      <DateTimePicker
+        label="Departure"
+        value={datetime}
+        ampm={false}
+        onChange={(val) => setDatetime(val)}
+        onAccept={() => fetchData()}
+        inputFormat="DD.MM.YYYY HH:MM"
+        renderInput={(params) => (
+          <TextField sx={{ width: 350 }} size="small" {...params} />
+        )}
       />
       <Tooltip title="Filter Type">
         <IconButton size="small" onClick={openMenu}>
