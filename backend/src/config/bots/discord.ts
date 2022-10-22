@@ -1,28 +1,55 @@
-import { Client, GatewayIntentBits } from "discord.js";
+import {
+  Client,
+  GatewayIntentBits,
+  ChannelType,
+  TextChannel,
+} from "discord.js";
+import Logger from "../logger";
 
 import { getSettingValue, Settings } from "../settings";
 
-export const getDiscordBot = async (
-  cb: (err: Error, client: Client) => void
-) => {
-  const key = await getSettingValue(Settings.DISCORD_KEY);
+export class DiscordBot {
+  private bot: Client;
+  private static readonly botName = "DiscordBot";
 
-  if (!key) {
-    return undefined;
+  static async of(cb: (err: Error, bot: DiscordBot) => void) {
+    Logger.debug(`[${DiscordBot.botName}] Getting instance`);
+
+    const key = await getSettingValue(Settings.DISCORD_KEY);
+
+    const client = new Client({
+      intents: [GatewayIntentBits.Guilds],
+    });
+
+    client.on("ready", () => {
+      cb(null, new DiscordBot(client));
+    });
+
+    client.on("error", (err) => {
+      cb(err, null);
+    });
+
+    //make sure this line is the last line
+    client.login(key);
   }
 
-  const client = new Client({
-    intents: [GatewayIntentBits.Guilds],
-  });
+  constructor(bot: Client) {
+    this.bot = bot;
+  }
 
-  client.on("ready", () => {
-    cb(null, client);
-  });
+  async getChannel(): Promise<TextChannel | undefined> {
+    const channelID = await getSettingValue(Settings.DISCORD_CHANNEL_ID);
+    const channel = this.bot.channels.cache.find(
+      (channel) =>
+        channel.type === ChannelType.GuildText && channel.id === channelID
+    ) as TextChannel;
 
-  client.on("error", (err) => {
-    cb(err, null);
-  });
+    return channel;
+  }
 
-  //make sure this line is the last line
-  client.login(key); //login bot using token
-};
+  async sendMessage(message: string) {
+    Logger.info(`[${DiscordBot.botName}] Sending Message`);
+    const channel = await this.getChannel();
+    if (channel) channel.send(message);
+  }
+}

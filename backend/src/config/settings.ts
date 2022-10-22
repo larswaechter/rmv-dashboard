@@ -10,6 +10,7 @@ export enum Settings {
 }
 
 export const getSettingValue = async (key: Settings) => {
+  Logger.debug(`Reading setting: ${key}`);
   if (Cache.has(key)) return Cache.get(key);
 
   const setting = await SettingsModel.findOne({

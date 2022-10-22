@@ -1,17 +1,32 @@
 import NodeTelegramBot from "node-telegram-bot-api";
 
-import Cache from "../cache";
+import Logger from "../logger";
 import { getSettingValue, Settings } from "../settings";
 
-export const getTelegramBot = async () => {
-  if (Cache.has(Settings.TELEGRAM_KEY))
-    return new NodeTelegramBot(Cache.get(Settings.TELEGRAM_KEY));
+export class TelegramBot {
+  private bot: NodeTelegramBot;
+  private static readonly botName = "TelegramBot";
 
-  const key = await getSettingValue(Settings.TELEGRAM_KEY);
+  static async of(): Promise<TelegramBot | undefined> {
+    Logger.debug(`[${TelegramBot.botName}] Getting instance`);
 
-  if (!key) {
-    return undefined;
+    const key = await getSettingValue(Settings.TELEGRAM_KEY);
+    if (!key) return undefined;
+
+    return new TelegramBot(new NodeTelegramBot(key));
   }
 
-  return new NodeTelegramBot(key);
-};
+  constructor(bot: NodeTelegramBot) {
+    this.bot = bot;
+  }
+
+  getChatID() {
+    return getSettingValue(Settings.TELEGRAM_CHAT_ID);
+  }
+
+  async sendMessage(message: string) {
+    Logger.info(`[${TelegramBot.botName}] Sending Message`);
+    const chatID = await this.getChatID();
+    if (chatID) this.bot.sendMessage(chatID, message);
+  }
+}

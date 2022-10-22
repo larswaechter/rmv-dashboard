@@ -1,6 +1,5 @@
 import cron from "node-cron";
 import WebSocket from "ws";
-import { ChannelType, TextChannel } from "discord.js";
 
 import { wsserver } from "../app";
 
@@ -10,14 +9,13 @@ import { WebSocketEvents } from "../config/ws";
 import Alarm from "../components/alarms/model";
 import { RMVApi } from "../components/rmv/api";
 import { Journey } from "../components/rmv/models/Journey";
-import { getTelegramBot } from "../config/bots/telegram";
-import { getSettingValue, Settings } from "../config/settings";
-import { getDiscordBot } from "../config/bots/discord";
+import { TelegramBot } from "../config/bots/telegram";
+import { DiscordBot } from "../config/bots/discord";
 
 /**
  * Job for sending schedule changes via WS
  */
-cron.schedule("*/15 * * * *", async () => {
+cron.schedule("*/15 * * * * *", async () => {
   try {
     Logger.info("[CRONJOB] Starting");
 
@@ -45,6 +43,10 @@ cron.schedule("*/15 * * * *", async () => {
         `[CRONJOB] Sending ${data.length} schedule changes to ${wsserver.clients.size} clients`
       );
 
+      /**
+       * WebSocket
+       */
+
       wsserver.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
           client.send(
@@ -56,39 +58,20 @@ cron.schedule("*/15 * * * *", async () => {
         }
       });
 
-      /*
-      Logger.debug(`[CRONJOB] Getting TelegramBot instance`);
-      const telegramBot = await getTelegramBot();
+      /**
+       * Telegram
+       */
 
-      if (telegramBot) {
-        Logger.debug(`[CRONJOB] Reading Telegram ChatID`);
-        const chatID = await getSettingValue(Settings.TELEGRAM_CHAT_ID);
+      const telegramBot = await TelegramBot.of();
+      if (telegramBot) telegramBot.sendMessage("Delay message");
 
-        if (chatID) {
-          Logger.info(`[CRONJOB] Sending Telegram message`);
-          telegramBot.sendMessage(chatID, "Delay message");
-        }
-      }
-      */
+      /**
+       * Discord
+       */
 
-      Logger.debug(`[CRONJOB] Getting DiscordBot instance`);
-      getDiscordBot(async (err, client) => {
-        if (err) {
-          Logger.error(err.stack);
-          return;
-        }
-
-        Logger.debug(`[CRONJOB] Reading Discoard ChannelID`);
-        const channelID = await getSettingValue(Settings.DISCORD_CHANNEL_ID);
-        const channel = client.channels.cache.find(
-          (channel) =>
-            channel.type === ChannelType.GuildText && channel.id === channelID
-        ) as TextChannel;
-
-        if (channel) {
-          Logger.info(`[CRONJOB] Sending Discord message`);
-          channel.send("My notification");
-        }
+      DiscordBot.of((err, bot) => {
+        if (err) Logger.error(err.stack);
+        else bot.sendMessage("Delay message");
       });
     }
   } catch (err) {

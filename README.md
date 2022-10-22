@@ -18,11 +18,23 @@ A self-hosted web app for displaying public transport information like train & b
   - MaterialUI
 - Docker
 
+## Features
+
+- Dashboard
+  - Station Departure Board
+  - Train connection details
+- Watchtower
+  - InApp notifications
+  - Discord notifications
+  - Telegram notifications
+
 ## Installation
 
 First of all, get your RMV API Key from [here](https://opendata.rmv.de/site/anmeldeseite.html).
 
-### Docker Hub
+### Setup
+
+#### Docker Hub
 
 Pull the Docker image from [DockerHub](https://hub.docker.com/r/larswaechter/rmv-dashboard):
 
@@ -47,7 +59,7 @@ docker run \
   larswaechter/rmv-dashboard
 ```
 
-### Docker Compose
+#### Docker Compose
 
 ```yml
 version: "3"
@@ -67,29 +79,38 @@ services:
 After you started the container for the first time you have to execute the database seeding:
 
 ```bash
-# Get container name
+# Get container id
 docker ps
 
 # Execute seeding
-docker exec -i <Container> bash -c "cd backend && npm run seed"
+docker exec -i <ContainerID> bash -c "cd backend && npm run seed"
 ```
 
-## Debugging
+### Debugging
 
 If there occur any errors on the backend you can check the log files:
 
 ```bash
-# Connect to container
-docker exec -it <ContainerID> bash
+# Get container id
+docker ps
 
-# Open logs dir
-cd backend/logs
-
-# View logs
-cat errors.log
+# Print logs
+docker exec -i <ContainerID> bash -c "cat backend/logs/*.log"
 ```
 
+## External Services
+
+### Discord
+
+...
+
+### Telegram
+
+...
+
 ## Development
+
+### Setup
 
 ```bash
 # Clone Repo
@@ -110,12 +131,3 @@ cd frontend
 npm i
 npm start
 ```
-
-## Features
-
-- Dashboard
-  - Station Departure Board
-  - Train connection details
-- Watchtower
-  - InApp notifications
-  - Telegram notifications
