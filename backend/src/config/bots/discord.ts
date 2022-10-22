@@ -5,7 +5,7 @@ import {
   TextChannel,
 } from "discord.js";
 
-import { IDelayAlarm } from "../../services/cronjob";
+import { IScheduleChange } from "../../services/cronjob";
 
 import { IBot } from ".";
 import Logger from "../logger";
@@ -56,13 +56,15 @@ export class DiscordBot implements IBot {
     if (channel) channel.send(message);
   }
 
-  async sendDelayNotifications(notifications: IDelayAlarm[]) {
-    let res = "";
+  async sendDelayNotifications(scheduleChanges: IScheduleChange[]) {
+    let res = `**##### There are ${scheduleChanges.length} schedule changes #####**\n\n`;
 
-    for (const not of notifications) {
-      res += not.stop.buildDeviationMessages().join("\n-");
+    for (const notification of scheduleChanges) {
+      res += `__Direction: ${notification.product.name} - ${notification.direction.value} @${notification.stop.name}__\n`;
+      res += "- " + notification.stop.buildDeviationMessages().join("\n- ");
+      res += "\n\n";
     }
 
-    await this.sendMessage(res);
+    if (res.length) await this.sendMessage(res);
   }
 }

@@ -1,6 +1,6 @@
-import { IDelayAlarm } from "../../services/cronjob";
+import { IScheduleChange } from "../../services/cronjob";
 
 export interface IBot {
   sendMessage(message: string);
-  sendDelayNotifications(notifications: IDelayAlarm[]);
+  sendDelayNotifications(notifications: IScheduleChange[]);
 }

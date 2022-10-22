@@ -1,6 +1,6 @@
 import NodeTelegramBot from "node-telegram-bot-api";
 
-import { IDelayAlarm } from "../../services/cronjob";
+import { IScheduleChange } from "../../services/cronjob";
 
 import { IBot } from ".";
 import Logger from "../logger";
@@ -33,10 +33,10 @@ export class TelegramBot implements IBot {
     if (chatID) this.bot.sendMessage(chatID, message);
   }
 
-  async sendDelayNotifications(notifications: IDelayAlarm[]) {
+  async sendDelayNotifications(scheduleChanges: IScheduleChange[]) {
     let res = "";
 
-    for (const not of notifications) {
+    for (const not of scheduleChanges) {
       res += not.stop.buildDeviationMessages().join("\n-");
     }
 

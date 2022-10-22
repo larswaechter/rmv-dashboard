@@ -16,7 +16,13 @@ import { IDirection } from "../components/rmv/models/Misc";
 import { Product } from "../components/rmv/models/Product";
 import { Stop } from "../components/rmv/models/Stop";
 
-export interface IDelayAlarm {
+class ScheduleChangesNotification {
+  private timestamp: number = Date.now();
+  private scheduleChanges: IScheduleChange[];
+  private content: string;
+}
+
+export interface IScheduleChange {
   stop: Stop;
   alarm: Model;
   direction: IDirection;
@@ -31,7 +37,7 @@ cron.schedule("*/15 * * * * *", async () => {
     Logger.info("[CRONJOB] Starting");
 
     const alarms = await Alarm.findAll();
-    const notifications: IDelayAlarm[] = [];
+    const scheduleChanges: IScheduleChange[] = [];
 
     for (const alarm of alarms) {
       const { journeyRef, station_id } = alarm.get();
@@ -42,7 +48,7 @@ cron.schedule("*/15 * * * * *", async () => {
       const stop = journey.getStopByID(station_id);
 
       if (stop.hasScheduleChange())
-        notifications.push({
+        scheduleChanges.push({
           stop,
           alarm,
           direction: journey.directions[0],
@@ -51,9 +57,9 @@ cron.schedule("*/15 * * * * *", async () => {
       else Logger.error(`[CRONJOB] Stop ${stop.id} not found in API response`);
     }
 
-    if (notifications.length) {
+    if (scheduleChanges.length) {
       Logger.info(
-        `[CRONJOB] Sending ${notifications.length} schedule changes to ${wsserver.clients.size} clients`
+        `[CRONJOB] Sending ${scheduleChanges.length} schedule changes to ${wsserver.clients.size} WebSocket clients`
       );
 
       /**
@@ -65,7 +71,7 @@ cron.schedule("*/15 * * * * *", async () => {
           client.send(
             JSON.stringify({
               event: WebSocketEvents.CronjobTimetable,
-              body: notifications,
+              body: scheduleChanges,
             })
           );
         }
@@ -78,7 +84,7 @@ cron.schedule("*/15 * * * * *", async () => {
       const telegramBot = await TelegramBot.of();
       if (telegramBot)
         telegramBot.sendDelayNotifications(
-          notifications.filter((notification) =>
+          scheduleChanges.filter((notification) =>
             notification.alarm.getDataValue("telegram")
           )
         );
@@ -91,7 +97,7 @@ cron.schedule("*/15 * * * * *", async () => {
         if (err) Logger.error(err.stack);
         else
           bot.sendDelayNotifications(
-            notifications.filter((notification) =>
+            scheduleChanges.filter((notification) =>
               notification.alarm.getDataValue("discord")
             )
           );
