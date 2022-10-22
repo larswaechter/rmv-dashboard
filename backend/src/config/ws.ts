@@ -1,3 +1,3 @@
-export const WebSocketEvents = {
-  cronjob_timetable: "cronjob-timetable",
-};
+export enum WebSocketEvents {
+  CronjobTimetable = "cronjob-timetable",
+}

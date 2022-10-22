@@ -39,8 +39,10 @@ const AlarmCard = ({ alarm, afterDelete }) => {
 
   const handleDelete = async () => {
     try {
-      await deleteAlarm(alarm.id);
-      afterDelete(alarm.id);
+      if (window.confirm("Delete item?")) {
+        await deleteAlarm(alarm.id);
+        afterDelete(alarm.id);
+      }
     } catch (err) {
       console.error(err);
       setError(err);

@@ -109,10 +109,6 @@ const StationBoard = ({ station, afterDelete }) => {
     setOrderBy(property);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -132,8 +128,15 @@ const StationBoard = ({ station, afterDelete }) => {
   };
 
   const handleDelete = async () => {
-    await deleteStation(station.id);
-    afterDelete(station.id);
+    try {
+      if (window.confirm("Delete station?")) {
+        await deleteStation(station.id);
+        afterDelete(station.id);
+      }
+    } catch (err) {
+      console.error(err);
+      setError(err);
+    }
   };
 
   const departuresMemo = useMemo(() => {
@@ -195,9 +198,9 @@ const StationBoard = ({ station, afterDelete }) => {
         ampm={false}
         onChange={(val) => setDatetime(val)}
         onAccept={() => fetchData()}
-        inputFormat="DD.MM.YYYY HH:MM"
+        inputFormat="DD.MM HH:MM"
         renderInput={(params) => (
-          <TextField sx={{ width: 350 }} size="small" {...params} />
+          <TextField sx={{ width: 290 }} size="small" {...params} />
         )}
       />
       <Tooltip title="Filter Type">
@@ -314,7 +317,7 @@ const StationBoard = ({ station, afterDelete }) => {
           count={departuresMemo.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onPageChange={handleChangePage}
+          onPageChange={(e, val) => setPage(val)}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>

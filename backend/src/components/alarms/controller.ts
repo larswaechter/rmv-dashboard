@@ -1,4 +1,4 @@
-import logger from "../../config/logger";
+import Logger from "../../config/logger";
 
 import { RMVApi } from "../rmv/api";
 import { Journey } from "../rmv/models/Journey";
@@ -12,7 +12,7 @@ export class AlarmsController {
 
       res.json(alarms);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }
@@ -26,7 +26,7 @@ export class AlarmsController {
 
       res.json(alarm);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }
@@ -52,7 +52,7 @@ export class AlarmsController {
 
       res.json(parsed);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }
@@ -66,7 +66,7 @@ export class AlarmsController {
 
       res.status(201).json(newAlarm);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }
@@ -87,7 +87,7 @@ export class AlarmsController {
 
       res.sendStatus(204);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }

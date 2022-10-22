@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import logger from "../../config/logger";
+import Logger from "../../config/logger";
 
 import { RMVApi } from "../rmv/api";
 import { Departure } from "../rmv/models/Departure";
@@ -14,7 +14,7 @@ export class StationsController {
 
       res.json(stations);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }
@@ -28,7 +28,7 @@ export class StationsController {
 
       res.json(station);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }
@@ -53,7 +53,7 @@ export class StationsController {
 
       res.json(prepared);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }
@@ -70,7 +70,7 @@ export class StationsController {
 
       res.json(prepared);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }
@@ -84,7 +84,7 @@ export class StationsController {
 
       res.status(201).json(newStation);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }
@@ -105,7 +105,7 @@ export class StationsController {
 
       res.sendStatus(204);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }

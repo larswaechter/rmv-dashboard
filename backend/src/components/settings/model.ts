@@ -1,20 +1,25 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../config/db";
 
-const Station = sequelize.define("Station", {
+const Settings = sequelize.define("Settings", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  name: {
+  key: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
-  station_id: {
+  value: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+  },
+  default: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 });
 
-export default Station;
+export default Settings;

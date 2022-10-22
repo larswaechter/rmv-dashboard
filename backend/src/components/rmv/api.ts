@@ -1,4 +1,5 @@
-import logger from "../../config/logger";
+import Logger from "../../config/logger";
+
 import { IDepartureBoard } from "./models/Departure";
 import { IJourneyDetails } from "./models/Journey";
 import { IStation } from "./models/Station";
@@ -12,7 +13,7 @@ export class RMVApi {
 
   static getDepartureBoard(stop_id, date, time): Promise<IDepartureBoard> {
     const url = `${RMVApi.RMV_URL}/departureBoard?`;
-    logger.debug(`[RMV] GET ${url}`);
+    Logger.debug(`[RMV] GET ${url}`);
 
     return fetch(
       url +
@@ -31,14 +32,14 @@ export class RMVApi {
         throw new Error(response.statusText);
       })
       .catch((err) => {
-        logger.error(err.stack);
+        Logger.error(err.stack);
         return Promise.reject("[RMV] GET /departureBoard failed");
       });
   }
 
   static searchStations(name): Promise<IStation> {
     const url = `${RMVApi.RMV_URL}/location.name?`;
-    logger.debug(`[RMV] GET ${url}`);
+    Logger.debug(`[RMV] GET ${url}`);
 
     return fetch(
       url +
@@ -56,14 +57,14 @@ export class RMVApi {
         throw new Error(response.statusText);
       })
       .catch((err) => {
-        logger.error(err.stack);
+        Logger.error(err.stack);
         return Promise.reject("[RMV] GET /location.name failed");
       });
   }
 
   static getJourneyDetails(id): Promise<IJourneyDetails> {
     const url = `${RMVApi.RMV_URL}/journeyDetails?`;
-    logger.debug(`[RMV] GET ${url}`);
+    Logger.debug(`[RMV] GET ${url}`);
 
     return fetch(
       url +
@@ -80,7 +81,7 @@ export class RMVApi {
         throw new Error(response.statusText);
       })
       .catch((err) => {
-        logger.error(err.stack);
+        Logger.error(err.stack);
         return Promise.reject("[RMV] GET /journeyDetails failed");
       });
   }

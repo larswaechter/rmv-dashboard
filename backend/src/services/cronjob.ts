@@ -3,24 +3,22 @@ import WebSocket from "ws";
 
 import { wsserver } from "../app";
 
-import logger from "../config/logger";
+import Logger from "../config/logger";
 import { WebSocketEvents } from "../config/ws";
 
 import Alarm from "../components/alarms/model";
 import { RMVApi } from "../components/rmv/api";
 import { Journey } from "../components/rmv/models/Journey";
+import { getTelegramBot } from "../config/bots/telegram";
+import SettingsModel from "../components/settings/model";
+import { Settings } from "../config/settings";
 
 /**
  * Job for sending schedule changes via WS
  */
-cron.schedule("*/15 * * * *", async () => {
-  if (!wsserver.clients.size) {
-    logger.info("[CRONJOB] Skipped because there are no connected clients");
-    return;
-  }
-
+cron.schedule("*/15 * * * * *", async () => {
   try {
-    logger.info("[CRONJOB] Starting");
+    Logger.info("[CRONJOB] Starting");
 
     const data = [];
     const alarms = await Alarm.findAll();
@@ -38,26 +36,46 @@ cron.schedule("*/15 * * * *", async () => {
           direction: journey.directions[0],
           product: journey.products[0],
         });
-      else logger.error(`[CRONJOB] Stop ${stop.id} not found in API response`);
+      else Logger.error(`[CRONJOB] Stop ${stop.id} not found in API response`);
     }
 
-    logger.info(
-      `[CRONJOB] Sending ${data.length} schedule changes to ${wsserver.clients.size} clients`
-    );
+    if (data.length) {
+      Logger.info(
+        `[CRONJOB] Sending ${data.length} schedule changes to ${wsserver.clients.size} clients`
+      );
 
-    wsserver.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(
-          JSON.stringify({
-            event: WebSocketEvents.cronjob_timetable,
-            body: data,
-          })
-        );
+      wsserver.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(
+            JSON.stringify({
+              event: WebSocketEvents.CronjobTimetable,
+              body: data,
+            })
+          );
+        }
+      });
+
+      Logger.debug(`[CRONJOB] Getting TelegramBot instance`);
+      const telegramBot = await getTelegramBot();
+
+      if (telegramBot) {
+        Logger.debug(`[CRONJOB] Reading Telegram ChatID`);
+        const setting = await SettingsModel.findOne({
+          where: {
+            key: Settings.TELEGRAM_CHAT_ID,
+          },
+        });
+
+        const chatID = setting.getDataValue("value");
+        if (chatID) {
+          Logger.info(`[CRONJOB] Sending Telegram message`);
+          telegramBot.sendMessage(chatID, "Delay message");
+        }
       }
-    });
+    }
   } catch (err) {
-    logger.error(err.stack || err);
+    Logger.error(err.stack || err);
   } finally {
-    logger.info("[CRONJOB] Finished");
+    Logger.info("[CRONJOB] Finished");
   }
 });

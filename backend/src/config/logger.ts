@@ -14,20 +14,20 @@ const errorsLog = join(logDir, "errors.log");
 const exceptionsLog = join(logDir, "exceptions.log");
 const rejectionsLog = join(logDir, "rejections.log");
 
-const logger = createLogger({
+const Logger = createLogger({
   format: format.simple(),
   silent: process.env.NODE_ENV === "test",
 });
 
 if (isDevEnv) {
-  logger.add(
+  Logger.add(
     new transports.Console({
       level: "debug",
       format: format.combine(format.colorize(), format.simple()),
     })
   );
 
-  logger.add(
+  Logger.add(
     new transports.File({
       filename: debugLog,
       level: "debug",
@@ -48,7 +48,7 @@ if (isDevEnv) {
   );
   */
 } else {
-  logger.add(
+  Logger.add(
     new transports.File({
       filename: errorsLog,
       level: "error",
@@ -56,14 +56,14 @@ if (isDevEnv) {
     })
   );
 
-  logger.exceptions.handle(
+  Logger.exceptions.handle(
     new transports.File({
       filename: exceptionsLog,
       format: format.json(),
     })
   );
 
-  logger.rejections.handle(
+  Logger.rejections.handle(
     new transports.File({
       filename: rejectionsLog,
       format: format.json(),
@@ -71,4 +71,4 @@ if (isDevEnv) {
   );
 }
 
-export default logger;
+export default Logger;

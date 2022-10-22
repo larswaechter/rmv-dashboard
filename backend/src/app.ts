@@ -5,11 +5,12 @@ import { json } from "express";
 import { createServer } from "http";
 import { WebSocketServer } from "ws";
 
-import logger from "./config/logger";
+import Logger from "./config/logger";
 
 import journeysRouter from "./components/journeys/routes";
 import stationsRouter from "./components/stations/routes";
 import alarmsRouter from "./components/alarms/routes";
+import settingsRouter from "./components/settings/routes";
 
 const app = express();
 export const server = createServer(app);
@@ -30,15 +31,16 @@ app.get(/^\/(?!api)/, (req, res) => {
 app.use("/api/journeys/", journeysRouter);
 app.use("/api/stations/", stationsRouter);
 app.use("/api/alarms/", alarmsRouter);
+app.use("/api/settings/", settingsRouter);
 
 wsserver.on("connection", function connection(ws) {
-  logger.debug("[WS] Client connected");
+  Logger.debug("[WS] Client connected");
 
   ws.on("message", function message(data) {
-    logger.debug("[WS] Received: %s", data);
+    Logger.debug("[WS] Received: %s", data);
   });
 
   ws.on("close", () => {
-    logger.debug("[WS] Client disconnected");
+    Logger.debug("[WS] Client disconnected");
   });
 });

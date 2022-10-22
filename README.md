@@ -58,11 +58,23 @@ services:
     volumes:
       - /path/to/host/data:/app/data
     ports:
-      - 8080:8080
+      - 5000:5000
     restart: unless-stopped
 ```
 
-### Debugging
+### Seeding
+
+After you started the container for the first time you have to execute the database seeding:
+
+```bash
+# Get container name
+docker ps
+
+# Execute seeding
+docker exec -i <Container> bash -c "cd backend && npm run seed"
+```
+
+## Debugging
 
 If there occur any errors on the backend you can check the log files:
 
@@ -93,6 +105,9 @@ cd backend
 npm i
 mv .env.example .env  # Enter your RMV API Key
 npm run watch
+
+# Seed Database
+npm run seed
 
 # Setup Frontend
 cd frontend

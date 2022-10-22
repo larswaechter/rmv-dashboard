@@ -1,4 +1,4 @@
-import logger from "../../config/logger";
+import Logger from "../../config/logger";
 
 import { RMVApi } from "../rmv/api";
 import { Journey } from "../rmv/models/Journey";
@@ -14,7 +14,7 @@ export class JourneysController {
 
       res.json(parsed);
     } catch (err) {
-      logger.error(err.stack || err);
+      Logger.error(err.stack || err);
       res.sendStatus(500);
     }
   }
