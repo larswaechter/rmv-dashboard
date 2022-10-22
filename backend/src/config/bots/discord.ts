@@ -4,11 +4,14 @@ import {
   ChannelType,
   TextChannel,
 } from "discord.js";
-import Logger from "../logger";
 
+import { IDelayAlarm } from "../../services/cronjob";
+
+import { IBot } from ".";
+import Logger from "../logger";
 import { getSettingValue, Settings } from "../settings";
 
-export class DiscordBot {
+export class DiscordBot implements IBot {
   private bot: Client;
   private static readonly botName = "DiscordBot";
 
@@ -51,5 +54,15 @@ export class DiscordBot {
     Logger.info(`[${DiscordBot.botName}] Sending Message`);
     const channel = await this.getChannel();
     if (channel) channel.send(message);
+  }
+
+  async sendDelayNotifications(notifications: IDelayAlarm[]) {
+    let res = "";
+
+    for (const not of notifications) {
+      res += not.stop.buildDeviationMessages().join("\n-");
+    }
+
+    await this.sendMessage(res);
   }
 }

@@ -57,7 +57,55 @@ export class Stop {
     return stop;
   }
 
+  buildDeviationMessages() {
+    const messages: string[] = [];
+
+    if (this.hasArrivalDelay())
+      messages.push(
+        `The arrival is delayed by ${this.arrival.delay} minute(s): New arrival @ ${this.arrival.date.value} ${this.arrival.time.value}`
+      );
+    if (this.hasArrivalTrackChange())
+      messages.push(
+        `The arrival track has changed: ${this.arrival.track.original}: ${this.arrival.track.value}`
+      );
+
+    if (this.hasDepartureDelay())
+      messages.push(
+        `The departure is delayed by ${this.departure.delay} minute(s) => New departure @ ${this.departure.date.value} ${this.departure.time.value}`
+      );
+    if (this.hasDepartureTrackChange())
+      messages.push(
+        `The departure track has changed: ${this.departure.track.value} => ${this.departure.track.value}`
+      );
+
+    return messages;
+  }
+
+  hasScheduleChange() {
+    return this.hasDelay() || this.hasTrackChange();
+  }
+
   hasDelay() {
-    return true;
+    return this.hasArrivalDelay() || this.hasDepartureDelay();
+  }
+
+  hasArrivalDelay() {
+    return this.arrival.delay > 0;
+  }
+
+  hasDepartureDelay() {
+    return this.departure.delay > 0;
+  }
+
+  hasTrackChange() {
+    this.hasArrivalTrackChange() || this.hasDepartureTrackChange();
+  }
+
+  hasArrivalTrackChange() {
+    return this.arrival.track.original !== undefined;
+  }
+
+  hasDepartureTrackChange() {
+    return this.departure.track.original !== undefined;
   }
 }

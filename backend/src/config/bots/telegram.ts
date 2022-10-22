@@ -1,9 +1,12 @@
 import NodeTelegramBot from "node-telegram-bot-api";
 
+import { IDelayAlarm } from "../../services/cronjob";
+
+import { IBot } from ".";
 import Logger from "../logger";
 import { getSettingValue, Settings } from "../settings";
 
-export class TelegramBot {
+export class TelegramBot implements IBot {
   private bot: NodeTelegramBot;
   private static readonly botName = "TelegramBot";
 
@@ -28,5 +31,15 @@ export class TelegramBot {
     Logger.info(`[${TelegramBot.botName}] Sending Message`);
     const chatID = await this.getChatID();
     if (chatID) this.bot.sendMessage(chatID, message);
+  }
+
+  async sendDelayNotifications(notifications: IDelayAlarm[]) {
+    let res = "";
+
+    for (const not of notifications) {
+      res += not.stop.buildDeviationMessages().join("\n-");
+    }
+
+    // await this.sendMessage(res);
   }
 }

@@ -1,5 +1,6 @@
 import cron from "node-cron";
 import WebSocket from "ws";
+import { Model } from "sequelize";
 
 import { wsserver } from "../app";
 
@@ -11,6 +12,16 @@ import { RMVApi } from "../components/rmv/api";
 import { Journey } from "../components/rmv/models/Journey";
 import { TelegramBot } from "../config/bots/telegram";
 import { DiscordBot } from "../config/bots/discord";
+import { IDirection } from "../components/rmv/models/Misc";
+import { Product } from "../components/rmv/models/Product";
+import { Stop } from "../components/rmv/models/Stop";
+
+export interface IDelayAlarm {
+  stop: Stop;
+  alarm: Model;
+  direction: IDirection;
+  product: Product;
+}
 
 /**
  * Job for sending schedule changes via WS
@@ -19,28 +30,30 @@ cron.schedule("*/15 * * * * *", async () => {
   try {
     Logger.info("[CRONJOB] Starting");
 
-    const data = [];
     const alarms = await Alarm.findAll();
+    const notifications: IDelayAlarm[] = [];
 
     for (const alarm of alarms) {
-      const { journeyRef, station_id, telegram } = alarm.get();
+      const { journeyRef, station_id } = alarm.get();
 
       const journeyDetails = await RMVApi.getJourneyDetails(journeyRef);
       const journey = Journey.ofJourneyDetails(journeyDetails);
 
       const stop = journey.getStopByID(station_id);
 
-      if (stop.hasDelay())
-        data.push({
+      if (stop.hasScheduleChange())
+        notifications.push({
+          stop,
+          alarm,
           direction: journey.directions[0],
           product: journey.products[0],
         });
       else Logger.error(`[CRONJOB] Stop ${stop.id} not found in API response`);
     }
 
-    if (data.length) {
+    if (notifications.length) {
       Logger.info(
-        `[CRONJOB] Sending ${data.length} schedule changes to ${wsserver.clients.size} clients`
+        `[CRONJOB] Sending ${notifications.length} schedule changes to ${wsserver.clients.size} clients`
       );
 
       /**
@@ -52,7 +65,7 @@ cron.schedule("*/15 * * * * *", async () => {
           client.send(
             JSON.stringify({
               event: WebSocketEvents.CronjobTimetable,
-              body: data,
+              body: notifications,
             })
           );
         }
@@ -63,7 +76,12 @@ cron.schedule("*/15 * * * * *", async () => {
        */
 
       const telegramBot = await TelegramBot.of();
-      if (telegramBot) telegramBot.sendMessage("Delay message");
+      if (telegramBot)
+        telegramBot.sendDelayNotifications(
+          notifications.filter((notification) =>
+            notification.alarm.getDataValue("telegram")
+          )
+        );
 
       /**
        * Discord
@@ -71,7 +89,12 @@ cron.schedule("*/15 * * * * *", async () => {
 
       DiscordBot.of((err, bot) => {
         if (err) Logger.error(err.stack);
-        else bot.sendMessage("Delay message");
+        else
+          bot.sendDelayNotifications(
+            notifications.filter((notification) =>
+              notification.alarm.getDataValue("discord")
+            )
+          );
       });
     }
   } catch (err) {
