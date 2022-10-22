@@ -96,10 +96,6 @@ cat errors.log
 git clone https://github.com/larswaechter/rmv-dashboard
 cd rmv-dashboard
 
-# Create Database
-cd data
-touch db.sqlite
-
 # Setup Backend
 cd backend
 npm i
@@ -121,4 +117,5 @@ npm start
   - Station Departure Board
   - Train connection details
 - Watchtower
-  - Delay notifications
+  - InApp notifications
+  - Telegram notifications

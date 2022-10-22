@@ -31,7 +31,8 @@ const style = {
 const AlarmAdd = ({ handleClose }) => {
   const [stop, setStop] = useState("");
   const [stops, setStops] = useState([]);
-  const [autoremove, setAutoremove] = useState(true);
+  const [telegram, setTelegram] = useState(false);
+  const [discord, setDiscord] = useState(false);
   const [journeyRef, setJourneyRef] = useState("");
 
   const [error, setError] = useState(null);
@@ -44,7 +45,8 @@ const AlarmAdd = ({ handleClose }) => {
       const newAlarm = await createAlarm({
         journeyRef,
         station_id: stop,
-        autoremove,
+        telegram,
+        discord,
       });
       handleClose(newAlarm);
     } catch (err) {
@@ -124,11 +126,20 @@ const AlarmAdd = ({ handleClose }) => {
           <FormControlLabel
             control={
               <Switch
-                checked={autoremove}
-                onChange={(e) => setAutoremove(e.target.checked)}
+                checked={discord}
+                onChange={(e) => setDiscord(e.target.checked)}
               />
             }
-            label="Autoremove"
+            label="Discord"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={telegram}
+                onChange={(e) => setTelegram(e.target.checked)}
+              />
+            }
+            label="Telegram"
           />
         </FormGroup>
 

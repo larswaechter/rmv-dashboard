@@ -15,9 +15,13 @@ const Alarm = sequelize.define("Alarm", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  autoremove: {
+  telegram: {
     type: DataTypes.BOOLEAN,
-    defaultValue: true,
+    defaultValue: false,
+  },
+  discord: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
 });
 

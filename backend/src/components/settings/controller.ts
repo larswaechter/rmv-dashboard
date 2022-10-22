@@ -8,7 +8,7 @@ import SettingsModel from "./model";
 export class SettingsController {
   async getSettings(req: Request, res: Response) {
     try {
-      const settings = SettingsModel.findAll();
+      const settings = await SettingsModel.findAll();
       res.json(settings);
     } catch (err) {
       Logger.error(err.stack || err);
@@ -19,10 +19,11 @@ export class SettingsController {
   async updateSetting(req: Request, res: Response) {
     try {
       const { key } = req.params;
+
       if (!key) return res.sendStatus(400);
 
       const { value } = req.body;
-      if (!value) res.sendStatus(400);
+      if (value === undefined) return res.sendStatus(400);
 
       const model = await SettingsModel.findOne({
         where: {
@@ -41,7 +42,7 @@ export class SettingsController {
         }
       );
 
-      Logger.info(`Updating cache entry: ${key}`);
+      Logger.debug(`Updating cache entry: ${key}`);
       Cache.set(key, value);
 
       res.sendStatus(204);

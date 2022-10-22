@@ -1,6 +1,7 @@
 import { useRoutes } from "react-router-dom";
 
 import PagesDashboard from "./Dashboard";
+import PagesSettings from "./Settings";
 import PagesWatchtower from "./Watchtower";
 
 const Router = () => {
@@ -12,6 +13,10 @@ const Router = () => {
     {
       path: "/watchtower",
       element: <PagesWatchtower />,
+    },
+    {
+      path: "/settings",
+      element: <PagesSettings />,
     },
   ]);
 

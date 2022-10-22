@@ -107,7 +107,27 @@ const AlarmCard = ({ alarm, afterDelete }) => {
         <JourneyStopTimes stop={details.stop} />
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
-        {getChip()}
+        <div>
+          {getChip()}
+          {alarm.telegram && (
+            <Chip
+              label="TELEGRAM"
+              sx={{ marginLeft: 1 }}
+              color="info"
+              variant="outlined"
+              title="Notification enabled"
+            />
+          )}
+          {alarm.discord && (
+            <Chip
+              label="DISCORD"
+              sx={{ marginLeft: 1 }}
+              color="info"
+              variant="outlined"
+              title="Notification enabled"
+            />
+          )}
+        </div>
         <div>
           <IconButton size="small" onClick={() => fetchData()}>
             <ReplayIcon />

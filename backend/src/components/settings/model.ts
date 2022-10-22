@@ -20,6 +20,14 @@ const Settings = sequelize.define("Settings", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  description: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  group: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 export default Settings;
