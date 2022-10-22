@@ -56,4 +56,8 @@ export class Stop {
 
     return stop;
   }
+
+  hasDelay() {
+    return true;
+  }
 }

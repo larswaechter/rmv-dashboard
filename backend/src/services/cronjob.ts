@@ -32,7 +32,7 @@ cron.schedule("*/15 * * * *", async () => {
 
       const stop = journey.getStopByID(station_id);
 
-      if (stop)
+      if (stop.hasDelay())
         data.push({
           direction: journey.directions[0],
           product: journey.products[0],
