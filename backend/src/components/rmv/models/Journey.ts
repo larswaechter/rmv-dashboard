@@ -41,7 +41,7 @@ export class Journey {
     return journey;
   }
 
-  getStopByID(id: string) {
+  getStopByID(id: string): Stop | undefined {
     return this.stops.find((stop) => stop.id === id);
   }
 

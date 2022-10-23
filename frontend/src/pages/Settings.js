@@ -55,7 +55,7 @@ const PagesSettings = () => {
     }
   };
 
-  const handleSnackClose = (event, reason) => {
+  const handleSnackClose = (e, reason) => {
     if (reason === "clickaway") return;
     setShowSnack(false);
   };

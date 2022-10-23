@@ -78,13 +78,30 @@ const PagesWatchtower = () => {
       <Typography variant="h5" component="h1" marginBottom={"16px"}>
         Watchtower
       </Typography>
-      <Grid container spacing={2}>
-        {alarms.map((alarm, i) => (
-          <Grid key={i} xs={4}>
-            <AlarmCard alarm={alarm} afterDelete={handleDelete} />
-          </Grid>
-        ))}
-      </Grid>
+      {alarms.length > 0 ? (
+        <Grid container spacing={2}>
+          {alarms.map((alarm, i) => (
+            <Grid key={i} xs={4}>
+              <AlarmCard alarm={alarm} afterDelete={handleDelete} />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Alert
+          severity="info"
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              onClick={() => setShowModal(true)}
+            >
+              Add
+            </Button>
+          }
+        >
+          No alarm created yet!
+        </Alert>
+      )}
       <Fab
         color="primary"
         aria-label="add"

@@ -20,12 +20,3 @@ export const delayToColor = (delaySec) => {
   if (delaySec < 20) return deepOrange[500];
   return red[500];
 };
-
-export const hasStopDelay = (stop) => {
-  return (
-    stop.arrival.date.original ||
-    stop.arrival.time.original ||
-    stop.departure.date.original ||
-    stop.departure.date.time
-  );
-};

@@ -1,3 +1,5 @@
+import hash from "object-hash";
+
 import { RTDate, Timeservice } from "../../../services/time";
 
 export interface IStop {
@@ -57,6 +59,22 @@ export class Stop {
     return stop;
   }
 
+  getScheduleHash() {
+    return hash({
+      arrival: this.arrival,
+      departure: this.departure,
+    });
+  }
+
+  wasReached() {
+    return (
+      Timeservice.parseDateTime(
+        this.departure.date.value,
+        this.departure.time.value
+      ) < new Date()
+    );
+  }
+
   buildDeviationMessages() {
     const messages: string[] = [];
 
@@ -77,6 +95,26 @@ export class Stop {
       messages.push(
         `The departure track has changed: ~~${this.departure.track.value}~~ => ${this.departure.track.value}`
       );
+
+    return messages;
+  }
+
+  buildDeviationMessagesShort() {
+    const messages: string[] = [];
+
+    if (this.hasArrivalDelay())
+      messages.push(
+        `Arrival: ${this.arrival.date.value} ${this.arrival.time.value} (+${this.arrival.delay}m)`
+      );
+    if (this.hasArrivalTrackChange())
+      messages.push(`Arrival track ${this.arrival.track.value}`);
+
+    if (this.hasDepartureDelay())
+      messages.push(
+        `Departure: ${this.departure.date.value} ${this.departure.time.value} (+${this.departure.delay}m)`
+      );
+    if (this.hasDepartureTrackChange())
+      messages.push(`Departure track: ${this.departure.track.value}`);
 
     return messages;
   }

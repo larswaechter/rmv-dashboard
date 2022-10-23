@@ -31,6 +31,8 @@ const style = {
 const AlarmAdd = ({ handleClose }) => {
   const [stop, setStop] = useState("");
   const [stops, setStops] = useState([]);
+  const [autoremove, setAutoremove] = useState(true);
+  const [smartmode, setSmartmode] = useState(true);
   const [telegram, setTelegram] = useState(false);
   const [discord, setDiscord] = useState(false);
   const [journeyRef, setJourneyRef] = useState("");
@@ -45,6 +47,7 @@ const AlarmAdd = ({ handleClose }) => {
       const newAlarm = await createAlarm({
         journeyRef,
         station_id: stop,
+        autoremove,
         telegram,
         discord,
       });
@@ -89,7 +92,7 @@ const AlarmAdd = ({ handleClose }) => {
       >
         Add alarm
       </Typography>
-      <Stack spacing={4}>
+      <Stack spacing={2}>
         <TextField
           required
           id="outlined-basic"
@@ -109,9 +112,7 @@ const AlarmAdd = ({ handleClose }) => {
               id="demo-simple-select"
               value={stop}
               label="Stops"
-              onChange={(e) => {
-                setStop(e.target.value);
-              }}
+              onChange={(e) => setStop(e.target.value)}
             >
               {stops.map((stop) => (
                 <MenuItem key={stop.id} value={stop.id}>
@@ -123,6 +124,32 @@ const AlarmAdd = ({ handleClose }) => {
         )}
 
         <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={smartmode}
+                onChange={(e) => setSmartmode(e.target.checked)}
+              />
+            }
+            label="Smartmode"
+            title="Receive updates only on changes"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={autoremove}
+                onChange={(e) => setAutoremove(e.target.checked)}
+              />
+            }
+            label="Autoremove"
+            title="Remove alarm after departure"
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Typography variant="subtitle1" gutterBottom>
+            Bots
+          </Typography>
           <FormControlLabel
             control={
               <Switch

@@ -7,7 +7,7 @@ import { wsserver } from "../app";
 import Logger from "../config/logger";
 import { WebSocketEvents } from "../config/ws";
 
-import Alarm from "../components/alarms/model";
+import { Alarm, AlarmHistory } from "../components/alarms/model";
 import { RMVApi } from "../components/rmv/api";
 import { Journey } from "../components/rmv/models/Journey";
 import { TelegramBot } from "../config/bots/telegram";
@@ -15,12 +15,6 @@ import { DiscordBot } from "../config/bots/discord";
 import { IDirection } from "../components/rmv/models/Misc";
 import { Product } from "../components/rmv/models/Product";
 import { Stop } from "../components/rmv/models/Stop";
-
-class ScheduleChangesNotification {
-  private timestamp: number = Date.now();
-  private scheduleChanges: IScheduleChange[];
-  private content: string;
-}
 
 export interface IScheduleChange {
   stop: Stop;
@@ -40,21 +34,64 @@ cron.schedule("*/15 * * * * *", async () => {
     const scheduleChanges: IScheduleChange[] = [];
 
     for (const alarm of alarms) {
-      const { journeyRef, station_id } = alarm.get();
+      const { id, journeyRef, station_id, autoremove, smartmode } = alarm.get();
 
       const journeyDetails = await RMVApi.getJourneyDetails(journeyRef);
       const journey = Journey.ofJourneyDetails(journeyDetails);
 
       const stop = journey.getStopByID(station_id);
 
-      if (stop.hasScheduleChange())
-        scheduleChanges.push({
-          stop,
-          alarm,
-          direction: journey.directions[0],
-          product: journey.products[0],
+      if (!stop) {
+        Logger.error(`[CRONJOB] Stop ${stop.id} not found in API response`);
+        continue;
+      }
+
+      if (autoremove && stop.wasReached()) {
+        Alarm.destroy({
+          where: {
+            id,
+            autoremove: true,
+          },
         });
-      else Logger.error(`[CRONJOB] Stop ${stop.id} not found in API response`);
+      } else if (stop.hasScheduleChange()) {
+        const scheduleHash = stop.getScheduleHash();
+        const history = await AlarmHistory.findOne({
+          where: {
+            journeyRef,
+            station_id,
+          },
+        });
+
+        if (
+          !history ||
+          !smartmode ||
+          scheduleHash !== history.getDataValue("scheduleHash")
+        ) {
+          scheduleChanges.push({
+            stop,
+            alarm,
+            direction: journey.directions[0],
+            product: journey.products[0],
+          });
+
+          if (!history)
+            await AlarmHistory.create({
+              journeyRef,
+              station_id,
+              scheduleHash,
+            });
+          else
+            await AlarmHistory.update(
+              { scheduleHash },
+              {
+                where: {
+                  journeyRef,
+                  station_id,
+                },
+              }
+            );
+        }
+      }
     }
 
     if (scheduleChanges.length) {
@@ -65,7 +102,6 @@ cron.schedule("*/15 * * * * *", async () => {
       /**
        * WebSocket
        */
-
       wsserver.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
           client.send(
@@ -80,7 +116,6 @@ cron.schedule("*/15 * * * * *", async () => {
       /**
        * Telegram
        */
-
       const telegramBot = await TelegramBot.of();
       if (telegramBot)
         telegramBot.sendDelayNotifications(
@@ -92,7 +127,6 @@ cron.schedule("*/15 * * * * *", async () => {
       /**
        * Discord
        */
-
       DiscordBot.of((err, bot) => {
         if (err) Logger.error(err.stack);
         else
@@ -104,7 +138,7 @@ cron.schedule("*/15 * * * * *", async () => {
       });
     }
   } catch (err) {
-    Logger.error(err.stack || err);
+    Logger.error(err.message || err);
   } finally {
     Logger.info("[CRONJOB] Finished");
   }

@@ -50,7 +50,7 @@ const AlarmCard = ({ alarm, afterDelete }) => {
   };
 
   const getChip = () => {
-    if (hasStopDelay(details.stop))
+    if (details.stop.departure.delay || details.stop.arrival.delay)
       return <Chip label="DELAY" color="error" variant="outlined" />;
 
     if (details.stop.departure.track.original)

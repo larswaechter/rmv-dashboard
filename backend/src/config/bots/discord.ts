@@ -57,8 +57,9 @@ export class DiscordBot implements IBot {
   }
 
   async sendDelayNotifications(scheduleChanges: IScheduleChange[]) {
-    let res = `**##### There are ${scheduleChanges.length} schedule changes #####**\n\n`;
+    if (!scheduleChanges.length) return;
 
+    let res = `**##### There are ${scheduleChanges.length} schedule changes #####**\n\n`;
     for (const notification of scheduleChanges) {
       res += `__Direction: ${notification.product.name} - ${notification.direction.value} @${notification.stop.name}__\n`;
       res += "- " + notification.stop.buildDeviationMessages().join("\n- ");

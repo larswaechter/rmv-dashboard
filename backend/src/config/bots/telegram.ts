@@ -30,16 +30,24 @@ export class TelegramBot implements IBot {
   async sendMessage(message: string) {
     Logger.info(`[${TelegramBot.botName}] Sending Message`);
     const chatID = await this.getChatID();
-    if (chatID) this.bot.sendMessage(chatID, message);
+    if (chatID)
+      this.bot.sendMessage(chatID, message, {
+        parse_mode: "HTML",
+      });
   }
 
   async sendDelayNotifications(scheduleChanges: IScheduleChange[]) {
-    let res = "";
+    if (!scheduleChanges.length) return;
 
-    for (const not of scheduleChanges) {
-      res += not.stop.buildDeviationMessages().join("\n-");
+    let res = `There are <b>${scheduleChanges.length}</b> schedule changes\n\n`;
+    for (const notification of scheduleChanges) {
+      res += `<u>Direction: ${notification.direction.value} (${notification.product.name})</u>\n`;
+      res += `- Stop: ${notification.stop.name}\n`;
+      res +=
+        "- " + notification.stop.buildDeviationMessagesShort().join("\n- ");
+      res += "\n\n";
     }
 
-    // await this.sendMessage(res);
+    await this.sendMessage(res);
   }
 }

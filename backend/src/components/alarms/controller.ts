@@ -1,12 +1,14 @@
+import { Request, Response } from "express";
+
 import Logger from "../../config/logger";
 
 import { RMVApi } from "../rmv/api";
 import { Journey } from "../rmv/models/Journey";
 
-import Alarm from "./model";
+import { Alarm } from "./model";
 
 export class AlarmsController {
-  async getAlarms(req, res) {
+  async getAlarms(req: Request, res: Response) {
     try {
       const alarms = await Alarm.findAll();
 
@@ -17,7 +19,7 @@ export class AlarmsController {
     }
   }
 
-  async getAlarm(req, res) {
+  async getAlarm(req: Request, res: Response) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
@@ -31,7 +33,7 @@ export class AlarmsController {
     }
   }
 
-  async getAlarmDetails(req, res) {
+  async getAlarmDetails(req: Request, res: Response) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);
@@ -57,7 +59,7 @@ export class AlarmsController {
     }
   }
 
-  async createAlarm(req, res) {
+  async createAlarm(req: Request, res: Response) {
     try {
       const alarm = req.body;
       if (!alarm) res.sendStatus(400);
@@ -71,7 +73,7 @@ export class AlarmsController {
     }
   }
 
-  async deleteAlarm(req, res) {
+  async deleteAlarm(req: Request, res: Response) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);

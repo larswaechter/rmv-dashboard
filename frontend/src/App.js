@@ -61,6 +61,11 @@ const App = () => {
     };
   }, []);
 
+  const handleSnackClose = (e, reason) => {
+    if (reason === "clickaway") return;
+    setSnackOpen(false);
+  };
+
   const action = (
     <Button
       color="primary"
@@ -88,14 +93,14 @@ const App = () => {
         <Snackbar
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           open={snackOpen}
-          onClose={() => setSnackOpen(false)}
+          onClose={handleSnackClose}
+          autoHideDuration={10000}
         >
           <SnackbarContent
             message={
               <>
                 <div>
-                  Watchtower: There are {snackContent.length} schedule changes
-                  in:
+                  There are {snackContent.length} schedule changes:
                   <ul>
                     {snackContent.map((item, i) => (
                       <li key={i}>
