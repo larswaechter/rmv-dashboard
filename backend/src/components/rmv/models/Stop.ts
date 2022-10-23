@@ -47,7 +47,7 @@ export class Stop {
     stop.isLast = stop.index === numberOfStops - 1;
 
     if (!stop.isFirst)
-      stop.arrival = Timeservice.buildRTDate(
+      stop.arrival = Timeservice.buildRTSchedule(
         res.arrDate,
         res.rtArrDate,
         res.arrTime,
@@ -57,7 +57,7 @@ export class Stop {
       );
 
     if (!stop.isLast)
-      stop.departure = Timeservice.buildRTDate(
+      stop.departure = Timeservice.buildRTSchedule(
         res.depDate,
         res.rtDepDate,
         res.depTime,

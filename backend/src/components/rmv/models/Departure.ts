@@ -51,7 +51,7 @@ export class Departure {
     departure.name = res.name;
     departure.direction = res.direction;
 
-    departure.departure = Timeservice.buildRTDate(
+    departure.departure = Timeservice.buildRTSchedule(
       res.date,
       res.rtDate,
       res.time,

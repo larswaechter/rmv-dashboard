@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 
 export interface RTValue {
-  value: string;
-  original?: string;
+  value: any;
+  original?: any;
 }
 
 export interface RTSchedule {
@@ -14,16 +14,36 @@ export interface RTSchedule {
 }
 
 export class Timeservice {
-  static hasRealtimeValue = (value, rt) => rt !== undefined && rt !== value;
+  static hasRealtimeValue = (value: any, rt?: any) =>
+    rt !== undefined && rt !== value;
 
-  static getRealtimeValue = (
-    value: string,
-    rt: string,
-    defaultVal?: string
-  ): RTValue =>
+  static getRealtimeValue = (value: any, rt: any, defaultVal?: any): RTValue =>
     Timeservice.hasRealtimeValue(value, rt)
       ? { value: rt, original: value }
       : { value: value !== undefined ? value : defaultVal };
+
+  static buildRTSchedule(
+    date: string,
+    rtDate: string,
+    time: string,
+    rtTime: string,
+    track: string,
+    rtTrack: string
+  ): RTSchedule {
+    const _date = Timeservice.getRealtimeValue(date, rtDate);
+    const _time = Timeservice.getRealtimeValue(time, rtTime);
+    const _track = Timeservice.getRealtimeValue(track, rtTrack);
+
+    const delay = Timeservice.getDelayInMinutes(_date, _time);
+
+    return {
+      date: _date,
+      time: _time,
+      parsed: Timeservice.parseDateTime(_date.value, _time.value),
+      track: _track,
+      delay,
+    };
+  }
 
   static parseDateTime = (date: string, time: string) => {
     const [arrYear, arrMonth, arrDay] = date.split("-");
@@ -48,13 +68,13 @@ export class Timeservice {
     const datePlan = date.value;
     const timePlan = time.value;
 
-    return Timeservice.getDateDiffInSec(
+    return Timeservice.getDateDiffInMin(
       Timeservice.parseDateTime(dateOriginal, timeOriginal),
       Timeservice.parseDateTime(datePlan, timePlan)
     );
   };
 
-  static addDays(date: Date, n: number) {
+  static addDays(date: Date, n: number): dayjs.Dayjs {
     const datejs = dayjs(date);
 
     // Exception on weekend
@@ -66,13 +86,13 @@ export class Timeservice {
     let newDate = datejs.add(daysToAdd, "day");
 
     // Number of passed working days
-    const passed = Math.max(5 - newDate.day(), 0);
+    const passed = Math.max(5 - datejs.day(), 0);
     switch (newDate.day()) {
       case 0:
-        newDate = newDate.add(daysToAdd - passed);
+        newDate = newDate.add(daysToAdd - passed, "day");
         break;
       case 6:
-        newDate = newDate.add(1 + daysToAdd - passed);
+        newDate = newDate.add(1 + daysToAdd - passed, "day");
         break;
     }
 
@@ -81,28 +101,6 @@ export class Timeservice {
       : newDate;
   }
 
-  static buildRTDate(
-    date: string,
-    rtDate: string,
-    time: string,
-    rtTime: string,
-    track: string,
-    rtTrack: string
-  ): RTSchedule {
-    const _date = Timeservice.getRealtimeValue(date, rtDate);
-    const _time = Timeservice.getRealtimeValue(time, rtTime);
-    const _track = Timeservice.getRealtimeValue(track, rtTrack);
-
-    const delay = Timeservice.getDelayInMinutes(_date, _time);
-
-    return {
-      date: _date,
-      time: _time,
-      parsed: Timeservice.parseDateTime(_date.value, _time.value),
-      track: _track,
-      delay,
-    };
-  }
-
-  private static getDateDiffInSec = (start, end) => (end - start) / 1000 / 60;
+  private static getDateDiffInMin = (start: Date, end: Date) =>
+    Math.floor((end.valueOf() - start.valueOf()) / 1000 / 60);
 }
