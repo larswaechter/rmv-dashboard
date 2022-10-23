@@ -11,7 +11,11 @@ const headers = {
 export class RMVApi {
   private static RMV_URL = "https://www.rmv.de/hapi";
 
-  static getDepartureBoard(stop_id, date, time): Promise<IDepartureBoard> {
+  static getDepartureBoard(
+    stop_id: string,
+    date: string,
+    time: string
+  ): Promise<IDepartureBoard> {
     const url = `${RMVApi.RMV_URL}/departureBoard?`;
     Logger.debug(`[RMV] GET ${url}`);
 
@@ -37,7 +41,7 @@ export class RMVApi {
       });
   }
 
-  static searchStations(name): Promise<IStation> {
+  static searchStations(name: string): Promise<IStation> {
     const url = `${RMVApi.RMV_URL}/location.name?`;
     Logger.debug(`[RMV] GET ${url}`);
 
@@ -62,7 +66,7 @@ export class RMVApi {
       });
   }
 
-  static getJourneyDetails(id): Promise<IJourneyDetails> {
+  static getJourneyDetails(id: string): Promise<IJourneyDetails> {
     const url = `${RMVApi.RMV_URL}/journeyDetails?`;
     Logger.debug(`[RMV] GET ${url}`);
 

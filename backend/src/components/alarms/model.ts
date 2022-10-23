@@ -20,6 +20,13 @@ const Alarm = sequelize.define("Alarm", {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
   },
+  interval: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    validate: {
+      is: /^[0-7]$/g,
+    },
+  },
   autoremove: {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
@@ -31,6 +38,10 @@ const Alarm = sequelize.define("Alarm", {
   discord: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
+  },
+  active: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
   },
 });
 

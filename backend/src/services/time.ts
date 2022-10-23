@@ -1,13 +1,16 @@
-export interface RealtimeValue {
+import dayjs from "dayjs";
+
+export interface RTValue {
   value: string;
   original?: string;
 }
 
-export interface RTDate {
-  date: RealtimeValue;
-  time: RealtimeValue;
+export interface RTSchedule {
+  date: RTValue;
+  time: RTValue;
+  parsed: Date;
   delay: number;
-  track: RealtimeValue;
+  track: RTValue;
 }
 
 export class Timeservice {
@@ -17,7 +20,7 @@ export class Timeservice {
     value: string,
     rt: string,
     defaultVal?: string
-  ): RealtimeValue =>
+  ): RTValue =>
     Timeservice.hasRealtimeValue(value, rt)
       ? { value: rt, original: value }
       : { value: value !== undefined ? value : defaultVal };
@@ -36,7 +39,7 @@ export class Timeservice {
     );
   };
 
-  static getDelayInMinutes = (date: RealtimeValue, time: RealtimeValue) => {
+  static getDelayInMinutes = (date: RTValue, time: RTValue) => {
     if (!date.original && !time.original) return 0;
 
     const dateOriginal = date.original ? date.original : date.value;
@@ -51,6 +54,19 @@ export class Timeservice {
     );
   };
 
+  static getNextWorkingDay(date: Date) {
+    const datejs = dayjs(date);
+
+    switch (datejs.day()) {
+      case 5:
+        return datejs.add(3, "day");
+      case 6:
+        return datejs.add(2, "day");
+      default:
+        return datejs.add(1, "day");
+    }
+  }
+
   static buildRTDate(
     date: string,
     rtDate: string,
@@ -58,7 +74,7 @@ export class Timeservice {
     rtTime: string,
     track: string,
     rtTrack: string
-  ): RTDate {
+  ): RTSchedule {
     const _date = Timeservice.getRealtimeValue(date, rtDate);
     const _time = Timeservice.getRealtimeValue(time, rtTime);
     const _track = Timeservice.getRealtimeValue(track, rtTrack);
@@ -68,6 +84,7 @@ export class Timeservice {
     return {
       date: _date,
       time: _time,
+      parsed: Timeservice.parseDateTime(_date.value, _time.value),
       track: _track,
       delay,
     };

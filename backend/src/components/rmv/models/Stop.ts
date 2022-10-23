@@ -1,6 +1,11 @@
 import hash from "object-hash";
 
-import { RTDate, Timeservice } from "../../../services/time";
+import { RTSchedule, Timeservice } from "../../../services/time";
+
+type DateTime = {
+  date: string;
+  time: string;
+};
 
 export interface IStop {
   id: string;
@@ -18,13 +23,15 @@ export interface IStop {
   rtDepTime: string;
   depTrack: string;
   rtDepTrack: string;
+  depDir: string;
 }
 
 export class Stop {
   id: string;
   name: string;
-  arrival: RTDate;
-  departure: RTDate;
+  arrival?: RTSchedule;
+  departure?: RTSchedule;
+  departureDir?: string;
   index: number;
   isFirst: boolean;
   isLast: boolean;
@@ -35,28 +42,46 @@ export class Stop {
     stop.name = res.name;
     stop.index = res.routeIdx;
 
-    stop.arrival = Timeservice.buildRTDate(
-      res.arrDate,
-      res.rtArrDate,
-      res.arrTime,
-      res.rtArrTime,
-      res.arrTrack,
-      res.rtArrTrack
-    );
-
-    stop.departure = Timeservice.buildRTDate(
-      res.depDate,
-      res.rtDepDate,
-      res.depTime,
-      res.rtDepTime,
-      res.depTrack,
-      res.rtDepTrack
-    );
-
+    stop.departureDir = res.depDir;
     stop.isFirst = stop.index === 0;
     stop.isLast = stop.index === numberOfStops - 1;
 
+    if (!stop.isFirst)
+      stop.arrival = Timeservice.buildRTDate(
+        res.arrDate,
+        res.rtArrDate,
+        res.arrTime,
+        res.rtArrTime,
+        res.arrTrack,
+        res.rtArrTrack
+      );
+
+    if (!stop.isLast)
+      stop.departure = Timeservice.buildRTDate(
+        res.depDate,
+        res.rtDepDate,
+        res.depTime,
+        res.rtDepTime,
+        res.depTrack,
+        res.rtDepTrack
+      );
+
     return stop;
+  }
+
+  getOriginalDateTime(type: "arrival" | "departure"): DateTime {
+    switch (type) {
+      case "arrival":
+        return {
+          date: this.arrival.date.original || this.arrival.date.value,
+          time: this.arrival.time.original || this.arrival.time.value,
+        };
+      default:
+        return {
+          date: this.departure.date.original || this.departure.date.value,
+          time: this.departure.time.original || this.departure.time.value,
+        };
+    }
   }
 
   getScheduleHash() {
@@ -66,13 +91,15 @@ export class Stop {
     });
   }
 
+  getDateTime(): DateTime {
+    return this.isLast
+      ? this.getOriginalDateTime("arrival")
+      : this.getOriginalDateTime("departure");
+  }
+
   wasReached() {
-    return (
-      Timeservice.parseDateTime(
-        this.departure.date.value,
-        this.departure.time.value
-      ) < new Date()
-    );
+    const { date, time } = this.getDateTime();
+    return Timeservice.parseDateTime(date, time) < new Date();
   }
 
   buildDeviationMessages() {

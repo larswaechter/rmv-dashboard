@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("source-map-support").install();
 
 import { server } from "./app";
 import db from "./config/db";

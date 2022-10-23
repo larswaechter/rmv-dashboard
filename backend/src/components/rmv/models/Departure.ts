@@ -1,4 +1,4 @@
-import { RTDate, Timeservice } from "../../../services/time";
+import { RTSchedule, Timeservice } from "../../../services/time";
 
 import { IProduct } from "./Product";
 import { IJourneyDetailRef, IMessage, INote } from "./Misc";
@@ -33,9 +33,10 @@ export interface IDepartureBoard {
 export class Departure {
   name: string;
   direction: string;
-  departure: RTDate;
+  departure: RTSchedule;
   journeyRef: string;
   journeyStatus: string;
+  stopId: string;
   category: string;
   notes: string[];
 
@@ -61,8 +62,16 @@ export class Departure {
 
     departure.journeyRef = res.JourneyDetailRef.ref;
     departure.journeyStatus = res.JourneyStatus;
+    departure.stopId = res.stopid;
     departure.category = res.Product ? res.Product[0].catOut : "";
 
     return departure;
+  }
+
+  getOriginalDepartureTime() {
+    return {
+      date: this.departure.date.original || this.departure.date.value,
+      time: this.departure.time.original || this.departure.time.value,
+    };
   }
 }

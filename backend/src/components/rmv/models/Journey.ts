@@ -1,7 +1,11 @@
 import { Timeservice } from "../../../services/time";
+
+import { RMVApi } from "../api";
+
 import { IDirection } from "./Misc";
-import { IProduct, Product as RMVProduct } from "./Product";
 import { IStop, Stop } from "./Stop";
+import { Departure } from "./Departure";
+import { IProduct, Product as RMVProduct } from "./Product";
 
 export interface IJourneyDetails {
   JourneyStatus: string;
@@ -68,5 +72,32 @@ export class Journey {
     }
 
     return idx;
+  }
+
+  async getContinualDeparture(station_id: string) {
+    const station = this.getStopByID(station_id);
+    if (!station) return undefined;
+
+    const { date, time } = station.getDateTime();
+
+    const newDate = Timeservice.getNextWorkingDay(
+      Timeservice.parseDateTime(date, time)
+    ).format("YYYY-MM-DD");
+
+    const board = await RMVApi.getDepartureBoard(station.id, newDate, time);
+
+    const departures = Departure.ofDepartureBoard(board);
+    const departure = departures.find((dep) => {
+      const depTime = dep.getOriginalDepartureTime();
+
+      return (
+        dep.stopId === station_id &&
+        dep.direction === station.departureDir &&
+        depTime.date === newDate &&
+        depTime.time === time
+      );
+    });
+
+    return departure;
   }
 }

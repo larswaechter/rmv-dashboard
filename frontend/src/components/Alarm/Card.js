@@ -50,10 +50,10 @@ const AlarmCard = ({ alarm, afterDelete }) => {
   };
 
   const getChip = () => {
-    if (details.stop.departure.delay || details.stop.arrival.delay)
+    if (details.stop.departure?.delay || details.stop.arrival?.delay)
       return <Chip label="DELAY" color="error" variant="outlined" />;
 
-    if (details.stop.departure.track.original)
+    if (details.stop.departure?.track.original)
       return <Chip label="TRACK CHANGE" color="warning" variant="outlined" />;
 
     return <Chip label="ONTIME" color="success" variant="outlined" />;
@@ -102,7 +102,7 @@ const AlarmCard = ({ alarm, afterDelete }) => {
           {details.stop.name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {details.products[0].name} {details.direction}
+          {details.products[0].name} {details.directions[0].value}
         </Typography>
         <JourneyStopTimes stop={details.stop} />
       </CardContent>

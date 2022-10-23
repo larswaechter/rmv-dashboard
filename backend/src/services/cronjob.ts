@@ -1,5 +1,6 @@
 import cron from "node-cron";
 import WebSocket from "ws";
+import dayjs from "dayjs";
 import { Model } from "sequelize";
 
 import { wsserver } from "../app";
@@ -10,8 +11,8 @@ import { WebSocketEvents } from "../config/ws";
 import { Alarm, AlarmHistory } from "../components/alarms/model";
 import { RMVApi } from "../components/rmv/api";
 import { Journey } from "../components/rmv/models/Journey";
-import { TelegramBot } from "../config/bots/telegram";
-import { DiscordBot } from "../config/bots/discord";
+import { TelegramBot } from "../config/bots/Telegram";
+import { DiscordBot } from "../config/bots/Discord";
 import { IDirection } from "../components/rmv/models/Misc";
 import { Product } from "../components/rmv/models/Product";
 import { Stop } from "../components/rmv/models/Stop";
@@ -30,11 +31,26 @@ cron.schedule("*/15 * * * * *", async () => {
   try {
     Logger.info("[CRONJOB] Starting");
 
-    const alarms = await Alarm.findAll();
     const scheduleChanges: IScheduleChange[] = [];
+    const alarms = await Alarm.findAll({
+      /*
+      where: {
+        active: true,
+      },
+      */
+    });
 
     for (const alarm of alarms) {
-      const { id, journeyRef, station_id, autoremove, smartmode } = alarm.get();
+      const {
+        id,
+        journeyRef,
+        station_id,
+        autoremove,
+        smartmode,
+        interval,
+        telegram,
+        discord,
+      } = alarm.get();
 
       const journeyDetails = await RMVApi.getJourneyDetails(journeyRef);
       const journey = Journey.ofJourneyDetails(journeyDetails);
@@ -46,13 +62,56 @@ cron.schedule("*/15 * * * * *", async () => {
         continue;
       }
 
-      if (autoremove && stop.wasReached()) {
-        await Alarm.destroy({
-          where: {
-            id,
-            autoremove: true,
-          },
-        });
+      const stopDate = stop.getDateTime().date;
+
+      if (stop.wasReached()) {
+        // Interval enabled && stop is in futre
+        if (interval > 0 && dayjs(stopDate).isAfter(dayjs())) {
+          Logger.debug(`[CRONJOB] Searching continual departure: ${stop.id}`);
+
+          const next = await journey.getContinualDeparture(station_id);
+          if (next) {
+            const existing = await Alarm.findOne({
+              where: {
+                station_id,
+                journeyRef: next.journeyRef,
+              },
+            });
+            if (!existing) {
+              Logger.info(`[CRONJOB] Saving continual departure: ${stop.id}`);
+              await Alarm.create({
+                journeyRef: next.journeyRef,
+                station_id,
+                autoremove,
+                telegram,
+                discord,
+                interval,
+              });
+            }
+          } else
+            Logger.info(`[CRONJOB] No continual departure found: ${stop.id}`);
+        }
+
+        // Delete / Set inactive
+        if (autoremove)
+          await Alarm.destroy({
+            where: {
+              id,
+              autoremove: true,
+            },
+          });
+        else {
+          Alarm.update(
+            {
+              active: false,
+            },
+            {
+              where: {
+                id,
+              },
+            }
+          );
+        }
       } else if (stop.hasScheduleChange()) {
         const scheduleHash = stop.getScheduleHash();
         const history = await AlarmHistory.findOne({
@@ -74,14 +133,7 @@ cron.schedule("*/15 * * * * *", async () => {
             product: journey.products[0],
           });
 
-          if (!history)
-            await AlarmHistory.create({
-              AlarmId: id,
-              journeyRef,
-              station_id,
-              scheduleHash,
-            });
-          else
+          if (history)
             await AlarmHistory.update(
               { scheduleHash },
               {
@@ -91,6 +143,13 @@ cron.schedule("*/15 * * * * *", async () => {
                 },
               }
             );
+          else
+            await AlarmHistory.create({
+              AlarmId: id,
+              journeyRef,
+              station_id,
+              scheduleHash,
+            });
         }
       }
     }

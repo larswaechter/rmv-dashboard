@@ -198,7 +198,7 @@ const StationBoard = ({ station, afterDelete }) => {
         ampm={false}
         onChange={(val) => setDatetime(val)}
         onAccept={() => fetchData()}
-        inputFormat="DD.MM HH:MM"
+        inputFormat="DD.MM HH:mm"
         renderInput={(params) => (
           <TextField sx={{ width: 290 }} size="small" {...params} />
         )}

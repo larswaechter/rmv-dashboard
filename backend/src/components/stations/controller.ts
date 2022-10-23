@@ -45,8 +45,8 @@ export class StationsController {
 
       const board = await RMVApi.getDepartureBoard(
         station.getDataValue("station_id"),
-        date,
-        time
+        date as string,
+        time as string
       );
 
       const prepared = Departure.ofDepartureBoard(board);
@@ -63,7 +63,7 @@ export class StationsController {
       const { name } = req.query;
       if (!name) return res.sendStatus(400);
 
-      const stations = await RMVApi.searchStations(name);
+      const stations = await RMVApi.searchStations(name as string);
       const prepared = stations.stopLocationOrCoordLocation.map((location) =>
         RMVStation.ofResponse(location.StopLocation)
       );

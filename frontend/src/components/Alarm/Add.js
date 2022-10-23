@@ -33,6 +33,9 @@ const AlarmAdd = ({ handleClose }) => {
   const [stops, setStops] = useState([]);
   const [autoremove, setAutoremove] = useState(true);
   const [smartmode, setSmartmode] = useState(true);
+  const [continual, setContinual] = useState(false);
+  const [interval, setInterval] = useState(1);
+
   const [telegram, setTelegram] = useState(false);
   const [discord, setDiscord] = useState(false);
   const [journeyRef, setJourneyRef] = useState("");
@@ -47,6 +50,8 @@ const AlarmAdd = ({ handleClose }) => {
       const newAlarm = await createAlarm({
         journeyRef,
         station_id: stop,
+        interval: continual ? interval : 0,
+        smartmode,
         autoremove,
         telegram,
         discord,
@@ -84,12 +89,7 @@ const AlarmAdd = ({ handleClose }) => {
 
   return (
     <Box sx={style} component="form" onSubmit={handleSave}>
-      <Typography
-        id="modal-modal-title"
-        variant="h6"
-        component="h2"
-        marginBottom={"16px"}
-      >
+      <Typography variant="h6" component="h2" marginBottom={"16px"}>
         Add alarm
       </Typography>
       <Stack spacing={2}>
@@ -105,10 +105,10 @@ const AlarmAdd = ({ handleClose }) => {
 
         {stops.length > 0 && (
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Stops</InputLabel>
+            <InputLabel id="stops">Stops</InputLabel>
             <Select
               required
-              labelId="demo-simple-select-label"
+              labelId="stops"
               id="demo-simple-select"
               value={stop}
               label="Stops"
@@ -124,6 +124,35 @@ const AlarmAdd = ({ handleClose }) => {
         )}
 
         <FormGroup>
+          <Typography variant="subtitle1" gutterBottom>
+            Options
+          </Typography>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={continual}
+                onChange={(e) => setContinual(e.target.checked)}
+              />
+            }
+            label="Continual"
+            title="..."
+          />
+
+          {continual && (
+            <TextField
+              required
+              id="interval"
+              label="Day Interval"
+              variant="outlined"
+              value={interval}
+              onChange={(e) => setInterval(+e.target.value)}
+              size="small"
+              type="number"
+              InputProps={{ inputProps: { min: 1, max: 7 } }}
+              sx={{ marginY: 1 }}
+            />
+          )}
+
           <FormControlLabel
             control={
               <Switch
