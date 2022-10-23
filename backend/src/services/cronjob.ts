@@ -47,7 +47,7 @@ cron.schedule("*/15 * * * * *", async () => {
       }
 
       if (autoremove && stop.wasReached()) {
-        Alarm.destroy({
+        await Alarm.destroy({
           where: {
             id,
             autoremove: true,
@@ -76,6 +76,7 @@ cron.schedule("*/15 * * * * *", async () => {
 
           if (!history)
             await AlarmHistory.create({
+              AlarmId: id,
               journeyRef,
               station_id,
               scheduleHash,

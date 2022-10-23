@@ -1,7 +1,8 @@
 import { DataTypes } from "sequelize";
+
 import sequelize from "../../config/db";
 
-export const Alarm = sequelize.define("Alarm", {
+const Alarm = sequelize.define("Alarm", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -33,7 +34,7 @@ export const Alarm = sequelize.define("Alarm", {
   },
 });
 
-export const AlarmHistory = sequelize.define("AlarmHistory", {
+const AlarmHistory = sequelize.define("AlarmHistory", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -52,3 +53,12 @@ export const AlarmHistory = sequelize.define("AlarmHistory", {
     allowNull: false,
   },
 });
+
+Alarm.hasOne(AlarmHistory, {
+  onDelete: "CASCADE",
+  foreignKey: {
+    allowNull: false,
+  },
+});
+
+export { Alarm, AlarmHistory };
