@@ -2,6 +2,8 @@
 
 A self-hosted web app for displaying public transport information like train & bus using the [RMV Open Data](https://opendata.rmv.de/site/start.html) API.
 
+[![CI/CD](https://github.com/larswaechter/rmv-dashboard/actions/workflows/tests.yml/badge.svg)](https://github.com/larswaechter/rmv-dashboard/actions/workflows/tests.yml)
+
 ![Preview](https://user-images.githubusercontent.com/11744028/196059284-17f40ac5-c390-4168-b243-00bf539f55a1.png)
 
 ## Description
