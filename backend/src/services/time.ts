@@ -54,17 +54,31 @@ export class Timeservice {
     );
   };
 
-  static getNextWorkingDay(date: Date) {
+  static addDays(date: Date, n: number) {
     const datejs = dayjs(date);
 
-    switch (datejs.day()) {
-      case 5:
-        return datejs.add(3, "day");
+    // Exception on weekend
+    if (n % 7 === 0 && [0, 6].includes(datejs.day())) return datejs.add(n);
+
+    const daysToAdd = Math.min(n, 7);
+    const remainder = n - daysToAdd;
+
+    let newDate = datejs.add(daysToAdd, "day");
+
+    // Number of passed working days
+    const passed = Math.max(5 - newDate.day(), 0);
+    switch (newDate.day()) {
+      case 0:
+        newDate = newDate.add(daysToAdd - passed);
+        break;
       case 6:
-        return datejs.add(2, "day");
-      default:
-        return datejs.add(1, "day");
+        newDate = newDate.add(1 + daysToAdd - passed);
+        break;
     }
+
+    return remainder > 0
+      ? Timeservice.addDays(newDate.toDate(), remainder)
+      : newDate;
   }
 
   static buildRTDate(

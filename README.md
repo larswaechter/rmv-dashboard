@@ -8,6 +8,8 @@ A self-hosted web app for displaying public transport information like train & b
 
 ...
 
+Read more in the [Wiki](https://github.com/larswaechter/rmv-dashboard/wiki).
+
 ## Technology
 
 - Backend

@@ -74,14 +74,15 @@ export class Journey {
     return idx;
   }
 
-  async getContinualDeparture(station_id: string) {
+  async getContinualDeparture(station_id: string, days: number) {
     const station = this.getStopByID(station_id);
     if (!station) return undefined;
 
     const { date, time } = station.getDateTime();
 
-    const newDate = Timeservice.getNextWorkingDay(
-      Timeservice.parseDateTime(date, time)
+    const newDate = Timeservice.addDays(
+      Timeservice.parseDateTime(date, time),
+      days
     ).format("YYYY-MM-DD");
 
     const board = await RMVApi.getDepartureBoard(station.id, newDate, time);

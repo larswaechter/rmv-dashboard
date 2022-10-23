@@ -65,11 +65,14 @@ cron.schedule("*/15 * * * * *", async () => {
       const stopDate = stop.getDateTime().date;
 
       if (stop.wasReached()) {
-        // Interval enabled && stop is in futre
+        // Interval set && stop is in future
         if (interval > 0 && dayjs(stopDate).isAfter(dayjs())) {
           Logger.debug(`[CRONJOB] Searching continual departure: ${stop.id}`);
 
-          const next = await journey.getContinualDeparture(station_id);
+          const next = await journey.getContinualDeparture(
+            station_id,
+            interval
+          );
           if (next) {
             const existing = await Alarm.findOne({
               where: {
