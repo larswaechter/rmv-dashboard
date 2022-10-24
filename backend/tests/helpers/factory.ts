@@ -7,7 +7,7 @@ import supertest from "supertest";
 import { createServer, Server as HttpServer } from "http";
 
 import { Server } from "../../src/server";
-import sequelize from "../../src/config/db";
+import db from "../../src/config/db";
 
 export class TestFactory {
   private readonly server: Server;
@@ -23,10 +23,15 @@ export class TestFactory {
   }
 
   prepare(cb: (err?: Error) => void) {
-    sequelize
-      .authenticate()
+    db.authenticate()
       .then(() => {
-        this.http.listen(process.env.NODE_PORT, cb);
+        db.sync()
+          .then(() => {
+            this.http.listen(process.env.NODE_PORT, cb);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       })
       .catch((err) => {
         console.error(err);

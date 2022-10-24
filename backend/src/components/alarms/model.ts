@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 
-import sequelize from "../../config/db";
+import db from "../../config/db";
 
-const Alarm = sequelize.define("Alarm", {
+const Alarm = db.define("Alarm", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -45,7 +45,7 @@ const Alarm = sequelize.define("Alarm", {
   },
 });
 
-const AlarmHistory = sequelize.define("AlarmHistory", {
+const AlarmHistory = db.define("AlarmHistory", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,

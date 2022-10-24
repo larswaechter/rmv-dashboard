@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../../config/db";
+import db from "../../config/db";
 
-const Settings = sequelize.define("Settings", {
+const Settings = db.define("Settings", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,

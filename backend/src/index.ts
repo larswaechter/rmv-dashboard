@@ -10,18 +10,24 @@ import Logger from "./config/logger";
 
 db.authenticate()
   .then(() => {
-    const server = new Server();
-    const httpServer = createServer(server.app);
+    db.sync()
+      .then(() => {
+        const server = new Server();
+        const httpServer = createServer(server.app);
 
-    Server.wss = new WebSocketServer({
-      path: "/websocket",
-      server: httpServer,
-    });
+        Server.wss = new WebSocketServer({
+          path: "/websocket",
+          server: httpServer,
+        });
 
-    httpServer.listen(5000, () => {
-      require("./services/cronjob");
-      Logger.info("rmv-backend is listening on port 5000");
-    });
+        httpServer.listen(5000, () => {
+          require("./services/cronjob");
+          Logger.info("rmv-backend is listening on port 5000");
+        });
+      })
+      .catch((err) => {
+        Logger.error(err);
+      });
   })
   .catch((err) => {
     Logger.error(err);
