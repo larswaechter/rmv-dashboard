@@ -3,8 +3,6 @@ import WebSocket from "ws";
 import dayjs from "dayjs";
 import { Model } from "sequelize";
 
-import { wsserver } from "../app";
-
 import Logger from "../config/logger";
 import { WebSocketEvents } from "../config/ws";
 
@@ -16,6 +14,7 @@ import { DiscordBot } from "../config/bots/Discord";
 import { IDirection } from "../components/rmv/models/Misc";
 import { Product } from "../components/rmv/models/Product";
 import { Stop } from "../components/rmv/models/Stop";
+import { Server } from "../server";
 
 export interface IScheduleChange {
   stop: Stop;
@@ -33,11 +32,9 @@ cron.schedule("*/15 * * * * *", async () => {
 
     const scheduleChanges: IScheduleChange[] = [];
     const alarms = await Alarm.findAll({
-      /*
       where: {
         active: true,
       },
-      */
     });
 
     for (const alarm of alarms) {
@@ -159,13 +156,13 @@ cron.schedule("*/15 * * * * *", async () => {
 
     if (scheduleChanges.length) {
       Logger.info(
-        `[CRONJOB] Sending ${scheduleChanges.length} schedule changes to ${wsserver.clients.size} WebSocket clients`
+        `[CRONJOB] Sending ${scheduleChanges.length} schedule changes to ${Server.wss.clients.size} WebSocket clients`
       );
 
       /**
        * WebSocket
        */
-      wsserver.clients.forEach((client) => {
+      Server.wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
           client.send(
             JSON.stringify({

@@ -1,4 +1,4 @@
-import { RTValue, Timeservice } from "../src/services/time";
+import { RTValue, Timeservice } from "../../src/services/time";
 
 describe("Timeservice", () => {
   it("hasRealtimeValue", () => {
