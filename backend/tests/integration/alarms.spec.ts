@@ -44,7 +44,7 @@ describe("Alarms component", () => {
         expect(alarm).to.be.an("object");
         expect(alarm.id).eq(1);
         expect(alarm.journeyRef).eq(factory.dummyAlarm.journeyRef);
-        expect(alarm.station_id).eq(factory.dummyAlarm.station_id);
+        expect(alarm.stationId).eq(factory.dummyAlarm.stationId);
         expect(alarm.smartmode).eq(factory.dummyAlarm.smartmode);
         expect(alarm.interval).eq(factory.dummyAlarm.interval);
         expect(alarm.autoremove).eq(factory.dummyAlarm.autoremove);
@@ -70,7 +70,7 @@ describe("Alarms component", () => {
         expect(alarm).to.be.an("object");
         expect(alarm.id).eq(1);
         expect(alarm.journeyRef).eq(factory.dummyAlarm.journeyRef);
-        expect(alarm.station_id).eq(factory.dummyAlarm.station_id);
+        expect(alarm.stationId).eq(factory.dummyAlarm.stationId);
         expect(alarm.smartmode).eq(factory.dummyAlarm.smartmode);
         expect(alarm.interval).eq(factory.dummyAlarm.interval);
         expect(alarm.autoremove).eq(factory.dummyAlarm.autoremove);

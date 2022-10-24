@@ -15,7 +15,7 @@ class Alarm extends Model<
 > {
   declare id: CreationOptional<number>;
   declare journeyRef: string;
-  declare station_id: string;
+  declare stationId: string;
   declare smartmode: boolean;
   declare interval: number;
   declare autoremove: boolean;
@@ -37,7 +37,7 @@ Alarm.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    station_id: {
+    stationId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -84,7 +84,7 @@ class AlarmHistory extends Model<
   declare id: CreationOptional<number>;
   declare alarmId: ForeignKey<Alarm["id"]>;
   declare journeyRef: string;
-  declare station_id: string;
+  declare stationId: string;
   declare scheduleHash: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -101,7 +101,7 @@ AlarmHistory.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    station_id: {
+    stationId: {
       type: DataTypes.STRING,
       allowNull: false,
     },

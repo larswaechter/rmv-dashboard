@@ -1,0 +1,1066 @@
+[
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06534018",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06534018"
+        }
+      ]
+    },
+    "altId": ["A×de:06534:11076"],
+    "name": "Stadtallendorf Bahnhof",
+    "id": "A=1@O=Stadtallendorf Bahnhof@X=9014634@Y=50824480@U=80@L=3011076@",
+    "extId": "3011076",
+    "routeIdx": 0,
+    "lon": 9.014634,
+    "lat": 50.82448,
+    "depPrognosisType": "PROGNOSED",
+    "depTime": "14:28:00",
+    "depDate": "2022-10-16",
+    "depTrack": "3",
+    "depDir": "Frankfurt (Main) Hauptbahnhof"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06534011",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06534011"
+        }
+      ]
+    },
+    "altId": ["A×de:06534:11077"],
+    "name": "Kirchhain Bahnhof",
+    "id": "A=1@O=Kirchhain Bahnhof@X=8924320@Y=50823680@U=80@L=3011077@",
+    "extId": "3011077",
+    "routeIdx": 1,
+    "lon": 8.92432,
+    "lat": 50.82368,
+    "depTime": "14:34:00",
+    "depDate": "2022-10-16",
+    "arrTime": "14:34:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "5",
+    "depTrack": "5"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06534011",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06534011"
+        }
+      ]
+    },
+    "altId": ["A×de:06534:11078"],
+    "name": "Kirchhain-Anzefahr Bahnhof",
+    "id": "A=1@O=Kirchhain-Anzefahr Bahnhof@X=8860658@Y=50845793@U=80@L=3011078@",
+    "extId": "3011078",
+    "routeIdx": 2,
+    "lon": 8.859678,
+    "lat": 50.845685,
+    "depTime": "14:38:00",
+    "rtDepTime": "14:45:00",
+    "depDate": "2050-10-16",
+    "arrTime": "14:37:00",
+    "rtArrTime": "14:40:00",
+    "arrDate": "2050-10-16",
+    "arrTrack": "1",
+    "rtArrTrack": "2",
+    "depTrack": "1",
+    "rtDepTrack": "3"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06534006",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06534006"
+        }
+      ]
+    },
+    "altId": ["A×de:06534:11079"],
+    "name": "Cölbe-Bürgeln Bahnhof",
+    "id": "A=1@O=Cölbe-Bürgeln Bahnhof@X=8817923@Y=50853236@U=80@L=3011079@",
+    "extId": "3011079",
+    "routeIdx": 3,
+    "lon": 8.817923,
+    "lat": 50.853236,
+    "depTime": "14:41:00",
+    "depDate": "2022-10-16",
+    "arrTime": "14:40:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "1",
+    "depTrack": "1"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06534006",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06534006"
+        }
+      ]
+    },
+    "altId": ["A×de:06534:11080"],
+    "name": "Cölbe Bahnhof",
+    "id": "A=1@O=Cölbe Bahnhof@X=8786533@Y=50848517@U=80@L=3011080@",
+    "extId": "3011080",
+    "routeIdx": 4,
+    "lon": 8.786533,
+    "lat": 50.848517,
+    "depTime": "14:44:00",
+    "depDate": "2022-10-16",
+    "arrTime": "14:43:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "3",
+    "depTrack": "3"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06534014",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06534014"
+        }
+      ]
+    },
+    "altId": ["A×de:06534:10011"],
+    "name": "Marburg Hauptbahnhof",
+    "id": "A=1@O=Marburg Hauptbahnhof@X=8774011@Y=50819257@U=80@L=3010011@",
+    "extId": "3010011",
+    "routeIdx": 5,
+    "lon": 8.774011,
+    "lat": 50.819257,
+    "depTime": "14:49:00",
+    "depDate": "2022-10-16",
+    "arrTime": "14:48:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "4",
+    "depTrack": "4"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06534014",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06534014"
+        }
+      ]
+    },
+    "altId": ["A×de:06534:11323"],
+    "name": "Marburg Südbahnhof",
+    "id": "A=1@O=Marburg Südbahnhof@X=8763548@Y=50794869@U=80@L=3011323@",
+    "extId": "3011323",
+    "routeIdx": 6,
+    "lon": 8.763548,
+    "lat": 50.794869,
+    "depTime": "14:52:00",
+    "depDate": "2022-10-16",
+    "arrTime": "14:52:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "1",
+    "depTrack": "1"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06534020",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06534020"
+        }
+      ]
+    },
+    "altId": ["A×de:06534:11082"],
+    "name": "Weimar-Niederweimar Bahnhof",
+    "id": "A=1@O=Weimar-Niederweimar Bahnhof@X=8733901@Y=50756980@U=80@L=3011082@",
+    "extId": "3011082",
+    "routeIdx": 7,
+    "lon": 8.733901,
+    "lat": 50.75698,
+    "depTime": "14:56:00",
+    "depDate": "2022-10-16",
+    "arrTime": "14:55:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "1",
+    "depTrack": "1"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06534020",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06534020"
+        }
+      ]
+    },
+    "altId": ["A×de:06534:11083"],
+    "name": "Weimar-Niederwalgern Bahnhof",
+    "id": "A=1@O=Weimar-Niederwalgern Bahnhof@X=8707689@Y=50736574@U=80@L=3011083@",
+    "extId": "3011083",
+    "routeIdx": 8,
+    "lon": 8.707689,
+    "lat": 50.736574,
+    "depTime": "15:00:00",
+    "depDate": "2022-10-16",
+    "arrTime": "14:59:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "1",
+    "depTrack": "1"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06534009",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06534009"
+        }
+      ]
+    },
+    "altId": ["A×de:06534:11084"],
+    "name": "Fronhausen Bahnhof",
+    "id": "A=1@O=Fronhausen Bahnhof@X=8699140@Y=50706110@U=80@L=3011084@",
+    "extId": "3011084",
+    "routeIdx": 9,
+    "lon": 8.69914,
+    "lat": 50.70611,
+    "depTime": "15:03:00",
+    "depDate": "2022-10-16",
+    "arrTime": "15:03:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "1",
+    "depTrack": "1"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06531013",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06531013"
+        }
+      ]
+    },
+    "altId": ["A×de:06531:11011"],
+    "name": "Lollar-Odenhausen Friedelhausen Bf",
+    "id": "A=1@O=Lollar-Odenhausen Friedelhausen Bf@X=8710988@Y=50671924@U=80@L=3011011@",
+    "extId": "3011011",
+    "routeIdx": 10,
+    "lon": 8.710988,
+    "lat": 50.671924,
+    "depTime": "15:06:00",
+    "depDate": "2022-10-16",
+    "arrTime": "15:06:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "1",
+    "depTrack": "1"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06531013",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06531013"
+        }
+      ]
+    },
+    "altId": ["A×de:06531:11085"],
+    "name": "Lollar Bahnhof",
+    "id": "A=1@O=Lollar Bahnhof@X=8701585@Y=50647958@U=80@L=3011085@",
+    "extId": "3011085",
+    "routeIdx": 11,
+    "lon": 8.701585,
+    "lat": 50.647958,
+    "depTime": "15:09:00",
+    "depDate": "2022-10-16",
+    "arrTime": "15:09:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "1",
+    "depTrack": "1"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06531005",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06531005"
+        }
+      ]
+    },
+    "altId": ["A×de:06531:14672"],
+    "name": "Gießen Oswaldsgarten",
+    "id": "A=1@O=Gießen Oswaldsgarten@X=8670150@Y=50586958@U=80@L=3014672@",
+    "extId": "3014672",
+    "routeIdx": 12,
+    "lon": 8.67015,
+    "lat": 50.586958,
+    "depTime": "15:15:00",
+    "depDate": "2022-10-16",
+    "arrTime": "15:14:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "1",
+    "depTrack": "1"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06531005",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06531005"
+        }
+      ]
+    },
+    "altId": ["A×de:06531:11016"],
+    "name": "Gießen Bahnhof",
+    "id": "A=1@O=Gießen Bahnhof@X=8663803@Y=50579883@U=80@L=3011016@",
+    "extId": "3011016",
+    "routeIdx": 13,
+    "lon": 8.663803,
+    "lat": 50.579883,
+    "depTime": "15:22:00",
+    "depDate": "2022-10-16",
+    "arrTime": "15:18:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "4",
+    "depTrack": "4"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06440005",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06440005"
+        }
+      ]
+    },
+    "altId": ["A×de:06440:11133"],
+    "name": "Butzbach Bahnhof",
+    "id": "A=1@O=Butzbach Bahnhof@X=8669664@Y=50430752@U=80@L=3011133@",
+    "extId": "3011133",
+    "routeIdx": 14,
+    "lon": 8.669664,
+    "lat": 50.430752,
+    "depTime": "15:33:00",
+    "depDate": "2022-10-16",
+    "arrTime": "15:32:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "2",
+    "depTrack": "2"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06440002",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06440002"
+        }
+      ]
+    },
+    "altId": ["A×de:06440:11135"],
+    "name": "Bad Nauheim Bahnhof",
+    "id": "A=1@O=Bad Nauheim Bahnhof@X=8748320@Y=50367792@U=80@L=3011135@",
+    "extId": "3011135",
+    "routeIdx": 15,
+    "lon": 8.74832,
+    "lat": 50.367792,
+    "depTime": "15:39:00",
+    "depDate": "2022-10-16",
+    "arrTime": "15:38:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "1",
+    "depTrack": "1"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06440008",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06440008"
+        }
+      ]
+    },
+    "altId": ["A×de:06440:6401"],
+    "name": "Friedberg (Hessen) Bahnhof",
+    "id": "A=1@O=Friedberg (Hessen) Bahnhof@X=8761247@Y=50332743@U=80@L=3006401@",
+    "extId": "3006401",
+    "routeIdx": 16,
+    "lon": 8.761247,
+    "lat": 50.332743,
+    "depTime": "15:43:00",
+    "depDate": "2022-10-16",
+    "arrTime": "15:42:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "2",
+    "depTrack": "2"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "V0",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06412000",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06412000"
+        }
+      ]
+    },
+    "altId": ["A×de:06412:1204"],
+    "name": "Frankfurt (Main) Westbahnhof",
+    "id": "A=1@O=Frankfurt (Main) Westbahnhof@X=8639452@Y=50119447@U=80@L=3001204@",
+    "extId": "3001204",
+    "routeIdx": 17,
+    "lon": 8.639452,
+    "lat": 50.119447,
+    "depTime": "16:11:00",
+    "depDate": "2022-10-16",
+    "arrTime": "16:10:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "5",
+    "depTrack": "5"
+  },
+  {
+    "Notes": {
+      "Note": [
+        {
+          "value": "",
+          "key": "HB",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HE",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HI",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "HT",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "IS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "V0",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "",
+          "key": "WS",
+          "type": "A",
+          "txtN": ""
+        },
+        {
+          "value": "06412000",
+          "key": "GK",
+          "type": "I",
+          "txtN": "06412000"
+        }
+      ]
+    },
+    "altId": ["A×de:06412:10"],
+    "name": "Frankfurt (Main) Hauptbahnhof",
+    "id": "A=1@O=Frankfurt (Main) Hauptbahnhof@X=8663758@Y=50107158@U=80@L=3000010@",
+    "extId": "3000010",
+    "routeIdx": 18,
+    "lon": 8.663758,
+    "lat": 50.107158,
+    "arrPrognosisType": "PROGNOSED",
+    "arrTime": "16:15:00",
+    "arrDate": "2022-10-16",
+    "arrTrack": "14"
+  }
+]

@@ -25,7 +25,7 @@ export class TestFactory {
 
   dummyAlarm = {
     journeyRef: "MyJourneyRef",
-    station_id: "MyStationID",
+    stationId: "MyStationID",
     smartmode: false,
     interval: 5,
     autoremove: false,
@@ -36,7 +36,7 @@ export class TestFactory {
 
   dummyStation = {
     name: "Frankfurt Hauptbahnhof",
-    station_id: "MyStationID",
+    stationId: "MyStationID",
   };
 
   prepare(cb: (err?: Error) => void) {

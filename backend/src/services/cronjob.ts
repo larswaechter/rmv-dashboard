@@ -41,7 +41,7 @@ cron.schedule("*/15 * * * *", async () => {
       const {
         id,
         journeyRef,
-        station_id,
+        stationId,
         autoremove,
         smartmode,
         interval,
@@ -52,28 +52,25 @@ cron.schedule("*/15 * * * *", async () => {
       const journeyDetails = await RMVApi.getJourneyDetails(journeyRef);
       const journey = Journey.ofJourneyDetails(journeyDetails);
 
-      const stop = journey.getStopByID(station_id);
+      const stop = journey.getStopByID(stationId);
 
       if (!stop) {
         Logger.error(`[CRONJOB] Stop ${stop.id} not found in API response`);
         continue;
       }
 
-      const stopDate = stop.getDateTime().date;
+      const stopDate = stop.getOriginalDateTimeOrFallback().date;
 
       if (stop.wasReached()) {
         // Interval set && stop is in future
         if (interval > 0 && dayjs(stopDate).isAfter(dayjs())) {
           Logger.debug(`[CRONJOB] Searching continual departure: ${stop.id}`);
 
-          const next = await journey.getContinualDeparture(
-            station_id,
-            interval
-          );
+          const next = await journey.getContinualDeparture(stationId, interval);
           if (next) {
             const existing = await Alarm.findOne({
               where: {
-                station_id,
+                stationId,
                 journeyRef: next.journeyRef,
               },
             });
@@ -81,7 +78,7 @@ cron.schedule("*/15 * * * *", async () => {
               Logger.info(`[CRONJOB] Saving continual departure: ${stop.id}`);
               await Alarm.create({
                 journeyRef: next.journeyRef,
-                station_id,
+                stationId,
                 autoremove,
                 telegram,
                 discord,
@@ -117,7 +114,7 @@ cron.schedule("*/15 * * * *", async () => {
         const history = await AlarmHistory.findOne({
           where: {
             journeyRef,
-            station_id,
+            stationId,
           },
         });
 
@@ -139,7 +136,7 @@ cron.schedule("*/15 * * * *", async () => {
               {
                 where: {
                   journeyRef,
-                  station_id,
+                  stationId,
                 },
               }
             );
@@ -147,7 +144,7 @@ cron.schedule("*/15 * * * *", async () => {
             await AlarmHistory.create({
               alarmId: id,
               journeyRef,
-              station_id,
+              stationId,
               scheduleHash,
             });
         }

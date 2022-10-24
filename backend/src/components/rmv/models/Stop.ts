@@ -69,21 +69,6 @@ export class Stop {
     return stop;
   }
 
-  getOriginalDateTime(type: "arrival" | "departure"): DateTime {
-    switch (type) {
-      case "arrival":
-        return {
-          date: this.arrival.date.original || this.arrival.date.value,
-          time: this.arrival.time.original || this.arrival.time.value,
-        };
-      default:
-        return {
-          date: this.departure.date.original || this.departure.date.value,
-          time: this.departure.time.original || this.departure.time.value,
-        };
-    }
-  }
-
   getScheduleHash() {
     return hash({
       arrival: this.arrival,
@@ -91,14 +76,14 @@ export class Stop {
     });
   }
 
-  getDateTime(): DateTime {
+  getOriginalDateTimeOrFallback(): DateTime {
     return this.isLast
-      ? this.getOriginalDateTime("arrival")
-      : this.getOriginalDateTime("departure");
+      ? this.getDateTimeByType("arrival")
+      : this.getDateTimeByType("departure");
   }
 
   wasReached() {
-    const { date, time } = this.getDateTime();
+    const { date, time } = this.getOriginalDateTimeOrFallback();
     return Timeservice.parseDateTime(date, time) < new Date();
   }
 
@@ -155,22 +140,37 @@ export class Stop {
   }
 
   hasArrivalDelay() {
-    return this.arrival.delay > 0;
+    return !this.isFirst && this.arrival.delay > 0;
   }
 
   hasDepartureDelay() {
-    return this.departure.delay > 0;
+    return !this.isLast && this.departure.delay > 0;
   }
 
   hasTrackChange() {
-    this.hasArrivalTrackChange() || this.hasDepartureTrackChange();
+    return this.hasArrivalTrackChange() || this.hasDepartureTrackChange();
   }
 
   hasArrivalTrackChange() {
-    return this.arrival.track.original !== undefined;
+    return !this.isFirst && this.arrival.track.original !== undefined;
   }
 
   hasDepartureTrackChange() {
-    return this.departure.track.original !== undefined;
+    return !this.isLast && this.departure.track.original !== undefined;
+  }
+
+  private getDateTimeByType(type: "arrival" | "departure"): DateTime {
+    switch (type) {
+      case "arrival":
+        return {
+          date: this.arrival.date.original || this.arrival.date.value,
+          time: this.arrival.time.original || this.arrival.time.value,
+        };
+      default:
+        return {
+          date: this.departure.date.original || this.departure.date.value,
+          time: this.departure.time.original || this.departure.time.value,
+        };
+    }
   }
 }

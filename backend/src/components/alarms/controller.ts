@@ -46,9 +46,7 @@ export class AlarmsController {
       );
       const parsed = Journey.ofJourneyDetails(journey);
 
-      parsed["stop"] = parsed.stops.find(
-        (stop) => stop.id === alarm.getDataValue("station_id")
-      );
+      parsed["stop"] = parsed.stops.find((stop) => stop.id === alarm.stationId);
 
       delete parsed.stops;
 

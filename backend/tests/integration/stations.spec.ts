@@ -44,7 +44,7 @@ describe("Stations component", () => {
         expect(station).to.be.an("object");
         expect(station.id).eq(1);
         expect(station.name).eq(factory.dummyStation.name);
-        expect(station.station_id).eq(factory.dummyStation.station_id);
+        expect(station.stationId).eq(factory.dummyStation.stationId);
 
         done();
       })
@@ -66,7 +66,7 @@ describe("Stations component", () => {
         expect(stations[0]).to.be.an("object");
         expect(stations[0].id).eq(1);
         expect(stations[0].name).eq(factory.dummyStation.name);
-        expect(stations[0].station_id).eq(factory.dummyStation.station_id);
+        expect(stations[0].stationId).eq(factory.dummyStation.stationId);
 
         done();
       })
@@ -86,7 +86,7 @@ describe("Stations component", () => {
         expect(station).to.be.an("object");
         expect(station.id).eq(1);
         expect(station.name).eq(factory.dummyStation.name);
-        expect(station.station_id).eq(factory.dummyStation.station_id);
+        expect(station.stationId).eq(factory.dummyStation.stationId);
 
         done();
       })

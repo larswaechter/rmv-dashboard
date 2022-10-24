@@ -1,0 +1,67 @@
+{
+  "stopLocationOrCoordLocation": [
+    {
+      "StopLocation": {
+        "LocationNotes": {
+          "LocationNote": [
+            {
+              "value": "",
+              "key": "HB",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HE",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HT",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "IS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "WS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "06440005",
+              "key": "GK",
+              "type": "I",
+              "txtN": "06440005"
+            }
+          ]
+        },
+        "altId": ["A×de:06440:11133"],
+        "timezoneOffset": 120,
+        "id": "A=1@O=Butzbach Bahnhof@X=8669664@Y=50430752@U=80@L=3011133@B=1@p=1666375434@",
+        "extId": "3011133",
+        "name": "Butzbach Bahnhof",
+        "lon": 8.669664,
+        "lat": 50.430752,
+        "weight": 3380,
+        "products": 196
+      }
+    }
+  ],
+  "TechnicalMessages": {
+    "TechnicalMessage": [
+      {
+        "value": "2022-10-24 18:35:28",
+        "key": "requestTime"
+      }
+    ]
+  },
+  "serverVersion": "2.22.1",
+  "dialectVersion": "2.22"
+}

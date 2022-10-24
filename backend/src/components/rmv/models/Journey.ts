@@ -73,11 +73,11 @@ export class Journey {
     return idx;
   }
 
-  async getContinualDeparture(station_id: string, days: number) {
-    const station = this.getStopByID(station_id);
+  async getContinualDeparture(stationId: string, days: number) {
+    const station = this.getStopByID(stationId);
     if (!station) return undefined;
 
-    const { date, time } = station.getDateTime();
+    const { date, time } = station.getOriginalDateTimeOrFallback();
 
     const newDate = Timeservice.addDays(
       Timeservice.parseDateTime(date, time),
@@ -91,7 +91,7 @@ export class Journey {
       const depTime = dep.getOriginalDepartureTime();
 
       return (
-        dep.stopId === station_id &&
+        dep.stationId === stationId &&
         dep.direction === station.departureDir &&
         depTime.date === newDate &&
         depTime.time === time

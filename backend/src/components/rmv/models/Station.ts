@@ -13,12 +13,12 @@ export interface IStation {
 }
 
 export class Station {
-  station_id: string;
+  stationId: string;
   name: string;
 
   static ofResponse(res: IStopLocation): Station {
     const location = new Station();
-    location.station_id = res.id;
+    location.stationId = res.id;
     location.name = res.name;
 
     return location;

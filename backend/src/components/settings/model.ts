@@ -15,9 +15,9 @@ class Settings extends Model<
   declare id: CreationOptional<number>;
   declare key: string;
   declare value: CreationOptional<string>;
-  declare default: CreationOptional<boolean>;
+  declare default: CreationOptional<string>;
   declare description: number;
-  declare group: boolean;
+  declare group: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }

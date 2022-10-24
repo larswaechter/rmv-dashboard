@@ -1,0 +1,408 @@
+{
+  "Departure": [
+    {
+      "JourneyDetailRef": {
+        "ref": "2|#VN#1#ST#1666375434#PI#0#ZI#135350#TA#0#DA#241022#1S#3004503#1T#1828#LS#3011005#LT#2022#PU#80#RT#1#CA#TAB#ZE#RB40#ZB#    RB40#PC#2#FR#3004503#FT#1828#TO#3011005#TT#2022#"
+      },
+      "JourneyStatus": "P",
+      "ProductAtStop": {
+        "icon": {
+          "foregroundColor": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "hex": "#FFFFFF"
+          },
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "hex": "#000000"
+          },
+          "res": "prod_reg"
+        },
+        "name": "RB40",
+        "internalName": "    RB40",
+        "displayNumber": "RB40",
+        "num": "78",
+        "line": "RB40",
+        "lineId": "de:rmv:00004123:",
+        "catOut": "RB",
+        "catIn": "TAB",
+        "catCode": "2",
+        "cls": "4",
+        "catOutS": "TAB",
+        "catOutL": "RB",
+        "operatorCode": "DB9",
+        "operator": "DB Regio AG Mitte Region Hessen",
+        "admin": "800535",
+        "matchId": "15126"
+      },
+      "Product": [
+        {
+          "icon": {
+            "foregroundColor": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "hex": "#FFFFFF"
+            },
+            "backgroundColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "hex": "#000000"
+            },
+            "res": "prod_reg"
+          },
+          "name": "RB40",
+          "internalName": "RB40",
+          "displayNumber": "RB40",
+          "num": "78",
+          "line": "RB40",
+          "lineId": "de:rmv:00004123:",
+          "catOut": "RB",
+          "catIn": "TAB",
+          "catCode": "2",
+          "cls": "4",
+          "catOutS": "TAB",
+          "catOutL": "RB",
+          "operatorCode": "DB9",
+          "operator": "DB Regio AG Mitte Region Hessen",
+          "admin": "800535",
+          "routeIdxFrom": 9,
+          "routeIdxTo": 25,
+          "matchId": "15126"
+        }
+      ],
+      "Notes": {
+        "Note": [
+          {
+            "value": "Maskenpflicht nach gesetzl. Regelung; wir empfehlen eine FFP2-Maske",
+            "key": "ql",
+            "type": "A",
+            "priority": 200,
+            "routeIdxFrom": 9,
+            "routeIdxTo": 25,
+            "txtN": "Maskenpflicht nach gesetzl. Regelung; wir empfehlen eine FFP2-Maske"
+          },
+          {
+            "value": "Fahrzeuggebundene Einstiegshilfe vorhanden",
+            "key": "EH",
+            "type": "A",
+            "priority": 560,
+            "routeIdxFrom": 9,
+            "routeIdxTo": 25,
+            "txtN": "Fahrzeuggebundene Einstiegshilfe vorhanden"
+          },
+          {
+            "value": "Klimaanlage",
+            "key": "KL",
+            "type": "A",
+            "priority": 610,
+            "routeIdxFrom": 9,
+            "routeIdxTo": 25,
+            "txtN": "Klimaanlage"
+          },
+          {
+            "value": "15126",
+            "key": "FD",
+            "type": "I",
+            "routeIdxFrom": 9,
+            "routeIdxTo": 25,
+            "txtN": "15126"
+          },
+          {
+            "value": "2. Klasse: Geringe Belegung",
+            "key": "text.occup.jny.2nd.11",
+            "type": "A",
+            "txtN": "2. Klasse: Geringe Belegung"
+          },
+          {
+            "value": "Geringe Belegung",
+            "key": "text.occup.jny.max.11",
+            "type": "A",
+            "txtN": "Geringe Belegung"
+          },
+          {
+            "value": "2. Klasse: Geringe Belegung",
+            "key": "text.occup.loc.2nd.11",
+            "type": "A",
+            "txtN": "2. Klasse: Geringe Belegung"
+          },
+          {
+            "value": "Geringe Belegung",
+            "key": "text.occup.loc.max.11",
+            "type": "A",
+            "txtN": "Geringe Belegung"
+          }
+        ]
+      },
+      "Messages": {
+        "Message": [
+          {
+            "affectedStops": {
+              "StopLocation": [
+                {
+                  "LocationNotes": {
+                    "LocationNote": [
+                      {
+                        "value": "",
+                        "key": "HB",
+                        "type": "A",
+                        "txtN": ""
+                      },
+                      {
+                        "value": "",
+                        "key": "HE",
+                        "type": "A",
+                        "txtN": ""
+                      },
+                      {
+                        "value": "",
+                        "key": "HT",
+                        "type": "A",
+                        "txtN": ""
+                      },
+                      {
+                        "value": "",
+                        "key": "IS",
+                        "type": "A",
+                        "txtN": ""
+                      },
+                      {
+                        "value": "",
+                        "key": "WS",
+                        "type": "A",
+                        "txtN": ""
+                      },
+                      {
+                        "value": "06435014",
+                        "key": "GK",
+                        "type": "I",
+                        "txtN": "06435014"
+                      }
+                    ]
+                  },
+                  "altId": ["A×de:06435:4503"],
+                  "id": "A=1@O=Hanau Hauptbahnhof@X=8928419@Y=50121343@U=80@L=3004503@",
+                  "extId": "3004503",
+                  "name": "Hanau Hauptbahnhof",
+                  "lon": 8.928419,
+                  "lat": 50.121343,
+                  "products": 591
+                },
+                {
+                  "LocationNotes": {
+                    "LocationNote": [
+                      {
+                        "value": "",
+                        "key": "HB",
+                        "type": "A",
+                        "txtN": ""
+                      },
+                      {
+                        "value": "",
+                        "key": "HE",
+                        "type": "A",
+                        "txtN": ""
+                      },
+                      {
+                        "value": "",
+                        "key": "HT",
+                        "type": "A",
+                        "txtN": ""
+                      },
+                      {
+                        "value": "",
+                        "key": "IS",
+                        "type": "A",
+                        "txtN": ""
+                      },
+                      {
+                        "value": "",
+                        "key": "WS",
+                        "type": "A",
+                        "txtN": ""
+                      },
+                      {
+                        "value": "06532006",
+                        "key": "GK",
+                        "type": "I",
+                        "txtN": "06532006"
+                      }
+                    ]
+                  },
+                  "altId": ["A×de:06532:11005"],
+                  "id": "A=1@O=Dillenburg Bahnhof@X=8294589@Y=50734902@U=80@L=3011005@",
+                  "extId": "3011005",
+                  "name": "Dillenburg Bahnhof",
+                  "lon": 8.294589,
+                  "lat": 50.734902,
+                  "products": 70
+                }
+              ]
+            },
+            "validFromStop": {
+              "altId": ["A×de:06435:4503"],
+              "name": "Hanau Hauptbahnhof",
+              "id": "A=1@O=Hanau Hauptbahnhof@X=8928419@Y=50121343@U=80@L=3004503@",
+              "extId": "3004503",
+              "routeIdx": 0,
+              "lon": 8.928419,
+              "lat": 50.121343
+            },
+            "validToStop": {
+              "altId": ["A×de:06532:11005"],
+              "name": "Dillenburg Bahnhof",
+              "id": "A=1@O=Dillenburg Bahnhof@X=8294589@Y=50734902@U=80@L=3011005@",
+              "extId": "3011005",
+              "routeIdx": 25,
+              "lon": 8.294589,
+              "lat": 50.734902
+            },
+            "channel": [
+              {
+                "name": "TIMETABLE",
+                "url": [
+                  {
+                    "name": "- S6-Ausbau: Sperrungen zwischen Groß-Karben und Frankfurt vom 21.10. bis 31.10. (Artikel)",
+                    "url": "https://www.rmv.de/c/de/informationen-zum-rmv/der-rmv/rmv-aktuell/s6-ausbau-sperrungen-zwischen-gross-karben-und-frankfurt-vom-2110-bis-3110"
+                  },
+                  {
+                    "name": "- S6: Baustellenfahrplan mit Ersatzbussen und Angaben zu den Bushaltestellen (PDF)",
+                    "url": "https://www.rmv.de/auskunft/hd/1666195032461_S6_221021_neu.pdf"
+                  }
+                ],
+                "validFromTime": "11:17:00",
+                "validFromDate": "2022-10-18",
+                "validToTime": "04:00:00",
+                "validToDate": "2022-10-31"
+              },
+              {
+                "name": "MAP_CUSTOMER",
+                "url": [
+                  {
+                    "name": "- S6: Baustellenfahrplan mit Ersatzbussen und Angaben zu den Bushaltestellen (PDF)",
+                    "url": "https://www.rmv.de/auskunft/hd/1666195032461_S6_221021_neu.pdf"
+                  }
+                ],
+                "validFromTime": "17:28:00",
+                "validFromDate": "2022-10-18",
+                "validToTime": "23:59:00",
+                "validToDate": "2022-10-18"
+              }
+            ],
+            "messageCategory": [
+              {
+                "id": 1,
+                "name": "Betriebsstörung"
+              }
+            ],
+            "id": "2136034",
+            "act": true,
+            "head": "S6 / RE30, RB40, RB41, RB48, RB49, RE98, RE99: Umleitungen, Teilausfälle und Busse statt Bahnen auf Teilstrecken vom 21.10. bis 31.10.",
+            "lead": "An den Wochenenden und nachts fahren zwischen Groß-Karben und Frankfurt Ersatzbusse statt Bahnen der Linie S6. Werktags ist der Takt der Linie S6 ausgedünnt. Die Regionalzüge fahren zeitweise Umleitungen und es kommt zu weiteren Änderungen. Grund ist der Ausbau der S6-Strecke.",
+            "text": "Aufgrund der Bauarbeiten zum Ausbau der S6-Strecke kommt es zu umfangreichen Änderungen:<br><UL><LI> S6: vor allem nachts und an den Wochenenden verkehren zwei unterschiedliche Ersatzbuslinien, S6E und S6X, zwischen \"Groß-Karben Bahnhof\" (Ersatzhaltestelle in der Robert-Bosch-Straße) und \"Frankfurt Hauptbahnhof\" beziehungsweise \"Frankfurt Westbahnhof\". Montags bis freitags fährt die Linie S6 im 30-Minuten-Takt. Die Fahrradmitnahme ist in den Ersatzbussen nicht möglich. Die Haltestellen der Busse befinden sich nicht immer in unmittelbarer Nähe der Bahnsteige.</LI><LI> RE30: Die Züge fahren eine Umleitung (meist ohne Zwischenhalt) über \"Hanau Hauptbahnhof\" und bei vielen Fahrten entfällt der Halt \"Frankfurt Hauptbahnhof\", stattdessen fahren die Züge von/nach \"Frankfurt Süd\" oder \"Frankfurt West\". Bei einzelnen Fahrten kommt es zudem zwischen Marburg und Kassel zu Änderungen wegen Bauarbeiten in Neustadt.</LI><LI> RB40, RB41: die Fahrten entfallen zwischen Frankfurt und Friedberg und enden und beginnen in \"Hanau Hauptbahnhof\". Daher entfällt die RB49 zwischen Hanau und Friedberg. </LI><LI> RB48: die Züge von und nach Frankfurt fahren vom 24.10. bis 28.10. eine Umleitung über Friedrichsdorf.</LI><LI> RE98, RE99: die Züge fahren Umleitungen über Hanau. Die Züge enden und beginnen in \"Frankfurt Südbahnhof\", ein Zugpaar in \"Offenbach Hauptbahnhof\".</LI></UL>Die Änderungen sind in der elektronischen Verbindungsauskunft enthalten.<br>Weitere Informationen im Artikel",
+            "company": "RMVU",
+            "category": "1",
+            "priority": 30,
+            "products": 76,
+            "icon": "HIM1",
+            "routeIdxFrom": 0,
+            "routeIdxTo": 25,
+            "sTime": "23:00:00",
+            "sDate": "2022-10-21",
+            "eTime": "04:00:00",
+            "eDate": "2022-10-31",
+            "altStart": "",
+            "altEnd": "",
+            "modTime": "17:57:12",
+            "modDate": "2022-10-19",
+            "dailyStartingAt": "00:00:00",
+            "dailyDuration": "PT23H59M0S"
+          },
+          {
+            "channel": [
+              {
+                "name": "TIMETABLE",
+                "url": [
+                  {
+                    "name": "- Corona-Pandemie: Aktuelle Hinweise",
+                    "url": "https://www.rmv.de/c/de/informationen-zum-rmv/der-rmv/rmv-aktuell/coronavirus"
+                  }
+                ],
+                "validFromTime": "16:44:00",
+                "validFromDate": "2022-09-29",
+                "validToTime": "23:59:00",
+                "validToDate": "2022-12-31"
+              }
+            ],
+            "messageCategory": [
+              {
+                "id": 3,
+                "name": "Zusatzverkehr"
+              }
+            ],
+            "id": "2131462",
+            "act": true,
+            "head": "Beachtung der Hygiene-Vorschriften in Bussen und Bahnen",
+            "lead": "In Bussen und Bahnen des öffentlichen Nahverkehrs gelten weiterhin die gesetzlichen Hygiene-Vorschriften (Maskenpflicht).",
+            "text": "In Bussen und Bahnen des öffentlichen Nahverkehrs gelten weiterhin die gesetzlichen Hygiene-Vorschriften (Maskenpflicht).<br><br>Weitere Informationen im Artikel.",
+            "company": "RMVU",
+            "category": "3",
+            "priority": 3,
+            "products": 16383,
+            "icon": "rt_critical",
+            "routeIdxFrom": 0,
+            "routeIdxTo": 0,
+            "sTime": "00:00:00",
+            "sDate": "2022-03-20",
+            "eTime": "23:59:00",
+            "eDate": "2022-12-31",
+            "altStart": "20.03.2021",
+            "altEnd": "bis auf weiteres",
+            "modTime": "16:45:08",
+            "modDate": "2022-09-29",
+            "dailyStartingAt": "00:00:00",
+            "dailyDuration": "PT23H59M0S",
+            "baseType": "GLOBAL"
+          }
+        ]
+      },
+      "altId": ["A×de:06440:11133"],
+      "Occupancy": [
+        {
+          "name": "SECOND",
+          "raw": 11
+        }
+      ],
+      "name": "RB40",
+      "type": "ST",
+      "stop": "Butzbach Bahnhof",
+      "stopid": "A=1@O=Butzbach Bahnhof@X=8669664@Y=50430752@U=80@L=3011133@",
+      "stopExtId": "3011133",
+      "prognosisType": "PROGNOSED",
+      "time": "19:11:00",
+      "date": "2022-10-24",
+      "track": "1",
+      "rtTime": "19:15:00",
+      "rtDate": "2022-10-24",
+      "rtTrack": "1",
+      "reachable": true,
+      "direction": "Dillenburg Bahnhof",
+      "directionFlag": "2"
+    }
+  ],
+  "TechnicalMessages": {
+    "TechnicalMessage": [
+      {
+        "value": "2022-10-24 19:04:24",
+        "key": "requestTime"
+      }
+    ]
+  },
+  "serverVersion": "2.22.1",
+  "dialectVersion": "2.22",
+  "planRtTs": "2022-10-24T19:04:08.000+02:00"
+}

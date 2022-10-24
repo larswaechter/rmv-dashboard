@@ -44,7 +44,7 @@ export class StationsController {
       if (!station) return res.sendStatus(404);
 
       const board = await RMVApi.getDepartureBoard(
-        station.getDataValue("station_id"),
+        station.stationId,
         date as string,
         time as string
       );

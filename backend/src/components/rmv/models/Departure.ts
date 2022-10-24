@@ -1,6 +1,6 @@
 import { RTSchedule, Timeservice } from "../../../services/time";
 
-import { IProduct } from "./Product";
+import { IProduct, Product } from "./Product";
 import { IJourneyDetailRef, IMessage, INote } from "./Misc";
 
 interface IDeparture {
@@ -34,10 +34,10 @@ export class Departure {
   name: string;
   direction: string;
   departure: RTSchedule;
+  products: Product[];
   journeyRef: string;
   journeyStatus: string;
-  stopId: string;
-  category: string;
+  stationId: string;
   notes: string[];
 
   static ofDepartureBoard(departureBoard: IDepartureBoard): Departure[] {
@@ -60,10 +60,13 @@ export class Departure {
       res.rtTrack
     );
 
+    departure.products = res.Product.map((product) =>
+      Product.ofResponse(product)
+    );
+
     departure.journeyRef = res.JourneyDetailRef.ref;
     departure.journeyStatus = res.JourneyStatus;
-    departure.stopId = res.stopid;
-    departure.category = res.Product ? res.Product[0].catOut : "";
+    departure.stationId = res.stopid;
 
     return departure;
   }

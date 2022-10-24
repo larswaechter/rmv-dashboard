@@ -14,7 +14,7 @@ class Station extends Model<
 > {
   declare id: CreationOptional<number>;
   declare name: string;
-  declare station_id: CreationOptional<string>;
+  declare stationId: CreationOptional<string>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -30,7 +30,7 @@ Station.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    station_id: {
+    stationId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
