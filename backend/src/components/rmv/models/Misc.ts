@@ -1,5 +1,6 @@
 export interface IDirection {
   value: string;
+  flag: string;
   routeIdxFrom: number;
   routeIdxTo: number;
 }

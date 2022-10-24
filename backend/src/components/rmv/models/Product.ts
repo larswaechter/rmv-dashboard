@@ -1,9 +1,9 @@
 export interface IProduct {
   name: string;
-  internalname: string;
-  displaynumber: string;
+  internalName: string;
+  displayNumber: string;
   catOut: string;
-  catCode: number;
+  catCode: string;
 }
 
 export class Product {
@@ -11,14 +11,14 @@ export class Product {
   internalName: string;
   displayNumber: string;
   catOut: string;
-  catCode: number;
+  catCode: string;
 
   static ofResponse(res: IProduct): Product {
     const product = new Product();
 
     product.name = res.name;
-    product.internalName = res.internalname;
-    product.displayNumber = res.displaynumber;
+    product.internalName = res.internalName;
+    product.displayNumber = res.displayNumber;
     product.catOut = res.catOut;
     product.catCode = res.catCode;
 

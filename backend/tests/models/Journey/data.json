@@ -1,0 +1,502 @@
+{
+  "Stops": {
+    "Stop": [
+      {
+        "Notes": {
+          "Note": [
+            {
+              "value": "",
+              "key": "HB",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HE",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HT",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "IS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "WS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "06531005",
+              "key": "GK",
+              "type": "I",
+              "txtN": "06531005"
+            }
+          ]
+        },
+        "altId": ["A×de:06531:11016"],
+        "name": "Gießen Bahnhof",
+        "id": "A=1@O=Gießen Bahnhof@X=8663803@Y=50579883@U=80@L=3011016@",
+        "extId": "3011016",
+        "routeIdx": 0,
+        "lon": 8.663803,
+        "lat": 50.579883,
+        "depPrognosisType": "PROGNOSED",
+        "depTime": "08:08:00",
+        "depDate": "2022-10-19",
+        "depTrack": "5",
+        "depDir": "Frankfurt (Main) Hauptbahnhof"
+      },
+      {
+        "Notes": {
+          "Note": [
+            {
+              "value": "",
+              "key": "HB",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HE",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HT",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "IS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "WS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "06440002",
+              "key": "GK",
+              "type": "I",
+              "txtN": "06440002"
+            }
+          ]
+        },
+        "altId": ["A×de:06440:11135"],
+        "name": "Bad Nauheim Bahnhof",
+        "id": "A=1@O=Bad Nauheim Bahnhof@X=8748320@Y=50367792@U=80@L=3011135@",
+        "extId": "3011135",
+        "routeIdx": 1,
+        "lon": 8.74832,
+        "lat": 50.367792,
+        "depTime": "08:26:00",
+        "depDate": "2022-10-19",
+        "arrTime": "08:25:00",
+        "arrDate": "2022-10-19",
+        "arrTrack": "1",
+        "depTrack": "1"
+      },
+      {
+        "Notes": {
+          "Note": [
+            {
+              "value": "",
+              "key": "HB",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HE",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HT",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "IS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "WS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "06440008",
+              "key": "GK",
+              "type": "I",
+              "txtN": "06440008"
+            }
+          ]
+        },
+        "altId": ["A×de:06440:6401"],
+        "name": "Friedberg (Hessen) Bahnhof",
+        "id": "A=1@O=Friedberg (Hessen) Bahnhof@X=8761247@Y=50332743@U=80@L=3006401@",
+        "extId": "3006401",
+        "routeIdx": 2,
+        "lon": 8.761247,
+        "lat": 50.332743,
+        "depTime": "08:30:00",
+        "depDate": "2022-10-19",
+        "arrTime": "08:29:00",
+        "arrDate": "2022-10-19",
+        "arrTrack": "2",
+        "depTrack": "2"
+      },
+      {
+        "Notes": {
+          "Note": [
+            {
+              "value": "",
+              "key": "HB",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HE",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HT",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "IS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "V0",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "WS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "06412000",
+              "key": "GK",
+              "type": "I",
+              "txtN": "06412000"
+            }
+          ]
+        },
+        "altId": ["A×de:06412:1204"],
+        "name": "Frankfurt (Main) Westbahnhof",
+        "id": "A=1@O=Frankfurt (Main) Westbahnhof@X=8639452@Y=50119447@U=80@L=3001204@",
+        "extId": "3001204",
+        "routeIdx": 3,
+        "lon": 8.639452,
+        "lat": 50.119447,
+        "depTime": "08:53:00",
+        "depDate": "2022-10-19",
+        "arrTime": "08:52:00",
+        "arrDate": "2022-10-19",
+        "arrTrack": "5",
+        "depTrack": "5"
+      },
+      {
+        "Notes": {
+          "Note": [
+            {
+              "value": "",
+              "key": "HB",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HE",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HI",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "HT",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "IS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "V0",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "",
+              "key": "WS",
+              "type": "A",
+              "txtN": ""
+            },
+            {
+              "value": "06412000",
+              "key": "GK",
+              "type": "I",
+              "txtN": "06412000"
+            }
+          ]
+        },
+        "altId": ["A×de:06412:10"],
+        "name": "Frankfurt (Main) Hauptbahnhof",
+        "id": "A=1@O=Frankfurt (Main) Hauptbahnhof@X=8663758@Y=50107158@U=80@L=3000010@",
+        "extId": "3000010",
+        "routeIdx": 4,
+        "lon": 8.663758,
+        "lat": 50.107158,
+        "arrPrognosisType": "PROGNOSED",
+        "arrTime": "08:57:00",
+        "arrDate": "2022-10-19",
+        "arrTrack": "14"
+      }
+    ]
+  },
+  "Names": {
+    "Name": [
+      {
+        "Product": {
+          "icon": {
+            "foregroundColor": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "hex": "#FFFFFF"
+            },
+            "backgroundColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "hex": "#000000"
+            },
+            "res": "prod_reg"
+          },
+          "name": "RE30",
+          "internalName": "    RE30",
+          "displayNumber": "RE30",
+          "num": "113",
+          "line": "RE30",
+          "lineId": "de:rmv:00001298:",
+          "catOut": "RE",
+          "catIn": "DOE",
+          "catCode": "2",
+          "cls": "4",
+          "catOutS": "DOE",
+          "catOutL": "RE",
+          "operatorCode": "DB9",
+          "operator": "DB Regio AG Mitte Region Hessen",
+          "admin": "8005MW",
+          "matchId": "4179"
+        },
+        "name": "RE30",
+        "number": "RE30",
+        "category": "DOE",
+        "routeIdxFrom": 0,
+        "routeIdxTo": 4
+      }
+    ]
+  },
+  "Product": [
+    {
+      "icon": {
+        "foregroundColor": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "hex": "#FFFFFF"
+        },
+        "backgroundColor": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "hex": "#000000"
+        },
+        "res": "prod_reg"
+      },
+      "name": "RE30",
+      "internalName": "RE30",
+      "displayNumber": "RE30",
+      "num": "113",
+      "line": "RE30",
+      "lineId": "de:rmv:00001298:",
+      "catOut": "RE",
+      "catIn": "DOE",
+      "catCode": "2",
+      "cls": "4",
+      "catOutS": "DOE",
+      "catOutL": "RE",
+      "operatorCode": "DB9",
+      "operator": "DB Regio AG Mitte Region Hessen",
+      "admin": "8005MW",
+      "routeIdxFrom": 0,
+      "routeIdxTo": 4,
+      "matchId": "4179"
+    }
+  ],
+  "Directions": {
+    "Direction": [
+      {
+        "value": "Frankfurt (Main) Hauptbahnhof",
+        "flag": "1",
+        "routeIdxFrom": 0,
+        "routeIdxTo": 4
+      }
+    ]
+  },
+  "Notes": {
+    "Note": [
+      {
+        "value": "Pflicht zum Tragen einer Mund-Nasen-Bedeckung! Infos: nvv.de/corona",
+        "key": "CO",
+        "type": "A",
+        "priority": 2,
+        "routeIdxFrom": 0,
+        "routeIdxTo": 4,
+        "txtN": "Pflicht zum Tragen einer Mund-Nasen-Bedeckung! Infos: nvv.de/corona"
+      },
+      {
+        "value": "Maskenpflicht nach gesetzl. Regelung; wir empfehlen eine FFP2-Maske",
+        "key": "ql",
+        "type": "A",
+        "priority": 200,
+        "routeIdxFrom": 0,
+        "routeIdxTo": 4,
+        "txtN": "Maskenpflicht nach gesetzl. Regelung; wir empfehlen eine FFP2-Maske"
+      },
+      {
+        "value": "Klimaanlage",
+        "key": "KL",
+        "type": "A",
+        "priority": 610,
+        "routeIdxFrom": 0,
+        "routeIdxTo": 4,
+        "txtN": "Klimaanlage"
+      },
+      {
+        "value": "4179",
+        "key": "FD",
+        "type": "I",
+        "routeIdxFrom": 0,
+        "routeIdxTo": 4,
+        "txtN": "4179"
+      }
+    ]
+  },
+  "Messages": {
+    "Message": [
+      {
+        "channel": [
+          {
+            "name": "TIMETABLE",
+            "url": [
+              {
+                "name": "- Corona-Pandemie: Aktuelle Hinweise",
+                "url": "https://www.rmv.de/c/de/informationen-zum-rmv/der-rmv/rmv-aktuell/coronavirus"
+              }
+            ],
+            "validFromTime": "16:44:00",
+            "validFromDate": "2022-09-29",
+            "validToTime": "23:59:00",
+            "validToDate": "2022-12-31"
+          }
+        ],
+        "messageCategory": [
+          {
+            "id": 3,
+            "name": "Zusatzverkehr"
+          }
+        ],
+        "id": "2131462",
+        "act": true,
+        "head": "Beachtung der Hygiene-Vorschriften in Bussen und Bahnen",
+        "lead": "In Bussen und Bahnen des öffentlichen Nahverkehrs gelten weiterhin die gesetzlichen Hygiene-Vorschriften (Maskenpflicht).",
+        "text": "In Bussen und Bahnen des öffentlichen Nahverkehrs gelten weiterhin die gesetzlichen Hygiene-Vorschriften (Maskenpflicht).<br><br>Weitere Informationen im Artikel.",
+        "company": "RMVU",
+        "category": "3",
+        "priority": 3,
+        "products": 16383,
+        "icon": "rt_critical",
+        "routeIdxFrom": 0,
+        "routeIdxTo": 0,
+        "sTime": "00:00:00",
+        "sDate": "2022-03-20",
+        "eTime": "23:59:00",
+        "eDate": "2022-12-31",
+        "altStart": "20.03.2021",
+        "altEnd": "bis auf weiteres",
+        "modTime": "16:45:08",
+        "modDate": "2022-09-29",
+        "dailyStartingAt": "00:00:00",
+        "dailyDuration": "PT23H59M0S",
+        "baseType": "GLOBAL"
+      }
+    ]
+  },
+  "JourneyStatus": "P",
+  "ServiceDays": [
+    {
+      "planningPeriodBegin": "2022-08-04",
+      "planningPeriodEnd": "2022-12-10",
+      "sDaysR": "Mo - Fr",
+      "sDaysI": "nicht 24. bis 28. Okt 2022",
+      "sDaysB": "00000000F9F3E7C79F3E00F9F3E7CF9F00",
+      "routeIdxFrom": 0,
+      "routeIdxTo": 4
+    }
+  ],
+  "TechnicalMessages": {
+    "TechnicalMessage": [
+      {
+        "value": "2022-10-24 17:48:09",
+        "key": "requestTime"
+      }
+    ]
+  },
+  "serverVersion": "2.22.1",
+  "dialectVersion": "2.22",
+  "planRtTs": "2022-10-24T17:47:39.000+02:00",
+  "ref": "2|#VN#1#ST#1666375434#PI#0#ZI#137141#TA#0#DA#191022#1S#3011016#1T#808#LS#3000010#LT#857#PU#80#RT#1#CA#DOE#ZE#RE30#ZB#    RE30#PC#2#FR#3011016#FT#808#TO#3000010#TT#857#",
+  "reachable": true,
+  "dayOfOperation": "2022-10-19"
+}

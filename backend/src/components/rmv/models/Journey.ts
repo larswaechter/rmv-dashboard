@@ -40,7 +40,7 @@ export class Journey {
       Stop.ofResponse(stop, Stops.Stop.length)
     );
 
-    journey.nextStop = journey.getNextStop();
+    journey.nextStop = journey.getNextStopIdx();
 
     return journey;
   }
@@ -49,11 +49,10 @@ export class Journey {
     return this.stops.find((stop) => stop.id === id);
   }
 
-  getNextStop() {
+  getNextStopIdx(now: Date = new Date()) {
     if (!this.stops.length) return -1;
 
     let idx = this.stops.length - 1;
-    const now = Date.now();
 
     for (let i = 0; i < this.stops.length - 1; i++) {
       const { departure } = this.stops[i];
@@ -65,7 +64,7 @@ export class Journey {
       ).getTime();
 
       // Next stop
-      if (now < depParsed) {
+      if (now.valueOf() < depParsed) {
         idx = i;
         break;
       }
