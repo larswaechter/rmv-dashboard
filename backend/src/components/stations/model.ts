@@ -1,20 +1,46 @@
-import { DataTypes } from "sequelize";
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+  Model,
+} from "sequelize";
+
 import db from "../../config/db";
 
-const Station = db.define("Station", {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+class Station extends Model<
+  InferAttributes<Station>,
+  InferCreationAttributes<Station>
+> {
+  declare id: CreationOptional<number>;
+  declare name: string;
+  declare station_id: CreationOptional<string>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
+}
+
+Station.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    station_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  station_id: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
+  {
+    tableName: "Stations",
+    sequelize: db,
+  }
+);
 
 export default Station;

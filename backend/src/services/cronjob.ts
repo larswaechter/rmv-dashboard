@@ -26,7 +26,7 @@ export interface IScheduleChange {
 /**
  * Job for sending schedule changes via WS
  */
-cron.schedule("*/15 * * * * *", async () => {
+cron.schedule("*/15 * * * *", async () => {
   try {
     Logger.info("[CRONJOB] Starting");
 
@@ -145,7 +145,7 @@ cron.schedule("*/15 * * * * *", async () => {
             );
           else
             await AlarmHistory.create({
-              AlarmId: id,
+              alarmId: id,
               journeyRef,
               station_id,
               scheduleHash,

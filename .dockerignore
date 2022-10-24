@@ -1,4 +1,5 @@
 backend/logs/
+backend/tests/
 backend/node_modules/
 frontend/node_modules/
 

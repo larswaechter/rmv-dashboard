@@ -9,7 +9,9 @@ export enum Settings {
   DISCORD_CHANNEL_ID = "DISCORD_CHANNEL_ID",
 }
 
-export const getSettingValue = async (key: Settings) => {
+export const getSettingValue = async (
+  key: Settings
+): Promise<string | undefined> => {
   Logger.debug(`Reading setting: ${key}`);
   if (Cache.has(key)) return Cache.get(key);
 
@@ -20,7 +22,7 @@ export const getSettingValue = async (key: Settings) => {
   });
 
   if (setting) {
-    const value = setting.getDataValue("value");
+    const value = setting.value;
     Cache.set(key, value);
     return value;
   }
