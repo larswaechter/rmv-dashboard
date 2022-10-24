@@ -9,8 +9,8 @@
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
     "seed": "npx sequelize-cli db:seed:all",
-    "test": "jest --coverage --forceExit",
-    "test:watch": "jest --watch --forceExit"
+    "test": "rm -f ../data/db.test.sqlite && jest --coverage --forceExit",
+    "test:ci": "jest --forceExit"
   },
   "repository": {
     "type": "git",

@@ -8,6 +8,7 @@ import { createServer, Server as HttpServer } from "http";
 
 import { Server } from "../../src/server";
 import db from "../../src/config/db";
+import { Alarm } from "../../src/components/alarms/model";
 
 export class TestFactory {
   private readonly server: Server;
@@ -21,6 +22,22 @@ export class TestFactory {
   get app() {
     return supertest(this.server.app);
   }
+
+  dummyAlarm = {
+    journeyRef: "MyJourneyRef",
+    station_id: "MyStationID",
+    smartmode: false,
+    interval: 5,
+    autoremove: false,
+    telegram: false,
+    discord: false,
+    active: false,
+  };
+
+  dummyStation = {
+    name: "Frankfurt Hauptbahnhof",
+    station_id: "MyStationID",
+  };
 
   prepare(cb: (err?: Error) => void) {
     db.authenticate()
