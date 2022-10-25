@@ -4,89 +4,83 @@ import { IDepartureBoard } from "./models/Departure";
 import { IJourneyDetails } from "./models/Journey";
 import { IStation } from "./models/Station";
 
-const headers = {
-  Accept: "application/json",
-};
+type Endpoints = "departureBoard" | "location.name" | "journeyDetails";
 
 export class RMVApi {
   private static RMV_URL = "https://www.rmv.de/hapi";
+  private static Headers = {
+    Accept: "application/json",
+    Authorization: `Bearer ${process.env.RMV_KEY}`,
+  };
+
+  static buildURL(endpoint: Endpoints, params: Record<string, string>) {
+    return `${RMVApi.RMV_URL}/${endpoint}?${new URLSearchParams(params)}`;
+  }
 
   static getDepartureBoard(
     stop_id: string,
     date: string,
     time: string
   ): Promise<IDepartureBoard> {
-    const url = `${RMVApi.RMV_URL}/departureBoard?`;
-    Logger.debug(`[RMV] GET ${url}`);
+    const url = RMVApi.buildURL("departureBoard", {
+      id: stop_id,
+      date,
+      time,
+    });
 
-    return fetch(
-      url +
-        new URLSearchParams({
-          accessId: process.env.RMV_KEY,
-          id: stop_id,
-          date,
-          time,
-        }),
-      {
-        headers,
-      }
-    )
+    Logger.debug(`[RMVApi] GET ${url}`);
+
+    return fetch(url, {
+      headers: RMVApi.Headers,
+    })
       .then((response) => {
         if (response.ok) return response.json();
         throw new Error(response.statusText);
       })
       .catch((err) => {
         Logger.error(err.stack);
-        return Promise.reject("[RMV] GET /departureBoard failed");
+        return Promise.reject("[RMVApi] GET /departureBoard failed");
       });
   }
 
   static searchStations(name: string): Promise<IStation> {
-    const url = `${RMVApi.RMV_URL}/location.name?`;
-    Logger.debug(`[RMV] GET ${url}`);
+    const url = RMVApi.buildURL("location.name", {
+      input: name,
+      type: "S", // Filter stations
+    });
 
-    return fetch(
-      url +
-        new URLSearchParams({
-          accessId: process.env.RMV_KEY,
-          input: name,
-          type: "S", // Filter stations
-        }),
-      {
-        headers,
-      }
-    )
+    Logger.debug(`[RMVApi] GET ${url}`);
+
+    return fetch(url, {
+      headers: RMVApi.Headers,
+    })
       .then((response) => {
         if (response.ok) return response.json();
         throw new Error(response.statusText);
       })
       .catch((err) => {
         Logger.error(err.stack);
-        return Promise.reject("[RMV] GET /location.name failed");
+        return Promise.reject("[RMVApi] GET /location.name failed");
       });
   }
 
   static getJourneyDetails(id: string): Promise<IJourneyDetails> {
-    const url = `${RMVApi.RMV_URL}/journeyDetails?`;
-    Logger.debug(`[RMV] GET ${url}`);
+    const url = RMVApi.buildURL("journeyDetails", {
+      id,
+    });
 
-    return fetch(
-      url +
-        new URLSearchParams({
-          accessId: process.env.RMV_KEY,
-          id,
-        }),
-      {
-        headers,
-      }
-    )
+    Logger.debug(`[RMVApi] GET ${url}`);
+
+    return fetch(url, {
+      headers: RMVApi.Headers,
+    })
       .then((response) => {
         if (response.ok) return response.json();
         throw new Error(response.statusText);
       })
       .catch((err) => {
         Logger.error(err.stack);
-        return Promise.reject("[RMV] GET /journeyDetails failed");
+        return Promise.reject("[RMVApi] GET /journeyDetails failed");
       });
   }
 }

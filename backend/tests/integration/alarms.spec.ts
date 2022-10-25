@@ -86,7 +86,38 @@ describe("Alarms component", () => {
   });
 
   it("DELETE /api/alarms/1", (done) => {
-    factory.app.delete("/api/alarms/1").expect(201);
-    done();
+    factory.app
+      .delete("/api/alarms/1")
+      .expect(204)
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it("GET /api/alarms/1", (done) => {
+    factory.app
+      .get("/api/alarms/1")
+      .expect(404)
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it("DELETE /api/alarms/1", (done) => {
+    factory.app
+      .delete("/api/alarms/1")
+      .expect(404)
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
   });
 });

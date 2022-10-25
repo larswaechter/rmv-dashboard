@@ -16,10 +16,42 @@ export class SettingsController {
     }
   }
 
+  async getSetting(req: Request, res: Response) {
+    try {
+      const { key } = req.params;
+      if (!key) return res.sendStatus(400);
+
+      const setting = await SettingsModel.findOne({
+        where: {
+          key,
+        },
+      });
+      if (!setting) return res.sendStatus(404);
+
+      res.json(setting);
+    } catch (err) {
+      Logger.error(err.stack || err);
+      res.sendStatus(500);
+    }
+  }
+
+  async createSetting(req: Request, res: Response) {
+    try {
+      const setting = req.body;
+      if (!setting) res.sendStatus(400);
+
+      const newSetting = await SettingsModel.create(setting);
+
+      res.status(201).json(newSetting);
+    } catch (err) {
+      Logger.error(err.stack || err);
+      res.sendStatus(500);
+    }
+  }
+
   async updateSetting(req: Request, res: Response) {
     try {
       const { key } = req.params;
-
       if (!key) return res.sendStatus(400);
 
       const { value } = req.body;
@@ -31,7 +63,7 @@ export class SettingsController {
         },
       });
 
-      if (!model) res.sendStatus(404);
+      if (!model) return res.sendStatus(404);
 
       await SettingsModel.update(
         { value },

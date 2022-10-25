@@ -25,6 +25,7 @@ export class StationsController {
       if (!id) return res.sendStatus(400);
 
       const station = await Station.findByPk(+id);
+      if (!station) return res.sendStatus(404);
 
       res.json(station);
     } catch (err) {

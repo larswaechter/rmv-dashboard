@@ -39,6 +39,14 @@ export class TestFactory {
     stationId: "MyStationID",
   };
 
+  dummySetting = {
+    key: "MY_KEY",
+    value: "HelloWorld",
+    default: "MyDefaultVal",
+    description: "This is a description",
+    group: "testing",
+  };
+
   prepare(cb: (err?: Error) => void) {
     db.authenticate()
       .then(() => {

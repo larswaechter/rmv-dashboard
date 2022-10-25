@@ -11,7 +11,15 @@ describe("Journeys component", () => {
     factory.close(done);
   });
 
-  it("GET /api/journeys", () => {
-    factory.app.get("/api/journeys").expect(400);
+  it("GET /api/journeys/search", (done) => {
+    factory.app
+      .get("/api/journeys/search")
+      .expect(400)
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
   });
 });

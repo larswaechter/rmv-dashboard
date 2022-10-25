@@ -25,6 +25,7 @@ export class AlarmsController {
       if (!id) return res.sendStatus(400);
 
       const alarm = await Alarm.findByPk(+id);
+      if (!alarm) return res.sendStatus(404);
 
       res.json(alarm);
     } catch (err) {

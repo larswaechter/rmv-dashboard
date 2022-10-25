@@ -96,7 +96,38 @@ describe("Stations component", () => {
   });
 
   it("DELETE /api/stations/1", (done) => {
-    factory.app.delete("/api/stations/1").expect(201);
-    done();
+    factory.app
+      .delete("/api/stations/1")
+      .expect(204)
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it("GET /api/stations/1", (done) => {
+    factory.app
+      .get("/api/stations/1")
+      .expect(404)
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it("DELETE /api/stations/1", (done) => {
+    factory.app
+      .delete("/api/stations/1")
+      .expect(404)
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
   });
 });
