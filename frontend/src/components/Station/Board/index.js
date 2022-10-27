@@ -162,8 +162,8 @@ const StationBoard = ({ station, afterDelete }) => {
   const categories = Array.from(
     new Set(
       departures
-        .filter((dep) => dep.category.length)
-        .map((dep) => dep.category)
+        .filter((dep) => dep.products[0].catOut.length)
+        .map((dep) => dep.products[0].catOut)
         .sort()
     )
   );
@@ -219,7 +219,6 @@ const StationBoard = ({ station, afterDelete }) => {
         </IconButton>
       </Tooltip>
       <Menu
-        id="basic-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={closeMenu}
@@ -238,8 +237,8 @@ const StationBoard = ({ station, afterDelete }) => {
         <MenuItem key="all" onClick={() => handleMenuSelect()}>
           <CommuteIcon style={{ marginRight: 10 }} /> All
         </MenuItem>
-        {categories.map((category) => (
-          <MenuItem key={category} onClick={() => handleMenuSelect(category)}>
+        {categories.map((category, i) => (
+          <MenuItem key={i} onClick={() => handleMenuSelect(category)}>
             <div style={{ marginRight: 10 }}>{categoryToIcon(category)}</div>
             {category}
           </MenuItem>

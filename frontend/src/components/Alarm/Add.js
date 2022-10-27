@@ -49,7 +49,7 @@ const AlarmAdd = ({ handleClose }) => {
       if (!journeyRef || !stop) return;
       const newAlarm = await createAlarm({
         journeyRef,
-        station_id: stop,
+        stationId: stop,
         interval: continual ? interval : 0,
         smartmode,
         autoremove,

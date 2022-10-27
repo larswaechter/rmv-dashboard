@@ -14,6 +14,7 @@ import { Stack } from "@mui/system";
 
 const PagesSettings = () => {
   const [settings, setSettings] = useState([]);
+  const [initSettings, setInitSettings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [updateError, setUpdateError] = useState(null);
@@ -25,6 +26,7 @@ const PagesSettings = () => {
       setIsLoading(true);
       const data = await getSettings();
       setSettings(data);
+      setInitSettings(data);
       setError(null);
     } catch (err) {
       console.error(err);
@@ -43,10 +45,20 @@ const PagesSettings = () => {
     setSettings(copy);
   };
 
-  const handleSettingUpdate = async ({ key, value }) => {
+  const handleSettingUpdate = async (setting) => {
+    const { key, value } = setting;
+
+    // Check if value has changed
+    const initSettingIdx = initSettings.findIndex((s) => s.key === key);
+    if (initSettings[initSettingIdx].value === value) return;
+
     try {
       setUpdateError(null);
       await updateSetting(key, value);
+
+      const copy = initSettings.slice();
+      copy[initSettingIdx] = setting;
+      setInitSettings(copy);
     } catch (err) {
       console.error(err);
       setUpdateError(err);

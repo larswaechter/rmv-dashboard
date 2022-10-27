@@ -9,7 +9,7 @@ const SettingsTelegram = ({ settings, onInputChange, onSettingUpdate }) => {
   };
 
   const handleInputBlur = (i) => {
-    onSettingUpdate(settings[i]);
+    onSettingUpdate(settings[i], i);
   };
 
   return (

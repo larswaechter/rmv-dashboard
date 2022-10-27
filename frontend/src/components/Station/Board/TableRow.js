@@ -17,6 +17,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import Snackbar from "@mui/material/Snackbar";
 
 import { orange } from "@mui/material/colors";
 
@@ -38,6 +39,8 @@ const style = {
 const StationBoardTableRow = ({ row }) => {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [snackText, setSnackText] = useState("");
 
   const { category, direction, name, departure, journeyRef, notes } = row;
   const { date, time, track } = departure;
@@ -124,7 +127,11 @@ const StationBoardTableRow = ({ row }) => {
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  navigator.clipboard.writeText(journeyRef);
+                  navigator.clipboard
+                    .writeText(journeyRef)
+                    .then(() => setSnackText("JourneyRef copied"))
+                    .catch(() => setSnackText("Copy failed"))
+                    .finally(() => setSnackOpen(true));
                 }}
               >
                 Copy
@@ -142,6 +149,12 @@ const StationBoardTableRow = ({ row }) => {
           </Button>
         </Box>
       </Modal>
+      <Snackbar
+        open={snackOpen}
+        onClose={() => setSnackOpen(false)}
+        autoHideDuration={3000}
+        message={snackText}
+      />
     </>
   );
 };
