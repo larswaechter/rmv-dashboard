@@ -20,6 +20,9 @@ describe("Stop model", () => {
     expect(stop.isFirst).to.be.true;
     expect(stop.isLast).to.be.false;
 
+    expect(stop.lat).to.eq(src.lat);
+    expect(stop.lon).to.eq(src.lon);
+
     expect(stop.arrival).to.be.undefined;
 
     expect(stop.departure.delay).to.eq(0);
@@ -57,6 +60,9 @@ describe("Stop model", () => {
     expect(stop.index).to.eq(1);
     expect(stop.isFirst).to.be.false;
     expect(stop.isLast).to.be.false;
+
+    expect(stop.lat).to.eq(src.lat);
+    expect(stop.lon).to.eq(src.lon);
 
     expect(stop.arrival.delay).to.eq(0);
     expect(stop.arrival.date.original).to.be.undefined;
@@ -101,6 +107,9 @@ describe("Stop model", () => {
     expect(stop.index).to.eq(2);
     expect(stop.isFirst).to.be.false;
     expect(stop.isLast).to.be.false;
+
+    expect(stop.lat).to.eq(src.lat);
+    expect(stop.lon).to.eq(src.lon);
 
     expect(stop.arrival.delay).to.eq(3);
     expect(stop.arrival.date.original).to.be.undefined;
