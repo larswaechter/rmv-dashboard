@@ -29,11 +29,14 @@ const SettingsDiscord = ({ settings, onInputChange, onSettingUpdate }) => {
       </Typography>
       {settings.map((setting, i) =>
         setting.hidden ? (
-          <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <FormControl
+            sx={{ m: 1, width: "25ch" }}
+            variant="outlined"
+            key={setting.key}
+          >
             <InputLabel>{setting.description}</InputLabel>
             <OutlinedInput
               type={showKey ? "text" : "password"}
-              key={setting.key}
               label={setting.description}
               value={setting.value || setting.default || ""}
               onChange={(e) => handleInputChange(e.target.value, i)}

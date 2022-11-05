@@ -7,6 +7,8 @@ import Snackbar from "@mui/material/Snackbar";
 import Button from "@mui/material/Button";
 import SnackbarContent from "@mui/material/SnackbarContent";
 
+import "./App.css";
+
 import Navbar from "./components/Navbar";
 import { Drawer, DrawerHeader, drawerWidth } from "./components/Drawer";
 

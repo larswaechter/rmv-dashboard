@@ -24,6 +24,8 @@ export interface IStop {
   depTrack: string;
   rtDepTrack: string;
   depDir: string;
+  lat: number;
+  lon: number;
 }
 
 export class Stop {
@@ -33,6 +35,8 @@ export class Stop {
   departure?: RTSchedule;
   departureDir?: string;
   index: number;
+  lat: number;
+  lon: number;
   isFirst: boolean;
   isLast: boolean;
 
@@ -40,9 +44,12 @@ export class Stop {
     const stop = new Stop();
     stop.id = res.id;
     stop.name = res.name;
+    stop.departureDir = res.depDir;
     stop.index = res.routeIdx;
 
-    stop.departureDir = res.depDir;
+    stop.lat = res.lat;
+    stop.lon = res.lon;
+
     stop.isFirst = stop.index === 0;
     stop.isLast = stop.index === numberOfStops - 1;
 

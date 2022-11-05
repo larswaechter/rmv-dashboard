@@ -9,7 +9,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-const SettingsDiscord = ({ settings, onInputChange, onSettingUpdate }) => {
+const SettingsTelegram = ({ settings, onInputChange, onSettingUpdate }) => {
   const [showKey, setShowKey] = useState(false);
 
   const handleInputChange = (value, i) => {
@@ -29,11 +29,14 @@ const SettingsDiscord = ({ settings, onInputChange, onSettingUpdate }) => {
       </Typography>
       {settings.map((setting, i) =>
         setting.hidden ? (
-          <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <FormControl
+            sx={{ m: 1, width: "25ch" }}
+            variant="outlined"
+            key={setting.key}
+          >
             <InputLabel>{setting.description}</InputLabel>
             <OutlinedInput
               type={showKey ? "text" : "password"}
-              key={setting.key}
               label={setting.description}
               value={setting.value || setting.default || ""}
               onChange={(e) => handleInputChange(e.target.value, i)}
@@ -65,4 +68,4 @@ const SettingsDiscord = ({ settings, onInputChange, onSettingUpdate }) => {
   );
 };
 
-export default SettingsDiscord;
+export default SettingsTelegram;
