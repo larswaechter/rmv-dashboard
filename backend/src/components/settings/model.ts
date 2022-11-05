@@ -18,6 +18,7 @@ class Settings extends Model<
   declare default: CreationOptional<string>;
   declare description: number;
   declare group: string;
+  declare hidden: boolean;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -49,6 +50,10 @@ Settings.init(
     group: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    hidden: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,

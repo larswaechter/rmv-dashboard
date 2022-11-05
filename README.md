@@ -1,4 +1,4 @@
-# rmv-dashboard
+# rmv-dashboard (WIP)
 
 A self-hosted web app for displaying public transport information like train & bus using the [RMV Open Data](https://opendata.rmv.de/site/start.html) API.
 

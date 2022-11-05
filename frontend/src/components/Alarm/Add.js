@@ -149,7 +149,7 @@ const AlarmAdd = ({ handleClose }) => {
               size="small"
               type="number"
               InputProps={{ inputProps: { min: 1, max: 7 } }}
-              sx={{ marginY: 1 }}
+              sx={{ marginY: 2 }}
             />
           )}
 
