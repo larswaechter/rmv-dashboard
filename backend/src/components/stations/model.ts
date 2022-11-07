@@ -3,15 +3,12 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
-  Model,
-} from "sequelize";
+  Model
+} from 'sequelize';
 
-import db from "../../config/db";
+import db from '../../config/db';
 
-class Station extends Model<
-  InferAttributes<Station>,
-  InferCreationAttributes<Station>
-> {
+class Station extends Model<InferAttributes<Station>, InferCreationAttributes<Station>> {
   declare id: CreationOptional<number>;
   declare name: string;
   declare stationId: CreationOptional<string>;
@@ -24,22 +21,22 @@ Station.init(
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
+      primaryKey: true
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     stationId: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   },
   {
-    tableName: "Stations",
-    sequelize: db,
+    tableName: 'Stations',
+    sequelize: db
   }
 );
 

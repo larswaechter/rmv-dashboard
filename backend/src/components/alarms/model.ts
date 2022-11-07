@@ -4,15 +4,12 @@ import {
   InferCreationAttributes,
   CreationOptional,
   ForeignKey,
-  Model,
-} from "sequelize";
+  Model
+} from 'sequelize';
 
-import db from "../../config/db";
+import db from '../../config/db';
 
-class Alarm extends Model<
-  InferAttributes<Alarm>,
-  InferCreationAttributes<Alarm>
-> {
+class Alarm extends Model<InferAttributes<Alarm>, InferCreationAttributes<Alarm>> {
   declare id: CreationOptional<number>;
   declare journeyRef: string;
   declare stationId: string;
@@ -31,49 +28,49 @@ Alarm.init(
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
+      primaryKey: true
     },
     journeyRef: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     stationId: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     smartmode: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      defaultValue: true
     },
     interval: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
       validate: {
-        is: /^[0-7]$/g,
-      },
+        is: /^[0-7]$/g
+      }
     },
     autoremove: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      defaultValue: true
     },
     telegram: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: false
     },
     discord: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: false
     },
     active: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      defaultValue: true
     },
     createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   },
   {
-    tableName: "Alarms",
-    sequelize: db,
+    tableName: 'Alarms',
+    sequelize: db
   }
 );
 
@@ -82,7 +79,7 @@ class AlarmHistory extends Model<
   InferCreationAttributes<AlarmHistory>
 > {
   declare id: CreationOptional<number>;
-  declare alarmId: ForeignKey<Alarm["id"]>;
+  declare alarmId: ForeignKey<Alarm['id']>;
   declare journeyRef: string;
   declare stationId: string;
   declare scheduleHash: string;
@@ -95,35 +92,35 @@ AlarmHistory.init(
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
+      primaryKey: true
     },
     journeyRef: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     stationId: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     scheduleHash: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   },
   {
-    tableName: "AlarmHistories",
-    sequelize: db,
+    tableName: 'AlarmHistories',
+    sequelize: db
   }
 );
 
 Alarm.hasOne(AlarmHistory, {
-  onDelete: "CASCADE",
+  onDelete: 'CASCADE',
   foreignKey: {
     allowNull: false,
-    name: "alarmId",
-  },
+    name: 'alarmId'
+  }
 });
 
 export { Alarm, AlarmHistory };

@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
-import Cache from "../../config/cache";
+import { Request, Response } from 'express';
+import Cache from '../../config/cache';
 
-import Logger from "../../config/logger";
+import Logger from '../../config/logger';
 
-import SettingsModel from "./model";
+import SettingsModel from './model';
 
 export class SettingsController {
   async getSettings(req: Request, res: Response) {
@@ -23,8 +23,8 @@ export class SettingsController {
 
       const setting = await SettingsModel.findOne({
         where: {
-          key,
-        },
+          key
+        }
       });
       if (!setting) return res.sendStatus(404);
 
@@ -59,8 +59,8 @@ export class SettingsController {
 
       const model = await SettingsModel.findOne({
         where: {
-          key,
-        },
+          key
+        }
       });
 
       if (!model) return res.sendStatus(404);
@@ -69,8 +69,8 @@ export class SettingsController {
         { value },
         {
           where: {
-            key,
-          },
+            key
+          }
         }
       );
 

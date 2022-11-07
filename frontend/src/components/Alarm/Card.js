@@ -1,26 +1,24 @@
-import { useState, useEffect } from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
-import Alert from "@mui/material/Alert";
-import Typography from "@mui/material/Typography";
-import CircularProgress from "@mui/material/CircularProgress";
-import ReplayIcon from "@mui/icons-material/Replay";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Chip from "@mui/material/Chip";
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import ReplayIcon from '@mui/icons-material/Replay';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Chip from '@mui/material/Chip';
 
-import { deleteAlarm, getAlarmDetails } from "../../services/alarm";
-import JourneyStopTimes from "../Journey/StopTimes";
-import { hasStopDelay } from "../../utils/helper";
+import { deleteAlarm, getAlarmDetails } from '../../services/alarm';
+import JourneyStopTimes from '../Journey/StopTimes';
 
 const AlarmCard = ({ alarm, afterDelete }) => {
   const [details, setDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  console.log(details);
 
   const fetchData = async () => {
     try {
@@ -39,7 +37,7 @@ const AlarmCard = ({ alarm, afterDelete }) => {
 
   const handleDelete = async () => {
     try {
-      if (window.confirm("Delete item?")) {
+      if (window.confirm('Delete item?')) {
         await deleteAlarm(alarm.id);
         afterDelete(alarm.id);
       }
@@ -68,9 +66,9 @@ const AlarmCard = ({ alarm, afterDelete }) => {
       <Card
         sx={{
           minHeight: 390,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}
       >
         <CardContent>
@@ -106,7 +104,7 @@ const AlarmCard = ({ alarm, afterDelete }) => {
         </Typography>
         <JourneyStopTimes stop={details.stop} />
       </CardContent>
-      <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
+      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
           {getChip()}
           {alarm.telegram && (
@@ -139,6 +137,11 @@ const AlarmCard = ({ alarm, afterDelete }) => {
       </CardActions>
     </Card>
   );
+};
+
+AlarmCard.propTypes = {
+  alarm: PropTypes.object,
+  afterDelete: PropTypes.func
 };
 
 export default AlarmCard;

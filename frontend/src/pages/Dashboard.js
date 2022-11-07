@@ -55,7 +55,7 @@ const PagesDashboard = () => {
 
   if (isLoading)
     return (
-      <div sx={{ textAlign: 'center', padding: '20vh 0px' }}>
+      <div style={{ textAlign: 'center', padding: '20vh 0px' }}>
         <CircularProgress />
       </div>
     );

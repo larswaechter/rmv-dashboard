@@ -11,8 +11,8 @@
     "seed": "npx sequelize-cli db:seed:all",
     "test": "rm -f ../data/db.test.sqlite && jest --coverage --forceExit",
     "test:ci": "jest --forceExit",
-    "prettier": "prettier --config ../.prettierrc --write ./src/**/*.ts",
-    "prettier:ci": "prettier --config ../.prettierrc --check ./src/**/*.ts",
+    "prettier": "prettier --config ../.prettierrc --write './src/**/*.ts'",
+    "prettier:ci": "prettier --config ../.prettierrc --check './src/**/*.ts'",
     "lint": "eslint . --ext .ts"
   },
   "repository": {

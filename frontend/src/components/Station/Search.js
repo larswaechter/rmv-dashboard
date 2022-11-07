@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
-import { searchStations } from "../../services/station";
+import { searchStations } from '../../services/station';
 
 const StationSearch = ({ handleChange }) => {
-  const [value, setValue] = useState("");
-  const [inputValue, setInputValue] = useState("");
+  const [value, setValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [stations, setStations] = useState([]);
 
   useEffect(() => {
@@ -38,6 +39,10 @@ const StationSearch = ({ handleChange }) => {
       renderInput={(params) => <TextField {...params} label="Station" />}
     />
   );
+};
+
+StationSearch.propTypes = {
+  handleChange: PropTypes.func
 };
 
 export default StationSearch;

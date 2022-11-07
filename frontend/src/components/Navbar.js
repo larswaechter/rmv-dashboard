@@ -1,4 +1,4 @@
-import * as React from 'react';
+import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -59,6 +59,11 @@ const Navbar = ({ open, handleDrawerOpen }) => {
       </Toolbar>
     </AppBar>
   );
+};
+
+Navbar.propTypes = {
+  open: PropTypes.bool,
+  handleDrawerOpen: PropTypes.func
 };
 
 export default Navbar;

@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import Logger from "../../config/logger";
+import Logger from '../../config/logger';
 
-import { RMVApi } from "../rmv/api";
-import { Journey } from "../rmv/models/Journey";
+import { RMVApi } from '../rmv/api';
+import { Journey } from '../rmv/models/Journey';
 
-import { Alarm } from "./model";
+import { Alarm } from './model';
 
 export class AlarmsController {
   async getAlarms(req: Request, res: Response) {
@@ -42,12 +42,10 @@ export class AlarmsController {
       const alarm = await Alarm.findByPk(+id);
       if (!alarm) return res.sendStatus(404);
 
-      const journey = await RMVApi.getJourneyDetails(
-        alarm.getDataValue("journeyRef")
-      );
+      const journey = await RMVApi.getJourneyDetails(alarm.getDataValue('journeyRef'));
       const parsed = Journey.ofJourneyDetails(journey);
 
-      parsed["stop"] = parsed.stops.find((stop) => stop.id === alarm.stationId);
+      parsed['stop'] = parsed.stops.find((stop) => stop.id === alarm.stationId);
 
       delete parsed.stops;
 
@@ -82,8 +80,8 @@ export class AlarmsController {
 
       await Alarm.destroy({
         where: {
-          id,
-        },
+          id
+        }
       });
 
       res.sendStatus(204);

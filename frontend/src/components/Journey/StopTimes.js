@@ -1,10 +1,11 @@
-import { List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
-import TrainIcon from "@mui/icons-material/Train";
-import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
-import TagIcon from "@mui/icons-material/Tag";
-import { orange } from "@mui/material/colors";
+import PropTypes from 'prop-types';
+import { List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
+import TrainIcon from '@mui/icons-material/Train';
+import DepartureBoardIcon from '@mui/icons-material/DepartureBoard';
+import TagIcon from '@mui/icons-material/Tag';
+import { orange } from '@mui/material/colors';
 
-import { delayToColor } from "../../utils/helper";
+import { delayToColor } from '../../utils/helper';
 
 const JourneyStopTimes = ({ stop }) => {
   const { arrival, departure, isFirst, isLast } = stop;
@@ -24,7 +25,7 @@ const JourneyStopTimes = ({ stop }) => {
                 ? `${arrival.date.original || arrival.date.value} / ${
                     arrival.time.original || arrival.time.value
                   }`
-                : ""
+                : ''
             }
             secondary={
               <>
@@ -33,10 +34,10 @@ const JourneyStopTimes = ({ stop }) => {
                   <span
                     style={{
                       color: delayToColor(arrival.delay),
-                      marginLeft: 8,
+                      marginLeft: 8
                     }}
                   >
-                    {`${arrival.delay > 0 ? "+" : "-"}${arrival.delay} Min`}
+                    {`${arrival.delay > 0 ? '+' : '-'}${arrival.delay} Min`}
                   </span>
                 )}
               </>
@@ -56,7 +57,7 @@ const JourneyStopTimes = ({ stop }) => {
                 ? `${departure.date.original || departure.date.value} / ${
                     departure.time.original || departure.time.value
                   }`
-                : ""
+                : ''
             }
             secondary={
               <>
@@ -65,10 +66,10 @@ const JourneyStopTimes = ({ stop }) => {
                   <span
                     style={{
                       color: delayToColor(departure.delay),
-                      marginLeft: 8,
+                      marginLeft: 8
                     }}
                   >
-                    {`${departure.delay > 0 ? "+" : "-"}${departure.delay} Min`}
+                    {`${departure.delay > 0 ? '+' : '-'}${departure.delay} Min`}
                   </span>
                 )}
               </>
@@ -85,7 +86,7 @@ const JourneyStopTimes = ({ stop }) => {
             primary="Track"
             title={track.original}
             style={{
-              color: track.orignial ? orange[900] : "",
+              color: track.orignial ? orange[900] : ''
             }}
             secondary={track.value}
           ></ListItemText>
@@ -93,6 +94,10 @@ const JourneyStopTimes = ({ stop }) => {
       )}
     </List>
   );
+};
+
+JourneyStopTimes.propTypes = {
+  stop: PropTypes.object
 };
 
 export default JourneyStopTimes;

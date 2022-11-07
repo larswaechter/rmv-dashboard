@@ -1,7 +1,7 @@
-import Logger from "../../config/logger";
+import Logger from '../../config/logger';
 
-import { RMVApi } from "../rmv/api";
-import { Journey } from "../rmv/models/Journey";
+import { RMVApi } from '../rmv/api';
+import { Journey } from '../rmv/models/Journey';
 
 export class JourneysController {
   async searchJourney(req, res) {

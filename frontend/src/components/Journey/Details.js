@@ -1,35 +1,36 @@
-import { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import StepContent from "@mui/material/StepContent";
-import CircularProgress from "@mui/material/CircularProgress";
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import GpsFixedIcon from "@mui/icons-material/GpsFixed";
-import { IconButton } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import StepContent from '@mui/material/StepContent';
+import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
+import { IconButton } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
-import L from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
-import icon from "leaflet/dist/images/marker-icon.png";
-import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
-import "leaflet/dist/leaflet.css";
+import 'leaflet/dist/leaflet.css';
 
-import JourneyStopTimes from "./StopTimes";
+import JourneyStopTimes from './StopTimes';
 
-import { searchJourney } from "../../services/journey";
+import { searchJourney } from '../../services/journey';
 
 // Fix broken leaflet marker
 let DefaultIcon = L.icon({
   iconUrl: icon,
-  shadowUrl: iconShadow,
+  shadowUrl: iconShadow
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
@@ -67,33 +68,12 @@ const JourneyDetails = ({ journeyRef }) => {
 
   const getChip = (i) => {
     if (i < journey.nextStop)
-      return (
-        <Chip
-          title="Previous stop"
-          label="Previous"
-          color="warning"
-          variant="outlined"
-        />
-      );
+      return <Chip title="Previous stop" label="Previous" color="warning" variant="outlined" />;
 
     if (i > journey.nextStop)
-      return (
-        <Chip
-          title="Upcoming stop"
-          label="Upcoming"
-          color="info"
-          variant="outlined"
-        />
-      );
+      return <Chip title="Upcoming stop" label="Upcoming" color="info" variant="outlined" />;
 
-    return (
-      <Chip
-        title="Current stop"
-        label="Live •"
-        color="success"
-        variant="outlined"
-      />
-    );
+    return <Chip title="Current stop" label="Live •" color="success" variant="outlined" />;
   };
 
   useEffect(() => {
@@ -102,7 +82,7 @@ const JourneyDetails = ({ journeyRef }) => {
 
   if (isLoading)
     return (
-      <div style={{ textAlign: "center", padding: "16px 0px" }}>
+      <div style={{ textAlign: 'center', padding: '16px 0px' }}>
         <CircularProgress size={30} />
       </div>
     );
@@ -135,9 +115,9 @@ const JourneyDetails = ({ journeyRef }) => {
                   <StepContent>
                     <Box
                       sx={{
-                        width: "100%",
+                        width: '100%',
                         maxWidth: 360,
-                        bgcolor: "background.paper",
+                        bgcolor: 'background.paper'
                       }}
                     >
                       <JourneyStopTimes stop={stop} />
@@ -145,11 +125,7 @@ const JourneyDetails = ({ journeyRef }) => {
                         <IconButton disabled={i === 0} onClick={handleBack}>
                           <KeyboardArrowUpIcon />
                         </IconButton>
-                        <IconButton
-                          variant="contained"
-                          onClick={handleNext}
-                          sx={{ mr: 1 }}
-                        >
+                        <IconButton variant="contained" onClick={handleNext} sx={{ mr: 1 }}>
                           <KeyboardArrowDownIcon />
                         </IconButton>
                         {getChip(i)}
@@ -180,8 +156,8 @@ const JourneyDetails = ({ journeyRef }) => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            {stops.map((stop) => (
-              <Marker position={[stop.lat, stop.lon]}>
+            {stops.map((stop, i) => (
+              <Marker key={i} position={[stop.lat, stop.lon]}>
                 <Popup>{stop.name}</Popup>
               </Marker>
             ))}
@@ -190,6 +166,10 @@ const JourneyDetails = ({ journeyRef }) => {
       </Grid>
     </Box>
   );
+};
+
+JourneyDetails.propTypes = {
+  journeyRef: PropTypes.string
 };
 
 export default JourneyDetails;

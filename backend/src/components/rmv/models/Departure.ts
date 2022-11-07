@@ -1,7 +1,7 @@
-import { RTSchedule, Timeservice } from "../../../services/time";
+import { RTSchedule, Timeservice } from '../../../services/time';
 
-import { IProduct, Product } from "./Product";
-import { IJourneyDetailRef, IMessage, INote } from "./Misc";
+import { IProduct, Product } from './Product';
+import { IJourneyDetailRef, IMessage, INote } from './Misc';
 
 interface IDeparture {
   name: string;
@@ -60,9 +60,7 @@ export class Departure {
       res.rtTrack
     );
 
-    departure.products = res.Product.map((product) =>
-      Product.ofResponse(product)
-    );
+    departure.products = res.Product.map((product) => Product.ofResponse(product));
 
     departure.journeyRef = res.JourneyDetailRef.ref;
     departure.journeyStatus = res.JourneyStatus;
@@ -74,7 +72,7 @@ export class Departure {
   getOriginalDepartureTime() {
     return {
       date: this.departure.date.original || this.departure.date.value,
-      time: this.departure.time.original || this.departure.time.value,
+      time: this.departure.time.original || this.departure.time.value
     };
   }
 }

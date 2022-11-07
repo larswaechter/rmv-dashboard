@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 
 const useWebsocket = (onMessage) => {
   const [isConnected, setIsConnected] = useState(false);
@@ -6,8 +6,8 @@ const useWebsocket = (onMessage) => {
   const ws = useRef(null);
 
   const sendMessage = () => {
-    if (ws.current?.OPEN) ws.current.send("Hello from client");
-    else console.error("Cannot send message because WS is not open");
+    if (ws.current?.OPEN) ws.current.send('Hello from client');
+    else console.error('Cannot send message because WS is not open');
   };
 
   const connect = () => {
@@ -17,7 +17,7 @@ const useWebsocket = (onMessage) => {
 
     ws.current.onopen = () => {
       console.debug(ws.current);
-      console.log("Connected to WS");
+      console.log('Connected to WS');
       setIsConnected(true);
     };
 
@@ -27,7 +27,7 @@ const useWebsocket = (onMessage) => {
     };
 
     ws.current.onclose = (e) => {
-      console.log("Disconnected from WS");
+      console.log('Disconnected from WS');
       if (e.code !== 4000) setIsConnected(false);
     };
 
@@ -44,7 +44,7 @@ const useWebsocket = (onMessage) => {
   return {
     ws,
     sendMessage,
-    isConnected,
+    isConnected
   };
 };
 

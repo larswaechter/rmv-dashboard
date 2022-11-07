@@ -1,42 +1,43 @@
-import { useState, useMemo, useEffect } from "react";
-import dayjs from "dayjs";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import DeleteIcon from "@mui/icons-material/Delete";
-import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
-import TrainIcon from "@mui/icons-material/Train";
-import TramIcon from "@mui/icons-material/Tram";
-import SubwayIcon from "@mui/icons-material/Subway";
-import ReplayIcon from "@mui/icons-material/Replay";
-import DirectionsRailwayIcon from "@mui/icons-material/DirectionsRailway";
-import CommuteIcon from "@mui/icons-material/Commute";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
-import Alert from "@mui/material/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { useState, useMemo, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
+import Box from '@mui/material/Box';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import TrainIcon from '@mui/icons-material/Train';
+import TramIcon from '@mui/icons-material/Tram';
+import SubwayIcon from '@mui/icons-material/Subway';
+import ReplayIcon from '@mui/icons-material/Replay';
+import DirectionsRailwayIcon from '@mui/icons-material/DirectionsRailway';
+import CommuteIcon from '@mui/icons-material/Commute';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-import StationBoardTableRow from "./TableRow";
-import StationBoardTableHead from "./TableHead";
+import StationBoardTableRow from './TableRow';
+import StationBoardTableHead from './TableHead';
 
-import { deleteStation, getStationDepartures } from "../../../services/station";
+import { deleteStation, getStationDepartures } from '../../../services/station';
 
 const descendingComparator = (a, b, orderBy) => {
-  const valA = typeof a[orderBy] === "object" ? a[orderBy].value : a[orderBy];
-  const valB = typeof b[orderBy] === "object" ? b[orderBy].value : b[orderBy];
+  const valA = typeof a[orderBy] === 'object' ? a[orderBy].value : a[orderBy];
+  const valB = typeof b[orderBy] === 'object' ? b[orderBy].value : b[orderBy];
 
   if (valB < valA) return -1;
   if (valB > valA) return 1;
@@ -44,20 +45,20 @@ const descendingComparator = (a, b, orderBy) => {
 };
 
 const getComparator = (order, orderBy) => {
-  return order === "desc"
+  return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 };
 
 export const categoryToIcon = (category) => {
   switch (category) {
-    case "Bus":
+    case 'Bus':
       return <DirectionsBusIcon titleAccess={category} />;
-    case "U-Bahn":
+    case 'U-Bahn':
       return <SubwayIcon titleAccess={category} />;
-    case "Tram":
+    case 'Tram':
       return <TramIcon titleAccess={category} />;
-    case "ICE":
+    case 'ICE':
       return <DirectionsRailwayIcon titleAccess={category} />;
     default:
       return <TrainIcon titleAccess={category} />;
@@ -69,14 +70,14 @@ const StationBoard = ({ station, afterDelete }) => {
   const [departures, setDepartures] = useState([]);
   const [error, setError] = useState(null);
 
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("time");
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('time');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const [category, setCategory] = useState("");
-  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState('');
+  const [search, setSearch] = useState('');
 
   const [datetime, setDatetime] = useState(dayjs());
 
@@ -84,8 +85,8 @@ const StationBoard = ({ station, afterDelete }) => {
 
   const fetchData = async () => {
     try {
-      const date = dayjs(datetime).format("YYYY-MM-DD");
-      const time = dayjs(datetime).format("HH:mm");
+      const date = dayjs(datetime).format('YYYY-MM-DD');
+      const time = dayjs(datetime).format('HH:mm');
 
       setIsLoading(true);
       const data = await getStationDepartures(station.id, date, time);
@@ -104,8 +105,8 @@ const StationBoard = ({ station, afterDelete }) => {
   }, [station]);
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
@@ -123,13 +124,13 @@ const StationBoard = ({ station, afterDelete }) => {
 
   const handleMenuSelect = (category) => {
     if (category) setCategory(category);
-    else setCategory("");
+    else setCategory('');
     closeMenu();
   };
 
   const handleDelete = async () => {
     try {
-      if (window.confirm("Delete station?")) {
+      if (window.confirm('Delete station?')) {
         await deleteStation(station.id);
         afterDelete(station.id);
       }
@@ -154,10 +155,7 @@ const StationBoard = ({ station, afterDelete }) => {
     return clone;
   }, [departures, category, search]);
 
-  const emptyRows =
-    page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - departuresMemo.length)
-      : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - departuresMemo.length) : 0;
 
   const categories = Array.from(
     new Set(
@@ -172,15 +170,10 @@ const StationBoard = ({ station, afterDelete }) => {
     <Toolbar
       sx={{
         pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
+        pr: { xs: 1, sm: 1 }
       }}
     >
-      <Typography
-        sx={{ flex: "1 1 100%" }}
-        variant="h6"
-        id="tableTitle"
-        component="div"
-      >
+      <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
         {station.name}
       </Typography>
       <TextField
@@ -199,13 +192,11 @@ const StationBoard = ({ station, afterDelete }) => {
         onChange={(val) => setDatetime(val)}
         onAccept={() => fetchData()}
         inputFormat="DD.MM HH:mm"
-        renderInput={(params) => (
-          <TextField sx={{ width: 290 }} size="small" {...params} />
-        )}
+        renderInput={(params) => <TextField sx={{ width: 290 }} size="small" {...params} />}
       />
       <Tooltip title="Filter Type">
         <IconButton size="small" onClick={openMenu}>
-          <FilterAltIcon color={category ? "primary" : "action"} />
+          <FilterAltIcon color={category ? 'primary' : 'action'} />
         </IconButton>
       </Tooltip>
       <Tooltip title="Refresh">
@@ -223,15 +214,15 @@ const StationBoard = ({ station, afterDelete }) => {
         open={open}
         onClose={closeMenu}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+          vertical: 'bottom',
+          horizontal: 'right'
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right'
         }}
         MenuListProps={{
-          "aria-labelledby": "basic-button",
+          'aria-labelledby': 'basic-button'
         }}
       >
         <MenuItem key="all" onClick={() => handleMenuSelect()}>
@@ -249,10 +240,10 @@ const StationBoard = ({ station, afterDelete }) => {
 
   if (isLoading)
     return (
-      <Box sx={{ width: "100%" }}>
-        <Paper sx={{ width: "100%", mb: 2 }}>
+      <Box sx={{ width: '100%' }}>
+        <Paper sx={{ width: '100%', mb: 2 }}>
           {Head}
-          <div style={{ textAlign: "center", padding: "4vh 0px" }}>
+          <div style={{ textAlign: 'center', padding: '4vh 0px' }}>
             <CircularProgress />
           </div>
         </Paper>
@@ -261,8 +252,8 @@ const StationBoard = ({ station, afterDelete }) => {
 
   if (error)
     return (
-      <Box sx={{ width: "100%" }}>
-        <Paper sx={{ width: "100%", mb: 2 }}>
+      <Box sx={{ width: '100%' }}>
+        <Paper sx={{ width: '100%', mb: 2 }}>
           {Head}
           <Alert
             severity="error"
@@ -279,15 +270,11 @@ const StationBoard = ({ station, afterDelete }) => {
     );
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+    <Box sx={{ width: '100%' }}>
+      <Paper sx={{ width: '100%', mb: 2 }}>
         {Head}
         <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size="medium"
-          >
+          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size="medium">
             <StationBoardTableHead
               order={order}
               orderBy={orderBy}
@@ -322,6 +309,11 @@ const StationBoard = ({ station, afterDelete }) => {
       </Paper>
     </Box>
   );
+};
+
+StationBoard.propTypes = {
+  station: PropTypes.object,
+  afterDelete: PropTypes.func
 };
 
 export default StationBoard;

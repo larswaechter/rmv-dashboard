@@ -1,35 +1,36 @@
-import { useState } from "react";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Alert from "@mui/material/Alert";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Alert from '@mui/material/Alert';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
-import { searchJourney } from "../../services/journey";
-import { createAlarm } from "../../services/alarm";
+import { searchJourney } from '../../services/journey';
+import { createAlarm } from '../../services/alarm';
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
+  p: 4
 };
 
 const AlarmAdd = ({ handleClose }) => {
-  const [stop, setStop] = useState("");
+  const [stop, setStop] = useState('');
   const [stops, setStops] = useState([]);
   const [autoremove, setAutoremove] = useState(true);
   const [smartmode, setSmartmode] = useState(true);
@@ -38,7 +39,7 @@ const AlarmAdd = ({ handleClose }) => {
 
   const [telegram, setTelegram] = useState(false);
   const [discord, setDiscord] = useState(false);
-  const [journeyRef, setJourneyRef] = useState("");
+  const [journeyRef, setJourneyRef] = useState('');
 
   const [error, setError] = useState(null);
 
@@ -54,7 +55,7 @@ const AlarmAdd = ({ handleClose }) => {
         smartmode,
         autoremove,
         telegram,
-        discord,
+        discord
       });
       handleClose(newAlarm);
     } catch (err) {
@@ -64,7 +65,7 @@ const AlarmAdd = ({ handleClose }) => {
 
   const handleInputChange = (e) => {
     setJourneyRef(e.target.value);
-    setStop("");
+    setStop('');
     setStops([]);
   };
 
@@ -77,7 +78,7 @@ const AlarmAdd = ({ handleClose }) => {
         setStops(
           data.stops.map(({ id, name }) => ({
             id,
-            name,
+            name
           }))
         );
       setError(null);
@@ -89,7 +90,7 @@ const AlarmAdd = ({ handleClose }) => {
 
   return (
     <Box sx={style} component="form" onSubmit={handleSave}>
-      <Typography variant="h6" component="h2" marginBottom={"16px"}>
+      <Typography variant="h6" component="h2" marginBottom={'16px'}>
         Add alarm
       </Typography>
       <Stack spacing={2}>
@@ -129,10 +130,7 @@ const AlarmAdd = ({ handleClose }) => {
           </Typography>
           <FormControlLabel
             control={
-              <Switch
-                checked={continual}
-                onChange={(e) => setContinual(e.target.checked)}
-              />
+              <Switch checked={continual} onChange={(e) => setContinual(e.target.checked)} />
             }
             label="Continual"
             title="..."
@@ -155,20 +153,14 @@ const AlarmAdd = ({ handleClose }) => {
 
           <FormControlLabel
             control={
-              <Switch
-                checked={smartmode}
-                onChange={(e) => setSmartmode(e.target.checked)}
-              />
+              <Switch checked={smartmode} onChange={(e) => setSmartmode(e.target.checked)} />
             }
             label="Smartmode"
             title="Receive updates only on changes"
           />
           <FormControlLabel
             control={
-              <Switch
-                checked={autoremove}
-                onChange={(e) => setAutoremove(e.target.checked)}
-              />
+              <Switch checked={autoremove} onChange={(e) => setAutoremove(e.target.checked)} />
             }
             label="Autoremove"
             title="Remove alarm after departure"
@@ -180,32 +172,19 @@ const AlarmAdd = ({ handleClose }) => {
             Bots
           </Typography>
           <FormControlLabel
-            control={
-              <Switch
-                checked={discord}
-                onChange={(e) => setDiscord(e.target.checked)}
-              />
-            }
+            control={<Switch checked={discord} onChange={(e) => setDiscord(e.target.checked)} />}
             label="Discord"
           />
           <FormControlLabel
-            control={
-              <Switch
-                checked={telegram}
-                onChange={(e) => setTelegram(e.target.checked)}
-              />
-            }
+            control={<Switch checked={telegram} onChange={(e) => setTelegram(e.target.checked)} />}
             label="Telegram"
           />
         </FormGroup>
 
         {error && <Alert severity="error">{error}</Alert>}
 
-        <div style={{ textAlign: "right" }}>
-          <Button
-            style={{ marginRight: "4px" }}
-            onClick={() => handleClose(false)}
-          >
+        <div style={{ textAlign: 'right' }}>
+          <Button style={{ marginRight: '4px' }} onClick={() => handleClose(false)}>
             Close
           </Button>
           <Button variant="contained" type="submit">
@@ -215,6 +194,10 @@ const AlarmAdd = ({ handleClose }) => {
       </Stack>
     </Box>
   );
+};
+
+AlarmAdd.propTypes = {
+  handleClose: PropTypes.func
 };
 
 export default AlarmAdd;

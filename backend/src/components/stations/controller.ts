@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
-import Logger from "../../config/logger";
+import { Request, Response } from 'express';
+import Logger from '../../config/logger';
 
-import { RMVApi } from "../rmv/api";
-import { Departure } from "../rmv/models/Departure";
-import { Station as RMVStation } from "../rmv/models/Station";
+import { RMVApi } from '../rmv/api';
+import { Departure } from '../rmv/models/Departure';
+import { Station as RMVStation } from '../rmv/models/Station';
 
-import Station from "./model";
+import Station from './model';
 
 export class StationsController {
   async getStations(req: Request, res: Response) {
@@ -100,8 +100,8 @@ export class StationsController {
 
       await Station.destroy({
         where: {
-          id,
-        },
+          id
+        }
       });
 
       res.sendStatus(204);

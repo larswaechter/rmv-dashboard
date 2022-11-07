@@ -1,11 +1,11 @@
-import { Timeservice } from "../../../services/time";
+import { Timeservice } from '../../../services/time';
 
-import { RMVApi } from "../api";
+import { RMVApi } from '../api';
 
-import { IDirection } from "./Misc";
-import { IStop, Stop } from "./Stop";
-import { Departure } from "./Departure";
-import { IProduct, Product as RMVProduct } from "./Product";
+import { IDirection } from './Misc';
+import { IStop, Stop } from './Stop';
+import { Departure } from './Departure';
+import { IProduct, Product as RMVProduct } from './Product';
 
 export interface IJourneyDetails {
   JourneyStatus: string;
@@ -36,9 +36,7 @@ export class Journey {
     journey.directions = Directions.Direction.slice();
     journey.products = Product.map((product) => RMVProduct.ofResponse(product));
 
-    journey.stops = Stops.Stop.map((stop) =>
-      Stop.ofResponse(stop, Stops.Stop.length)
-    );
+    journey.stops = Stops.Stop.map((stop) => Stop.ofResponse(stop, Stops.Stop.length));
 
     journey.nextStop = journey.getNextStopIdx();
 
@@ -58,10 +56,7 @@ export class Journey {
       const { departure } = this.stops[i];
       const { date, time } = departure;
 
-      const depParsed = Timeservice.parseDateTime(
-        date.value,
-        time.value
-      ).getTime();
+      const depParsed = Timeservice.parseDateTime(date.value, time.value).getTime();
 
       // Next stop
       if (now.valueOf() < depParsed) {
@@ -79,10 +74,9 @@ export class Journey {
 
     const { date, time } = station.getOriginalDateTimeOrFallback();
 
-    const newDate = Timeservice.addDays(
-      Timeservice.parseDateTime(date, time),
-      days
-    ).format("YYYY-MM-DD");
+    const newDate = Timeservice.addDays(Timeservice.parseDateTime(date, time), days).format(
+      'YYYY-MM-DD'
+    );
 
     const board = await RMVApi.getDepartureBoard(station.id, newDate, time);
 

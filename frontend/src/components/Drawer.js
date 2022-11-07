@@ -1,4 +1,4 @@
-import * as React from 'react';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import MUIDrawer from '@mui/material/Drawer';
@@ -80,4 +80,9 @@ export const Drawer = ({ open, handleDrawerClose }) => {
       </List>
     </MUIDrawer>
   );
+};
+
+Drawer.propTypes = {
+  open: PropTypes.bool,
+  handleDrawerClose: PropTypes.func
 };

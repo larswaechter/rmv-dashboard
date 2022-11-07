@@ -3,15 +3,12 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
-  Model,
-} from "sequelize";
+  Model
+} from 'sequelize';
 
-import db from "../../config/db";
+import db from '../../config/db';
 
-class Settings extends Model<
-  InferAttributes<Settings>,
-  InferCreationAttributes<Settings>
-> {
+class Settings extends Model<InferAttributes<Settings>, InferCreationAttributes<Settings>> {
   declare id: CreationOptional<number>;
   declare key: string;
   declare value: CreationOptional<string>;
@@ -28,39 +25,39 @@ Settings.init(
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
+      primaryKey: true
     },
     key: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: true
     },
     value: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
     default: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     group: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     hidden: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: false
     },
     createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   },
   {
-    tableName: "Settings",
-    sequelize: db,
+    tableName: 'Settings',
+    sequelize: db
   }
 );
 

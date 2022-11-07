@@ -1,42 +1,42 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Snackbar from "@mui/material/Snackbar";
-import Button from "@mui/material/Button";
-import SnackbarContent from "@mui/material/SnackbarContent";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Snackbar from '@mui/material/Snackbar';
+import Button from '@mui/material/Button';
+import SnackbarContent from '@mui/material/SnackbarContent';
 
-import "./App.css";
+import './App.css';
 
-import Navbar from "./components/Navbar";
-import { Drawer, DrawerHeader, drawerWidth } from "./components/Drawer";
+import Navbar from './components/Navbar';
+import { Drawer, DrawerHeader, drawerWidth } from './components/Drawer';
 
-import Router from "./pages/routes";
+import Router from './pages/routes';
 
-import useWebsocketProvider from "./utils/hooks/useWebsocketProvider";
+import useWebsocketProvider from './utils/hooks/useWebsocketProvider';
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
+    transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.leavingScreen
     }),
     marginLeft: `-${drawerWidth}px`,
     ...(open && {
-      transition: theme.transitions.create("margin", {
+      transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.enteringScreen
       }),
-      marginLeft: 0,
-    }),
+      marginLeft: 0
+    })
   })
 );
 
 const onFocus = () => {
-  document.title = "RMV Dashboard";
+  document.title = 'RMV Dashboard';
 };
 
 const App = () => {
@@ -48,23 +48,23 @@ const App = () => {
   const { eventEmitter } = useWebsocketProvider();
 
   useEffect(() => {
-    window.addEventListener("focus", onFocus);
+    window.addEventListener('focus', onFocus);
 
-    eventEmitter.subscribe("message/cronjob-timetable", "App", (msg) => {
+    eventEmitter.subscribe('message/cronjob-timetable', 'App', (msg) => {
       console.log(msg);
       setSnackContent(msg);
       setSnackOpen(true);
-      if (!document.hasFocus()) document.title = "• RMV Dashboard";
+      if (!document.hasFocus()) document.title = '• RMV Dashboard';
     });
 
     return () => {
-      eventEmitter.unsubscribe("message", "App");
-      window.removeEventListener("focus", onFocus);
+      eventEmitter.unsubscribe('message', 'App');
+      window.removeEventListener('focus', onFocus);
     };
   }, []);
 
   const handleSnackClose = (e, reason) => {
-    if (reason === "clickaway") return;
+    if (reason === 'clickaway') return;
     setSnackOpen(false);
   };
 
@@ -74,7 +74,7 @@ const App = () => {
       size="small"
       onClick={() => {
         setSnackOpen(false);
-        navigate("/watchtower");
+        navigate('/watchtower');
       }}
     >
       VIEW
@@ -82,18 +82,15 @@ const App = () => {
   );
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <Navbar open={drawerOpen} handleDrawerOpen={() => setDrawerOpen(true)} />
-      <Drawer
-        open={drawerOpen}
-        handleDrawerClose={() => setDrawerOpen(false)}
-      />
+      <Drawer open={drawerOpen} handleDrawerClose={() => setDrawerOpen(false)} />
       <Main open={drawerOpen}>
         <DrawerHeader />
         <Router />
         <Snackbar
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           open={snackOpen}
           onClose={handleSnackClose}
           autoHideDuration={10000}

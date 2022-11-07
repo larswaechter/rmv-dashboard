@@ -1,6 +1,6 @@
-import hash from "object-hash";
+import hash from 'object-hash';
 
-import { RTSchedule, Timeservice } from "../../../services/time";
+import { RTSchedule, Timeservice } from '../../../services/time';
 
 type DateTime = {
   date: string;
@@ -79,14 +79,12 @@ export class Stop {
   getScheduleHash() {
     return hash({
       arrival: this.arrival,
-      departure: this.departure,
+      departure: this.departure
     });
   }
 
   getOriginalDateTimeOrFallback(): DateTime {
-    return this.isLast
-      ? this.getDateTimeByType("arrival")
-      : this.getDateTimeByType("departure");
+    return this.isLast ? this.getDateTimeByType('arrival') : this.getDateTimeByType('departure');
   }
 
   wasReached() {
@@ -125,8 +123,7 @@ export class Stop {
       messages.push(
         `Arrival: ${this.arrival.date.value} ${this.arrival.time.value} (+${this.arrival.delay}m)`
       );
-    if (this.hasArrivalTrackChange())
-      messages.push(`Arrival track ${this.arrival.track.value}`);
+    if (this.hasArrivalTrackChange()) messages.push(`Arrival track ${this.arrival.track.value}`);
 
     if (this.hasDepartureDelay())
       messages.push(
@@ -166,17 +163,17 @@ export class Stop {
     return !this.isLast && this.departure.track.original !== undefined;
   }
 
-  private getDateTimeByType(type: "arrival" | "departure"): DateTime {
+  private getDateTimeByType(type: 'arrival' | 'departure'): DateTime {
     switch (type) {
-      case "arrival":
+      case 'arrival':
         return {
           date: this.arrival.date.original || this.arrival.date.value,
-          time: this.arrival.time.original || this.arrival.time.value,
+          time: this.arrival.time.original || this.arrival.time.value
         };
       default:
         return {
           date: this.departure.date.original || this.departure.date.value,
-          time: this.departure.time.original || this.departure.time.value,
+          time: this.departure.time.original || this.departure.time.value
         };
     }
   }

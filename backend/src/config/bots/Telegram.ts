@@ -1,14 +1,14 @@
-import NodeTelegramBot from "node-telegram-bot-api";
+import NodeTelegramBot from 'node-telegram-bot-api';
 
-import { IScheduleChange } from "../../services/cronjob";
+import { IScheduleChange } from '../../services/cronjob';
 
-import { IBot } from ".";
-import Logger from "../logger";
-import { getSettingValue, Settings } from "../settings";
+import { IBot } from '.';
+import Logger from '../logger';
+import { getSettingValue, Settings } from '../settings';
 
 export class TelegramBot implements IBot {
   private bot: NodeTelegramBot;
-  private static readonly botName = "TelegramBot";
+  private static readonly botName = 'TelegramBot';
 
   static async of(): Promise<TelegramBot | undefined> {
     Logger.debug(`[${TelegramBot.botName}] Getting instance`);
@@ -32,7 +32,7 @@ export class TelegramBot implements IBot {
     const chatID = await this.getChatID();
     if (chatID)
       this.bot.sendMessage(chatID, message, {
-        parse_mode: "HTML",
+        parse_mode: 'HTML'
       });
   }
 
@@ -43,9 +43,8 @@ export class TelegramBot implements IBot {
     for (const notification of scheduleChanges) {
       res += `<u>Direction: ${notification.direction.value} (${notification.product.name})</u>\n`;
       res += `- Stop: ${notification.stop.name}\n`;
-      res +=
-        "- " + notification.stop.buildDeviationMessagesShort().join("\n- ");
-      res += "\n\n";
+      res += '- ' + notification.stop.buildDeviationMessagesShort().join('\n- ');
+      res += '\n\n';
     }
 
     await this.sendMessage(res);

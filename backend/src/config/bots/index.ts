@@ -1,4 +1,4 @@
-import { IScheduleChange } from "../../services/cronjob";
+import { IScheduleChange } from '../../services/cronjob';
 
 export interface IBot {
   sendMessage(message: string);

@@ -1,20 +1,21 @@
-import { useState } from "react";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const SettingsDiscord = ({ settings, onInputChange, onSettingUpdate }) => {
   const [showKey, setShowKey] = useState(false);
 
   const handleInputChange = (value, i) => {
     const setting = { ...settings[i] };
-    setting["value"] = value;
+    setting['value'] = value;
     onInputChange(setting);
   };
 
@@ -29,16 +30,12 @@ const SettingsDiscord = ({ settings, onInputChange, onSettingUpdate }) => {
       </Typography>
       {settings.map((setting, i) =>
         setting.hidden ? (
-          <FormControl
-            sx={{ m: 1, width: "25ch" }}
-            variant="outlined"
-            key={setting.key}
-          >
+          <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" key={setting.key}>
             <InputLabel>{setting.description}</InputLabel>
             <OutlinedInput
-              type={showKey ? "text" : "password"}
+              type={showKey ? 'text' : 'password'}
               label={setting.description}
-              value={setting.value || setting.default || ""}
+              value={setting.value || setting.default || ''}
               onChange={(e) => handleInputChange(e.target.value, i)}
               onBlur={() => handleInputBlur(i)}
               endAdornment={
@@ -58,7 +55,7 @@ const SettingsDiscord = ({ settings, onInputChange, onSettingUpdate }) => {
           <TextField
             key={setting.key}
             label={setting.description}
-            value={setting.value || setting.default || ""}
+            value={setting.value || setting.default || ''}
             onChange={(e) => handleInputChange(e.target.value, i)}
             onBlur={() => handleInputBlur(i)}
           />
@@ -66,6 +63,12 @@ const SettingsDiscord = ({ settings, onInputChange, onSettingUpdate }) => {
       )}
     </div>
   );
+};
+
+SettingsDiscord.propTypes = {
+  settings: PropTypes.array,
+  onInputChange: PropTypes.func,
+  onSettingUpdate: PropTypes.func
 };
 
 export default SettingsDiscord;

@@ -1,22 +1,23 @@
-import { useState } from "react";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
-import StationSearch from "./Search";
-import { createStation } from "../../services/station";
+import StationSearch from './Search';
+import { createStation } from '../../services/station';
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
+  p: 4
 };
 
 const StationAdd = ({ handleClose }) => {
@@ -34,21 +35,13 @@ const StationAdd = ({ handleClose }) => {
 
   return (
     <Box sx={style} component="form">
-      <Typography
-        id="modal-modal-title"
-        variant="h6"
-        component="h2"
-        marginBottom={"16px"}
-      >
+      <Typography id="modal-modal-title" variant="h6" component="h2" marginBottom={'16px'}>
         Add station
       </Typography>
       <Stack spacing={4}>
         <StationSearch handleChange={setStation} />
-        <div style={{ textAlign: "right" }}>
-          <Button
-            style={{ marginRight: "4px" }}
-            onClick={() => handleClose(false)}
-          >
+        <div style={{ textAlign: 'right' }}>
+          <Button style={{ marginRight: '4px' }} onClick={() => handleClose(false)}>
             Close
           </Button>
           <Button variant="contained" onClick={handleSave}>
@@ -58,6 +51,10 @@ const StationAdd = ({ handleClose }) => {
       </Stack>
     </Box>
   );
+};
+
+StationAdd.propTypes = {
+  handleClose: PropTypes.func
 };
 
 export default StationAdd;
