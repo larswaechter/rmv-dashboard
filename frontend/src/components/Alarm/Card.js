@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Chip from '@mui/material/Chip';
 
 import { deleteAlarm, getAlarmDetails } from '../../services/alarm';
-import JourneyStopTimes from '../Journey/StopTimes';
+import JourneyStop from '../Journey/Stop';
 
 const AlarmCard = ({ alarm, afterDelete }) => {
   const [details, setDetails] = useState(null);
@@ -102,7 +102,7 @@ const AlarmCard = ({ alarm, afterDelete }) => {
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {details.products[0].name} {details.directions[0].value}
         </Typography>
-        <JourneyStopTimes stop={details.stop} />
+        <JourneyStop stop={details.stop} />
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>

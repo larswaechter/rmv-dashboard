@@ -7,9 +7,8 @@ import { orange } from '@mui/material/colors';
 
 import { delayToColor } from '../../utils/helper';
 
-const JourneyStopTimes = ({ stop }) => {
+const JourneyStop = ({ stop }) => {
   const { arrival, departure, isFirst, isLast } = stop;
-  const { track } = departure;
 
   return (
     <List dense disablePadding>
@@ -77,18 +76,18 @@ const JourneyStopTimes = ({ stop }) => {
           ></ListItemText>
         </ListItem>
       )}
-      {track.value && (
+      {!isLast && departure.track.value && (
         <ListItem>
           <ListItemAvatar>
             <TagIcon />
           </ListItemAvatar>
           <ListItemText
             primary="Track"
-            title={track.original}
+            title={departure.track.original}
             style={{
-              color: track.orignial ? orange[900] : ''
+              color: departure.track.orignial ? orange[900] : ''
             }}
-            secondary={track.value}
+            secondary={departure.track.value}
           ></ListItemText>
         </ListItem>
       )}
@@ -96,8 +95,8 @@ const JourneyStopTimes = ({ stop }) => {
   );
 };
 
-JourneyStopTimes.propTypes = {
+JourneyStop.propTypes = {
   stop: PropTypes.object
 };
 
-export default JourneyStopTimes;
+export default JourneyStop;

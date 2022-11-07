@@ -15,24 +15,10 @@ import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import { IconButton } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
-import L from 'leaflet';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-
-import 'leaflet/dist/leaflet.css';
-
-import JourneyStopTimes from './StopTimes';
+import JourneyStop from './Stop';
 
 import { searchJourney } from '../../services/journey';
-
-// Fix broken leaflet marker
-let DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow
-});
-L.Marker.prototype.options.icon = DefaultIcon;
+import MapStops from '../Map/Stops';
 
 const JourneyDetails = ({ journeyRef }) => {
   const [journey, setJourney] = useState(null);
@@ -40,8 +26,6 @@ const JourneyDetails = ({ journeyRef }) => {
   const [error, setError] = useState(null);
 
   const [activeStep, setActiveStep] = useState(0);
-
-  console.log(journey);
 
   const fetchData = async () => {
     try {
@@ -120,7 +104,7 @@ const JourneyDetails = ({ journeyRef }) => {
                         bgcolor: 'background.paper'
                       }}
                     >
-                      <JourneyStopTimes stop={stop} />
+                      <JourneyStop stop={stop} />
                       <div>
                         <IconButton disabled={i === 0} onClick={handleBack}>
                           <KeyboardArrowUpIcon />
@@ -146,22 +130,7 @@ const JourneyDetails = ({ journeyRef }) => {
           </Stepper>
         </Grid>
         <Grid item xs={8}>
-          <MapContainer
-            center={[stops[activeStep].lat, stops[activeStep].lon]}
-            zoom={13}
-            scrollWheelZoom={false}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-
-            {stops.map((stop, i) => (
-              <Marker key={i} position={[stop.lat, stop.lon]}>
-                <Popup>{stop.name}</Popup>
-              </Marker>
-            ))}
-          </MapContainer>
+          <MapStops stops={stops} activeStopIdx={activeStep} />
         </Grid>
       </Grid>
     </Box>
