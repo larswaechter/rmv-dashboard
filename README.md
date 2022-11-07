@@ -6,13 +6,13 @@ A self-hosted web app for displaying public transport information like train & b
 
 ![Preview](https://user-images.githubusercontent.com/11744028/196059284-17f40ac5-c390-4168-b243-00bf539f55a1.png)
 
-## Description
+## 📍 Description
 
-...
+rmv-dashboard is a web application for displaying public transport information for the [Frankfurt Rhine-Main Region](https://en.wikipedia.org/wiki/Frankfurt_Rhine-Main) based on the data provided by the RMV Open Data API. The core features are departure boards for stops and intelligent delay alarms for journeys. The applications display real-time data when provided by the API.
 
-Read more in the [Wiki](https://github.com/larswaechter/rmv-dashboard/wiki).
+Keep in mind that the actual timetables might differ from the ones provided by the API. Read more in the [Wiki](https://github.com/larswaechter/rmv-dashboard/wiki).
 
-## Technology
+## 💻 Technology
 
 - Backend
   - Express.js
@@ -22,17 +22,17 @@ Read more in the [Wiki](https://github.com/larswaechter/rmv-dashboard/wiki).
   - MaterialUI
 - Docker
 
-## Features
+## :pushpin: Features
 
 - Dashboard
   - Station Departure Board
-  - Train connection details
+  - Journey details
 - Watchtower
   - InApp notifications
   - Discord notifications
   - Telegram notifications
 
-## Installation
+## :cd: Installation
 
 First of all, get your RMV API Key from [here](https://opendata.rmv.de/site/anmeldeseite.html).
 
@@ -59,8 +59,7 @@ docker run \
   -p 5000:5000 \
   -v /path/to/host/data:/app/data \
   -e RMV_KEY="YOUR_KEY" \
-  -d \
-  larswaechter/rmv-dashboard
+  -d larswaechter/rmv-dashboard
 ```
 
 #### Docker Compose
@@ -102,7 +101,7 @@ docker ps
 docker exec -i <ContainerID> bash -c "cat backend/logs/*.log"
 ```
 
-## External Services
+## 🧩 External Services
 
 ### Discord
 
@@ -112,7 +111,7 @@ docker exec -i <ContainerID> bash -c "cat backend/logs/*.log"
 
 ...
 
-## Development
+## :hammer: Development
 
 ### Setup
 
@@ -135,3 +134,11 @@ cd frontend
 npm i
 npm start
 ```
+
+## :octocat: Contributing
+
+See [CONTRIBUTING.md](https://github.com/larswaechter/rmv-dashboard/blob/main/CONTRIBUTING.md)
+
+## 🔑 License
+
+rmv-dashboard is released under [MIT](https://github.com/larswaechter/rmv-dashboard/blob/main/LICENSE) license.
