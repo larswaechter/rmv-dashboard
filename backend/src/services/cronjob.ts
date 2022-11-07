@@ -1,20 +1,20 @@
-import cron from "node-cron";
-import WebSocket from "ws";
-import dayjs from "dayjs";
-import { Model } from "sequelize";
+import cron from 'node-cron';
+import WebSocket from 'ws';
+import dayjs from 'dayjs';
+import { Model } from 'sequelize';
 
-import Logger from "../config/logger";
-import { WebSocketEvents } from "../config/ws";
+import Logger from '../config/logger';
+import { WebSocketEvents } from '../config/ws';
 
-import { Alarm, AlarmHistory } from "../components/alarms/model";
-import { RMVApi } from "../components/rmv/api";
-import { Journey } from "../components/rmv/models/Journey";
-import { TelegramBot } from "../config/bots/Telegram";
-import { DiscordBot } from "../config/bots/Discord";
-import { IDirection } from "../components/rmv/models/Misc";
-import { Product } from "../components/rmv/models/Product";
-import { Stop } from "../components/rmv/models/Stop";
-import { Server } from "../server";
+import { Alarm, AlarmHistory } from '../components/alarms/model';
+import { RMVApi } from '../components/rmv/api';
+import { Journey } from '../components/rmv/models/Journey';
+import { TelegramBot } from '../config/bots/Telegram';
+import { DiscordBot } from '../config/bots/Discord';
+import { IDirection } from '../components/rmv/models/Misc';
+import { Product } from '../components/rmv/models/Product';
+import { Stop } from '../components/rmv/models/Stop';
+import { Server } from '../server';
 
 export interface IScheduleChange {
   stop: Stop;
@@ -26,28 +26,20 @@ export interface IScheduleChange {
 /**
  * Job for sending schedule changes via WS
  */
-cron.schedule("*/15 * * * *", async () => {
+cron.schedule('*/15 * * * *', async () => {
   try {
-    Logger.info("[CRONJOB] Starting");
+    Logger.info('[CRONJOB] Starting');
 
     const scheduleChanges: IScheduleChange[] = [];
     const alarms = await Alarm.findAll({
       where: {
-        active: true,
-      },
+        active: true
+      }
     });
 
     for (const alarm of alarms) {
-      const {
-        id,
-        journeyRef,
-        stationId,
-        autoremove,
-        smartmode,
-        interval,
-        telegram,
-        discord,
-      } = alarm.get();
+      const { id, journeyRef, stationId, autoremove, smartmode, interval, telegram, discord } =
+        alarm.get();
 
       const journeyDetails = await RMVApi.getJourneyDetails(journeyRef);
       const journey = Journey.ofJourneyDetails(journeyDetails);
@@ -71,8 +63,8 @@ cron.schedule("*/15 * * * *", async () => {
             const existing = await Alarm.findOne({
               where: {
                 stationId,
-                journeyRef: next.journeyRef,
-              },
+                journeyRef: next.journeyRef
+              }
             });
             if (!existing) {
               Logger.info(`[CRONJOB] Saving continual departure: ${stop.id}`);
@@ -82,11 +74,10 @@ cron.schedule("*/15 * * * *", async () => {
                 autoremove,
                 telegram,
                 discord,
-                interval,
+                interval
               });
             }
-          } else
-            Logger.info(`[CRONJOB] No continual departure found: ${stop.id}`);
+          } else Logger.info(`[CRONJOB] No continual departure found: ${stop.id}`);
         }
 
         // Delete / Set inactive
@@ -94,18 +85,18 @@ cron.schedule("*/15 * * * *", async () => {
           await Alarm.destroy({
             where: {
               id,
-              autoremove: true,
-            },
+              autoremove: true
+            }
           });
         else {
           Alarm.update(
             {
-              active: false,
+              active: false
             },
             {
               where: {
-                id,
-              },
+                id
+              }
             }
           );
         }
@@ -114,20 +105,16 @@ cron.schedule("*/15 * * * *", async () => {
         const history = await AlarmHistory.findOne({
           where: {
             journeyRef,
-            stationId,
-          },
+            stationId
+          }
         });
 
-        if (
-          !history ||
-          !smartmode ||
-          scheduleHash !== history.getDataValue("scheduleHash")
-        ) {
+        if (!history || !smartmode || scheduleHash !== history.getDataValue('scheduleHash')) {
           scheduleChanges.push({
             stop,
             alarm,
             direction: journey.directions[0],
-            product: journey.products[0],
+            product: journey.products[0]
           });
 
           if (history)
@@ -136,8 +123,8 @@ cron.schedule("*/15 * * * *", async () => {
               {
                 where: {
                   journeyRef,
-                  stationId,
-                },
+                  stationId
+                }
               }
             );
           else
@@ -145,7 +132,7 @@ cron.schedule("*/15 * * * *", async () => {
               alarmId: id,
               journeyRef,
               stationId,
-              scheduleHash,
+              scheduleHash
             });
         }
       }
@@ -164,7 +151,7 @@ cron.schedule("*/15 * * * *", async () => {
           client.send(
             JSON.stringify({
               event: WebSocketEvents.CronjobTimetable,
-              body: scheduleChanges,
+              body: scheduleChanges
             })
           );
         }
@@ -176,9 +163,7 @@ cron.schedule("*/15 * * * *", async () => {
       const telegramBot = await TelegramBot.of();
       if (telegramBot)
         telegramBot.sendDelayNotifications(
-          scheduleChanges.filter((notification) =>
-            notification.alarm.getDataValue("telegram")
-          )
+          scheduleChanges.filter((notification) => notification.alarm.getDataValue('telegram'))
         );
 
       /**
@@ -188,15 +173,13 @@ cron.schedule("*/15 * * * *", async () => {
         if (err) Logger.error(err.stack);
         else
           bot.sendDelayNotifications(
-            scheduleChanges.filter((notification) =>
-              notification.alarm.getDataValue("discord")
-            )
+            scheduleChanges.filter((notification) => notification.alarm.getDataValue('discord'))
           );
       });
     }
   } catch (err) {
     Logger.error(err.message || err);
   } finally {
-    Logger.info("[CRONJOB] Finished");
+    Logger.info('[CRONJOB] Finished');
   }
 });

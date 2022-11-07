@@ -1,3 +1,3 @@
 export enum WebSocketEvents {
-  CronjobTimetable = "cronjob-timetable",
+  CronjobTimetable = 'cronjob-timetable'
 }

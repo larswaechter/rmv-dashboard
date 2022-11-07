@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useState } from "react";
-import Snackbar from "@mui/material/Snackbar";
-import CircularProgress from "@mui/material/CircularProgress";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
+import { useCallback, useEffect, useState } from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
 
-import Stationboard from "../components/Station/Board";
-import StationAdd from "../components/Station/Add";
+import Stationboard from '../components/Station/Board';
+import StationAdd from '../components/Station/Add';
 
-import { getStations } from "../services/station";
+import { getStations } from '../services/station';
 
 const PagesDashboard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -55,7 +55,7 @@ const PagesDashboard = () => {
 
   if (isLoading)
     return (
-      <div sx={{ textAlign: "center", padding: "20vh 0px" }}>
+      <div sx={{ textAlign: 'center', padding: '20vh 0px' }}>
         <CircularProgress />
       </div>
     );
@@ -76,7 +76,7 @@ const PagesDashboard = () => {
 
   return (
     <div className="PagesDashboard">
-      <Typography variant="h5" component="h1" marginBottom={"16px"}>
+      <Typography variant="h5" component="h1" marginBottom={'16px'}>
         Dashboard
       </Typography>
       {stations.length ? (
@@ -87,11 +87,7 @@ const PagesDashboard = () => {
         <Alert
           severity="info"
           action={
-            <Button
-              color="inherit"
-              size="small"
-              onClick={() => setShowModal(true)}
-            >
+            <Button color="inherit" size="small" onClick={() => setShowModal(true)}>
               Add
             </Button>
           }
@@ -102,7 +98,7 @@ const PagesDashboard = () => {
       <Fab
         color="primary"
         aria-label="add"
-        sx={{ position: "fixed", bottom: 16, right: 16 }}
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
         onClick={() => setShowModal(true)}
       >
         <AddIcon />

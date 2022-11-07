@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import Typography from "@mui/material/Typography";
-import CircularProgress from "@mui/material/CircularProgress";
-import Snackbar from "@mui/material/Snackbar";
-import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import Snackbar from '@mui/material/Snackbar';
+import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
 
-import { getSettings, updateSetting } from "../services/settings";
-import SettingsTelegram from "../components/Settings/Telegram";
-import SettingsDiscord from "../components/Settings/Discord";
-import { Stack } from "@mui/system";
+import { getSettings, updateSetting } from '../services/settings';
+import SettingsTelegram from '../components/Settings/Telegram';
+import SettingsDiscord from '../components/Settings/Discord';
+import { Stack } from '@mui/system';
 
 const PagesSettings = () => {
   const [settings, setSettings] = useState([]);
@@ -68,7 +68,7 @@ const PagesSettings = () => {
   };
 
   const handleSnackClose = (e, reason) => {
-    if (reason === "clickaway") return;
+    if (reason === 'clickaway') return;
     setShowSnack(false);
   };
 
@@ -78,7 +78,7 @@ const PagesSettings = () => {
 
   if (isLoading)
     return (
-      <div style={{ textAlign: "center", padding: "20vh 0px" }}>
+      <div style={{ textAlign: 'center', padding: '20vh 0px' }}>
         <CircularProgress />
       </div>
     );
@@ -99,25 +99,25 @@ const PagesSettings = () => {
 
   return (
     <div className="PagesSettings">
-      <Typography variant="h5" component="h1" marginBottom={"16px"}>
+      <Typography variant="h5" component="h1" marginBottom={'16px'}>
         Settings
       </Typography>
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
+          '& .MuiTextField-root': { m: 1, width: '25ch' }
         }}
         noValidate
         autoComplete="off"
       >
         <Stack spacing={2}>
           <SettingsDiscord
-            settings={settings.filter(({ group }) => group === "discord")}
+            settings={settings.filter(({ group }) => group === 'discord')}
             onInputChange={handleInputChange}
             onSettingUpdate={handleSettingUpdate}
           />
           <SettingsTelegram
-            settings={settings.filter(({ group }) => group === "telegram")}
+            settings={settings.filter(({ group }) => group === 'telegram')}
             onInputChange={handleInputChange}
             onSettingUpdate={handleSettingUpdate}
           />
@@ -126,7 +126,7 @@ const PagesSettings = () => {
       <Snackbar
         open={showSnack}
         onClose={handleSnackClose}
-        message={updateError ? updateError : "Settings updated"}
+        message={updateError ? updateError : 'Settings updated'}
         autoHideDuration={3000}
       />
     </div>

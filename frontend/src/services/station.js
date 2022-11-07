@@ -1,8 +1,8 @@
 export const getStations = () =>
   fetch(`api/stations`, {
     headers: {
-      Accept: "application/json",
-    },
+      Accept: 'application/json'
+    }
   })
     .then((response) => {
       if (response.ok) return response.json();
@@ -10,7 +10,7 @@ export const getStations = () =>
     })
     .catch((err) => {
       console.error(err);
-      return Promise.reject("Failed to fetch stations!");
+      return Promise.reject('Failed to fetch stations!');
     });
 
 export const getStationDepartures = (id, date, time) =>
@@ -18,12 +18,12 @@ export const getStationDepartures = (id, date, time) =>
     `api/stations/${id}/departures?` +
       new URLSearchParams({
         date,
-        time,
+        time
       }),
     {
       headers: {
-        Accept: "application/json",
-      },
+        Accept: 'application/json'
+      }
     }
   )
     .then((response) => {
@@ -32,19 +32,19 @@ export const getStationDepartures = (id, date, time) =>
     })
     .catch((err) => {
       console.error(err);
-      return Promise.reject("Failed to fetch departures!");
+      return Promise.reject('Failed to fetch departures!');
     });
 
 export const searchStations = (stop) =>
   fetch(
     `api/stations/search?` +
       new URLSearchParams({
-        name: stop,
+        name: stop
       }),
     {
       headers: {
-        Accept: "application/json",
-      },
+        Accept: 'application/json'
+      }
     }
   )
     .then((response) => {
@@ -53,16 +53,16 @@ export const searchStations = (stop) =>
     })
     .catch((err) => {
       console.error(err);
-      return Promise.reject("Failed to fetch stations!");
+      return Promise.reject('Failed to fetch stations!');
     });
 
 export const createStation = (station) =>
   fetch(`api/stations`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(station),
+    body: JSON.stringify(station)
   })
     .then((response) => {
       if (response.ok) return response.json();
@@ -70,17 +70,17 @@ export const createStation = (station) =>
     })
     .catch((err) => {
       console.error(err);
-      return Promise.reject("Failed to save station!");
+      return Promise.reject('Failed to save station!');
     });
 
 export const deleteStation = (id) =>
   fetch(`api/stations/${id}`, {
-    method: "DELETE",
+    method: 'DELETE'
   })
     .then((response) => {
       if (!response.ok) throw new Error(response.statusText);
     })
     .catch((err) => {
       console.error(err);
-      return Promise.reject("Failed to delete station!");
+      return Promise.reject('Failed to delete station!');
     });

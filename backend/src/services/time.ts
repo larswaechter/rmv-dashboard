@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export interface RTValue {
   value: any;
@@ -14,8 +14,7 @@ export interface RTSchedule {
 }
 
 export class Timeservice {
-  static hasRealtimeValue = (value: any, rt?: any) =>
-    rt !== undefined && rt !== value;
+  static hasRealtimeValue = (value: any, rt?: any) => rt !== undefined && rt !== value;
 
   static getRealtimeValue = (value: any, rt: any, defaultVal?: any): RTValue =>
     Timeservice.hasRealtimeValue(value, rt)
@@ -41,22 +40,15 @@ export class Timeservice {
       time: _time,
       parsed: Timeservice.parseDateTime(_date.value, _time.value),
       track: _track,
-      delay,
+      delay
     };
   }
 
   static parseDateTime = (date: string, time: string) => {
-    const [arrYear, arrMonth, arrDay] = date.split("-");
-    const [arrHours, arrMin, arrSec] = time.split(":");
+    const [arrYear, arrMonth, arrDay] = date.split('-');
+    const [arrHours, arrMin, arrSec] = time.split(':');
 
-    return new Date(
-      +arrYear,
-      +arrMonth - 1,
-      +arrDay,
-      +arrHours,
-      +arrMin,
-      +arrSec
-    );
+    return new Date(+arrYear, +arrMonth - 1, +arrDay, +arrHours, +arrMin, +arrSec);
   };
 
   static getDelayInMinutes = (date: RTValue, time: RTValue) => {
@@ -83,22 +75,20 @@ export class Timeservice {
     const daysToAdd = Math.min(n, 7);
     const remainder = n - daysToAdd;
 
-    let newDate = datejs.add(daysToAdd, "day");
+    let newDate = datejs.add(daysToAdd, 'day');
 
     // Number of passed working days
     const passed = Math.max(5 - datejs.day(), 0);
     switch (newDate.day()) {
       case 0:
-        newDate = newDate.add(daysToAdd - passed, "day");
+        newDate = newDate.add(daysToAdd - passed, 'day');
         break;
       case 6:
-        newDate = newDate.add(1 + daysToAdd - passed, "day");
+        newDate = newDate.add(1 + daysToAdd - passed, 'day');
         break;
     }
 
-    return remainder > 0
-      ? Timeservice.addDays(newDate.toDate(), remainder)
-      : newDate;
+    return remainder > 0 ? Timeservice.addDays(newDate.toDate(), remainder) : newDate;
   }
 
   private static getDateDiffInMin = (start: Date, end: Date) =>

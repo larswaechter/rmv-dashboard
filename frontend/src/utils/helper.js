@@ -1,17 +1,10 @@
-import { orange, green, red, deepOrange } from "@mui/material/colors";
+import { orange, green, red, deepOrange } from '@mui/material/colors';
 
 export const parseDateTime = (date, time) => {
-  const [arrYear, arrMonth, arrDay] = date.split("-");
-  const [arrHours, arrMin, arrSec] = time.split(":");
+  const [arrYear, arrMonth, arrDay] = date.split('-');
+  const [arrHours, arrMin, arrSec] = time.split(':');
 
-  return new Date(
-    +arrYear,
-    +arrMonth - 1,
-    +arrDay,
-    +arrHours,
-    +arrMin,
-    +arrSec
-  );
+  return new Date(+arrYear, +arrMonth - 1, +arrDay, +arrHours, +arrMin, +arrSec);
 };
 
 export const delayToColor = (delaySec) => {

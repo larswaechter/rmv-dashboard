@@ -1,18 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
 
-import Typography from "@mui/material/Typography";
-import CircularProgress from "@mui/material/CircularProgress";
-import Modal from "@mui/material/Modal";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Unstable_Grid2";
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import Modal from '@mui/material/Modal';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Unstable_Grid2';
 
-import AlarmAdd from "../components/Alarm/Add";
-import AlarmCard from "../components/Alarm/Card";
+import AlarmAdd from '../components/Alarm/Add';
+import AlarmCard from '../components/Alarm/Card';
 
-import { getAlarms } from "../services/alarm";
+import { getAlarms } from '../services/alarm';
 
 const PagesWatchtower = () => {
   const [showModal, setShowModal] = useState(false);
@@ -54,7 +54,7 @@ const PagesWatchtower = () => {
 
   if (isLoading)
     return (
-      <div style={{ textAlign: "center", padding: "20vh 0px" }}>
+      <div style={{ textAlign: 'center', padding: '20vh 0px' }}>
         <CircularProgress />
       </div>
     );
@@ -75,7 +75,7 @@ const PagesWatchtower = () => {
 
   return (
     <div className="PagesWatchtower">
-      <Typography variant="h5" component="h1" marginBottom={"16px"}>
+      <Typography variant="h5" component="h1" marginBottom={'16px'}>
         Watchtower
       </Typography>
       {alarms.length > 0 ? (
@@ -90,11 +90,7 @@ const PagesWatchtower = () => {
         <Alert
           severity="info"
           action={
-            <Button
-              color="inherit"
-              size="small"
-              onClick={() => setShowModal(true)}
-            >
+            <Button color="inherit" size="small" onClick={() => setShowModal(true)}>
               Add
             </Button>
           }
@@ -105,7 +101,7 @@ const PagesWatchtower = () => {
       <Fab
         color="primary"
         aria-label="add"
-        sx={{ position: "fixed", bottom: 16, right: 16 }}
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
         onClick={() => setShowModal(true)}
       >
         <AddIcon />

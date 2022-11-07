@@ -2,7 +2,8 @@
 
 A self-hosted web app for displaying public transport information like train & bus using the [RMV Open Data](https://opendata.rmv.de/site/start.html) API.
 
-[![Tests](https://github.com/larswaechter/rmv-dashboard/actions/workflows/tests.yml/badge.svg)](https://github.com/larswaechter/rmv-dashboard/actions/workflows/tests.yml)
+[![Backend](https://github.com/larswaechter/rmv-dashboard/actions/workflows/backend.yml/badge.svg)](https://github.com/larswaechter/rmv-dashboard/actions/workflows/backend.yml)
+[![Frontend](https://github.com/larswaechter/rmv-dashboard/actions/workflows/frontend.yml/badge.svg)](https://github.com/larswaechter/rmv-dashboard/actions/workflows/frontend.yml)
 
 ![Preview](https://user-images.githubusercontent.com/11744028/196059284-17f40ac5-c390-4168-b243-00bf539f55a1.png)
 
@@ -65,7 +66,7 @@ docker run \
 #### Docker Compose
 
 ```yml
-version: "3"
+version: '3'
 services:
   rmv-dashboard:
     image: larswaechter/rmv-dashboard:latest

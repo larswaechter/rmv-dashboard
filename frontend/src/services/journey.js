@@ -1,15 +1,15 @@
 const headers = {
-  Accept: "application/json",
+  Accept: 'application/json'
 };
 
 export const searchJourney = (id) =>
   fetch(
     `api/journeys/search?` +
       new URLSearchParams({
-        id,
+        id
       }),
     {
-      headers,
+      headers
     }
   )
     .then((response) => {
@@ -18,5 +18,5 @@ export const searchJourney = (id) =>
     })
     .catch((err) => {
       console.error(err);
-      return Promise.reject("Failed to fetch journey!");
+      return Promise.reject('Failed to fetch journey!');
     });

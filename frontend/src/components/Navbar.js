@@ -1,32 +1,32 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import TrainIcon from "@mui/icons-material/Train";
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import TrainIcon from '@mui/icons-material/Train';
 
-import GitHubIcon from "@mui/icons-material/GitHub";
-import InfoIcon from "@mui/icons-material/Info";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import InfoIcon from '@mui/icons-material/Info';
 
-import { drawerWidth } from "./Drawer";
+import { drawerWidth } from './Drawer';
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== 'open'
 })(({ theme, open }) => ({
-  transition: theme.transitions.create(["margin", "width"], {
+  transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: theme.transitions.duration.leavingScreen
   }),
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
+      duration: theme.transitions.duration.enteringScreen
+    })
+  })
 }));
 
 const Navbar = ({ open, handleDrawerOpen }) => {
@@ -38,11 +38,11 @@ const Navbar = ({ open, handleDrawerOpen }) => {
           aria-label="open drawer"
           onClick={handleDrawerOpen}
           edge="start"
-          sx={{ mr: 2, ...(open && { display: "none" }) }}
+          sx={{ mr: 2, ...(open && { display: 'none' }) }}
         >
           <MenuIcon />
         </IconButton>
-        <TrainIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+        <TrainIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
           RMV Dashboard
         </Typography>
@@ -53,11 +53,7 @@ const Navbar = ({ open, handleDrawerOpen }) => {
         >
           <GitHubIcon />
         </IconButton>
-        <IconButton
-          color="inherit"
-          href="https://opendata.rmv.de/site/start.html"
-          target="_blank"
-        >
+        <IconButton color="inherit" href="https://opendata.rmv.de/site/start.html" target="_blank">
           <InfoIcon />
         </IconButton>
       </Toolbar>
