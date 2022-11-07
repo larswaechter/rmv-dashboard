@@ -1,5 +1,7 @@
+const PATH = 'api/stations';
+
 export const getStations = () =>
-  fetch(`api/stations`, {
+  fetch(`${PATH}`, {
     headers: {
       Accept: 'application/json'
     }
@@ -15,7 +17,7 @@ export const getStations = () =>
 
 export const getStationDepartures = (id, date, time) =>
   fetch(
-    `api/stations/${id}/departures?` +
+    `${PATH}/${id}/departures?` +
       new URLSearchParams({
         date,
         time
@@ -37,7 +39,7 @@ export const getStationDepartures = (id, date, time) =>
 
 export const searchStations = (stop) =>
   fetch(
-    `api/stations/search?` +
+    `${PATH}/search?` +
       new URLSearchParams({
         name: stop
       }),
@@ -57,7 +59,7 @@ export const searchStations = (stop) =>
     });
 
 export const createStation = (station) =>
-  fetch(`api/stations`, {
+  fetch(`${PATH}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -74,7 +76,7 @@ export const createStation = (station) =>
     });
 
 export const deleteStation = (id) =>
-  fetch(`api/stations/${id}`, {
+  fetch(`${PATH}/${id}`, {
     method: 'DELETE'
   })
     .then((response) => {

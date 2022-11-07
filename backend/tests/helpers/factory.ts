@@ -28,11 +28,12 @@ export class TestFactory {
   dummyAlarm = {
     journeyRef: 'MyJourneyRef',
     stationId: 'MyStationID',
-    smartmode: false,
+    silent: false,
     interval: 5,
     autoremove: false,
     telegram: false,
     discord: false,
+    paused: false,
     active: false
   };
 

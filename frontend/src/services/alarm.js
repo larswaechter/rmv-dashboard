@@ -1,5 +1,7 @@
+const PATH = 'api/alarms';
+
 export const getAlarms = () =>
-  fetch(`api/alarms`, {
+  fetch(`${PATH}`, {
     headers: {
       Accept: 'application/json'
     }
@@ -14,7 +16,7 @@ export const getAlarms = () =>
     });
 
 export const getAlarmDetails = (id) =>
-  fetch(`api/alarms/${id}/details`, {
+  fetch(`${PATH}/${id}/details`, {
     headers: {
       Accept: 'application/json'
     }
@@ -29,7 +31,7 @@ export const getAlarmDetails = (id) =>
     });
 
 export const createAlarm = (alarm) =>
-  fetch(`api/alarms`, {
+  fetch(`${PATH}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -46,7 +48,7 @@ export const createAlarm = (alarm) =>
     });
 
 export const deleteAlarm = (id) =>
-  fetch(`api/alarms/${id}`, {
+  fetch(`${PATH}/${id}`, {
     method: 'DELETE'
   })
     .then((response) => {
@@ -55,4 +57,28 @@ export const deleteAlarm = (id) =>
     .catch((err) => {
       console.error(err);
       return Promise.reject('Failed to delete alarm!');
+    });
+
+export const pauseAlarm = (id) =>
+  fetch(`${PATH}/${id}/pause`, {
+    method: 'POST'
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error(response.statusText);
+    })
+    .catch((err) => {
+      console.error(err);
+      return Promise.reject('Failed to pause alarm!');
+    });
+
+export const continueAlarm = (id) =>
+  fetch(`${PATH}/${id}/continue`, {
+    method: 'POST'
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error(response.statusText);
+    })
+    .catch((err) => {
+      console.error(err);
+      return Promise.reject('Failed to continue alarm!');
     });

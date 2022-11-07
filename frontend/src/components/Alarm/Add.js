@@ -33,7 +33,7 @@ const AlarmAdd = ({ handleClose }) => {
   const [stop, setStop] = useState('');
   const [stops, setStops] = useState([]);
   const [autoremove, setAutoremove] = useState(true);
-  const [smartmode, setSmartmode] = useState(true);
+  const [silent, setSilent] = useState(true);
   const [continual, setContinual] = useState(false);
   const [interval, setInterval] = useState(1);
 
@@ -52,7 +52,7 @@ const AlarmAdd = ({ handleClose }) => {
         journeyRef,
         stationId: stop,
         interval: continual ? interval : 0,
-        smartmode,
+        silent,
         autoremove,
         telegram,
         discord
@@ -129,13 +129,17 @@ const AlarmAdd = ({ handleClose }) => {
             Options
           </Typography>
           <FormControlLabel
+            control={<Switch checked={silent} onChange={(e) => setSilent(e.target.checked)} />}
+            label="Silent"
+            title="Receive updates only on changes"
+          />
+          <FormControlLabel
             control={
               <Switch checked={continual} onChange={(e) => setContinual(e.target.checked)} />
             }
             label="Continual"
             title="..."
           />
-
           {continual && (
             <TextField
               required
@@ -151,13 +155,6 @@ const AlarmAdd = ({ handleClose }) => {
             />
           )}
 
-          <FormControlLabel
-            control={
-              <Switch checked={smartmode} onChange={(e) => setSmartmode(e.target.checked)} />
-            }
-            label="Smartmode"
-            title="Receive updates only on changes"
-          />
           <FormControlLabel
             control={
               <Switch checked={autoremove} onChange={(e) => setAutoremove(e.target.checked)} />

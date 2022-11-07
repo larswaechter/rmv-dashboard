@@ -56,6 +56,44 @@ export class AlarmsController {
     }
   }
 
+  async pauseAlarm(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      if (!id) return res.sendStatus(400);
+
+      const alarm = await Alarm.findByPk(+id);
+      if (!alarm) return res.sendStatus(404);
+
+      await alarm.update({
+        paused: true
+      });
+
+      res.sendStatus(204);
+    } catch (err) {
+      Logger.error(err.stack || err);
+      res.sendStatus(500);
+    }
+  }
+
+  async continueAlarm(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      if (!id) return res.sendStatus(400);
+
+      const alarm = await Alarm.findByPk(+id);
+      if (!alarm) return res.sendStatus(404);
+
+      await alarm.update({
+        paused: false
+      });
+
+      res.sendStatus(204);
+    } catch (err) {
+      Logger.error(err.stack || err);
+      res.sendStatus(500);
+    }
+  }
+
   async createAlarm(req: Request, res: Response) {
     try {
       const alarm = req.body;

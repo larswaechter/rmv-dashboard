@@ -1,5 +1,7 @@
+const PATH = 'api/settings';
+
 export const getSettings = () =>
-  fetch(`api/settings`, {
+  fetch(`${PATH}`, {
     headers: {
       Accept: 'application/json'
     }
@@ -14,7 +16,7 @@ export const getSettings = () =>
     });
 
 export const updateSetting = (key, value) =>
-  fetch(`api/settings/${key}`, {
+  fetch(`${PATH}/${key}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json'

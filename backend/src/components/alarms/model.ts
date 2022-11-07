@@ -13,11 +13,12 @@ class Alarm extends Model<InferAttributes<Alarm>, InferCreationAttributes<Alarm>
   declare id: CreationOptional<number>;
   declare journeyRef: string;
   declare stationId: string;
-  declare smartmode: boolean;
+  declare silent: boolean;
   declare interval: number;
   declare autoremove: boolean;
   declare telegram: boolean;
   declare discord: boolean;
+  declare paused: boolean;
   declare active: boolean;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -38,7 +39,7 @@ Alarm.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    smartmode: {
+    silent: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
@@ -58,6 +59,10 @@ Alarm.init(
       defaultValue: false
     },
     discord: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    paused: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },

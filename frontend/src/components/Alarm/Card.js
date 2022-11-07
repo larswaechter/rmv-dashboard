@@ -11,11 +11,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ReplayIcon from '@mui/icons-material/Replay';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Chip from '@mui/material/Chip';
+import PauseIcon from '@mui/icons-material/Pause';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
-import { deleteAlarm, getAlarmDetails } from '../../services/alarm';
+import { continueAlarm, deleteAlarm, getAlarmDetails, pauseAlarm } from '../../services/alarm';
 import JourneyStop from '../Journey/Stop';
 
-const AlarmCard = ({ alarm, afterDelete }) => {
+const AlarmCard = ({ alarm, afterUpdate, afterDelete }) => {
   const [details, setDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,6 +37,30 @@ const AlarmCard = ({ alarm, afterDelete }) => {
     }
   };
 
+  const onPause = async () => {
+    try {
+      await pauseAlarm(alarm.id);
+      afterUpdate({
+        ...alarm,
+        paused: true
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const onContinue = async () => {
+    try {
+      await continueAlarm(alarm.id);
+      afterUpdate({
+        ...alarm,
+        paused: false
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleDelete = async () => {
     try {
       if (window.confirm('Delete item?')) {
@@ -47,7 +73,7 @@ const AlarmCard = ({ alarm, afterDelete }) => {
     }
   };
 
-  const getChip = () => {
+  const getTimeChip = () => {
     if (details.stop.departure?.delay || details.stop.arrival?.delay)
       return <Chip label="DELAY" color="error" variant="outlined" />;
 
@@ -59,13 +85,13 @@ const AlarmCard = ({ alarm, afterDelete }) => {
 
   useEffect(() => {
     fetchData();
-  }, [alarm]);
+  }, [alarm.id]);
 
   if (isLoading)
     return (
       <Card
         sx={{
-          minHeight: 390,
+          minHeight: 200,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
@@ -79,7 +105,7 @@ const AlarmCard = ({ alarm, afterDelete }) => {
 
   if (error)
     return (
-      <Card sx={{ minHeight: 390 }}>
+      <Card>
         <Alert
           severity="error"
           action={
@@ -93,8 +119,10 @@ const AlarmCard = ({ alarm, afterDelete }) => {
       </Card>
     );
 
+  const { silent, interval, telegram, discord, paused } = alarm;
+
   return (
-    <Card sx={{ minHeight: 390 }}>
+    <Card>
       <CardContent>
         <Typography variant="h5" component="div">
           {details.stop.name}
@@ -106,23 +134,50 @@ const AlarmCard = ({ alarm, afterDelete }) => {
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
-          {getChip()}
-          {alarm.telegram && (
+          {getTimeChip()}
+          {silent && (
+            <Chip
+              label="SILENT"
+              sx={{ marginLeft: 1 }}
+              color="info"
+              variant="outlined"
+              title="Receive updates only on changes"
+            />
+          )}
+          {paused && (
+            <Chip
+              label="PAUSED"
+              sx={{ marginLeft: 1 }}
+              color="info"
+              variant="outlined"
+              title="Notifications paused"
+            />
+          )}
+          {interval > 0 && (
+            <Chip
+              label={`Interval: ${interval}`}
+              sx={{ marginLeft: 1 }}
+              color="info"
+              variant="outlined"
+              title="Interval enabled"
+            />
+          )}
+          {telegram && (
             <Chip
               label="TELEGRAM"
               sx={{ marginLeft: 1 }}
               color="info"
               variant="outlined"
-              title="Notification enabled"
+              title="Telegram notification enabled"
             />
           )}
-          {alarm.discord && (
+          {discord && (
             <Chip
               label="DISCORD"
               sx={{ marginLeft: 1 }}
               color="info"
               variant="outlined"
-              title="Notification enabled"
+              title="Discord notification enabled"
             />
           )}
         </div>
@@ -130,6 +185,15 @@ const AlarmCard = ({ alarm, afterDelete }) => {
           <IconButton size="small" onClick={() => fetchData()}>
             <ReplayIcon />
           </IconButton>
+          {paused ? (
+            <IconButton size="small" onClick={onContinue}>
+              <PlayArrowIcon />
+            </IconButton>
+          ) : (
+            <IconButton size="small" onClick={onPause}>
+              <PauseIcon />
+            </IconButton>
+          )}
           <IconButton size="small" color="error" onClick={handleDelete}>
             <DeleteIcon />
           </IconButton>
@@ -141,6 +205,7 @@ const AlarmCard = ({ alarm, afterDelete }) => {
 
 AlarmCard.propTypes = {
   alarm: PropTypes.object,
+  afterUpdate: PropTypes.func,
   afterDelete: PropTypes.func
 };
 

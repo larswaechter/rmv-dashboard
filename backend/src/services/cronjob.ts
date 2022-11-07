@@ -33,12 +33,13 @@ cron.schedule('*/15 * * * *', async () => {
     const scheduleChanges: IScheduleChange[] = [];
     const alarms = await Alarm.findAll({
       where: {
-        active: true
+        active: true,
+        paused: false
       }
     });
 
     for (const alarm of alarms) {
-      const { id, journeyRef, stationId, autoremove, smartmode, interval, telegram, discord } =
+      const { id, journeyRef, stationId, autoremove, silent, interval, telegram, discord } =
         alarm.get();
 
       const journeyDetails = await RMVApi.getJourneyDetails(journeyRef);
@@ -109,7 +110,7 @@ cron.schedule('*/15 * * * *', async () => {
           }
         });
 
-        if (!history || !smartmode || scheduleHash !== history.getDataValue('scheduleHash')) {
+        if (!history || !silent || scheduleHash !== history.getDataValue('scheduleHash')) {
           scheduleChanges.push({
             stop,
             alarm,

@@ -36,9 +36,16 @@ const PagesWatchtower = () => {
     }
   };
 
-  const handleDelete = useCallback(
-    (id) => {
-      setAlarms(alarms.filter((dept) => dept.id !== id));
+  const handleDelete = useCallback((id) => {
+    setAlarms((alarms) => alarms.filter((dept) => dept.id !== id));
+  }, []);
+
+  const handleUpdate = useCallback(
+    (alarm) => {
+      const idx = alarms.findIndex(({ id }) => id === alarm.id);
+      const copy = alarms.slice();
+      copy[idx] = alarm;
+      setAlarms(copy);
     },
     [alarms]
   );
@@ -82,7 +89,7 @@ const PagesWatchtower = () => {
         <Grid container spacing={2}>
           {alarms.map((alarm, i) => (
             <Grid key={i} xs={4}>
-              <AlarmCard alarm={alarm} afterDelete={handleDelete} />
+              <AlarmCard alarm={alarm} afterDelete={handleDelete} afterUpdate={handleUpdate} />
             </Grid>
           ))}
         </Grid>
