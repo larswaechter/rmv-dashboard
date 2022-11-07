@@ -13,8 +13,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Chip from '@mui/material/Chip';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-import { continueAlarm, deleteAlarm, getAlarmDetails, pauseAlarm } from '../../services/alarm';
+import { resumeAlarm, deleteAlarm, getAlarmDetails, pauseAlarm } from '../../services/alarm';
 import JourneyStop from '../Journey/Stop';
 
 const AlarmCard = ({ alarm, afterUpdate, afterDelete }) => {
@@ -51,7 +52,7 @@ const AlarmCard = ({ alarm, afterUpdate, afterDelete }) => {
 
   const onContinue = async () => {
     try {
-      await continueAlarm(alarm.id);
+      await resumeAlarm(alarm.id);
       afterUpdate({
         ...alarm,
         paused: false
@@ -74,10 +75,12 @@ const AlarmCard = ({ alarm, afterUpdate, afterDelete }) => {
   };
 
   const getTimeChip = () => {
-    if (details.stop.departure?.delay || details.stop.arrival?.delay)
+    const { stop } = details;
+
+    if (stop.departure?.delay || stop.arrival?.delay)
       return <Chip label="DELAY" color="error" variant="outlined" />;
 
-    if (details.stop.departure?.track.original)
+    if (stop.departure?.track.original)
       return <Chip label="TRACK CHANGE" color="warning" variant="outlined" />;
 
     return <Chip label="ONTIME" color="success" variant="outlined" />;
@@ -119,7 +122,7 @@ const AlarmCard = ({ alarm, afterUpdate, afterDelete }) => {
       </Card>
     );
 
-  const { silent, interval, telegram, discord, paused } = alarm;
+  const { active, interval, telegram, discord, paused } = alarm;
 
   return (
     <Card>
@@ -131,24 +134,29 @@ const AlarmCard = ({ alarm, afterUpdate, afterDelete }) => {
           {details.products[0].name} {details.directions[0].value}
         </Typography>
         <JourneyStop stop={details.stop} />
+        {!active && (
+          <Alert
+            icon={<CheckCircleOutlineIcon fontSize="inherit" />}
+            severity="success"
+            variant="outlined"
+            action={
+              <Button color="inherit" size="small" onClick={handleDelete}>
+                DELETE
+              </Button>
+            }
+          >
+            Alarm finished
+          </Alert>
+        )}
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
           {getTimeChip()}
-          {silent && (
-            <Chip
-              label="SILENT"
-              sx={{ marginLeft: 1 }}
-              color="info"
-              variant="outlined"
-              title="Receive updates only on changes"
-            />
-          )}
           {paused && (
             <Chip
               label="PAUSED"
               sx={{ marginLeft: 1 }}
-              color="info"
+              color="warning"
               variant="outlined"
               title="Notifications paused"
             />
@@ -182,15 +190,15 @@ const AlarmCard = ({ alarm, afterUpdate, afterDelete }) => {
           )}
         </div>
         <div>
-          <IconButton size="small" onClick={() => fetchData()}>
+          <IconButton size="small" onClick={() => fetchData()} title="Reload">
             <ReplayIcon />
           </IconButton>
           {paused ? (
-            <IconButton size="small" onClick={onContinue}>
+            <IconButton size="small" onClick={onContinue} title="Resume">
               <PlayArrowIcon />
             </IconButton>
           ) : (
-            <IconButton size="small" onClick={onPause}>
+            <IconButton size="small" onClick={onPause} title="Pause">
               <PauseIcon />
             </IconButton>
           )}

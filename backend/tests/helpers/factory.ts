@@ -30,7 +30,7 @@ export class TestFactory {
     stationId: 'MyStationID',
     silent: false,
     interval: 5,
-    autoremove: false,
+    autodelete: false,
     telegram: false,
     discord: false,
     paused: false,

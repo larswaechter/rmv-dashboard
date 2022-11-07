@@ -16,25 +16,14 @@ import Switch from '@mui/material/Switch';
 
 import { searchJourney } from '../../services/journey';
 import { createAlarm } from '../../services/alarm';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4
-};
+import { ModalStyle } from '../../utils/helper';
 
 const AlarmAdd = ({ handleClose }) => {
   const [stop, setStop] = useState('');
   const [stops, setStops] = useState([]);
-  const [autoremove, setAutoremove] = useState(true);
+  const [autodelete, setAutodelete] = useState(true);
   const [silent, setSilent] = useState(true);
-  const [continual, setContinual] = useState(false);
+  const [series, setSeries] = useState(false);
   const [interval, setInterval] = useState(1);
 
   const [telegram, setTelegram] = useState(false);
@@ -51,9 +40,9 @@ const AlarmAdd = ({ handleClose }) => {
       const newAlarm = await createAlarm({
         journeyRef,
         stationId: stop,
-        interval: continual ? interval : 0,
+        interval: series ? interval : 0,
         silent,
-        autoremove,
+        autodelete,
         telegram,
         discord
       });
@@ -89,7 +78,7 @@ const AlarmAdd = ({ handleClose }) => {
   };
 
   return (
-    <Box sx={style} component="form" onSubmit={handleSave}>
+    <Box sx={ModalStyle} component="form" onSubmit={handleSave}>
       <Typography variant="h6" component="h2" marginBottom={'16px'}>
         Add alarm
       </Typography>
@@ -134,13 +123,11 @@ const AlarmAdd = ({ handleClose }) => {
             title="Receive updates only on changes"
           />
           <FormControlLabel
-            control={
-              <Switch checked={continual} onChange={(e) => setContinual(e.target.checked)} />
-            }
-            label="Continual"
-            title="..."
+            control={<Switch checked={series} onChange={(e) => setSeries(e.target.checked)} />}
+            label="Series"
+            title="Repeart for future similar journeys"
           />
-          {continual && (
+          {series && (
             <TextField
               required
               id="interval"
@@ -157,10 +144,10 @@ const AlarmAdd = ({ handleClose }) => {
 
           <FormControlLabel
             control={
-              <Switch checked={autoremove} onChange={(e) => setAutoremove(e.target.checked)} />
+              <Switch checked={autodelete} onChange={(e) => setAutodelete(e.target.checked)} />
             }
-            label="Autoremove"
-            title="Remove alarm after departure"
+            label="Autodelete"
+            title="Delete alarm after departure"
           />
         </FormGroup>
 

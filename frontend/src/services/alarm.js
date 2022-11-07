@@ -61,7 +61,7 @@ export const deleteAlarm = (id) =>
 
 export const pauseAlarm = (id) =>
   fetch(`${PATH}/${id}/pause`, {
-    method: 'POST'
+    method: 'PATCH'
   })
     .then((response) => {
       if (!response.ok) throw new Error(response.statusText);
@@ -71,14 +71,14 @@ export const pauseAlarm = (id) =>
       return Promise.reject('Failed to pause alarm!');
     });
 
-export const continueAlarm = (id) =>
-  fetch(`${PATH}/${id}/continue`, {
-    method: 'POST'
+export const resumeAlarm = (id) =>
+  fetch(`${PATH}/${id}/resume`, {
+    method: 'PATCH'
   })
     .then((response) => {
       if (!response.ok) throw new Error(response.statusText);
     })
     .catch((err) => {
       console.error(err);
-      return Promise.reject('Failed to continue alarm!');
+      return Promise.reject('Failed to resume alarm!');
     });

@@ -75,7 +75,7 @@ export class AlarmsController {
     }
   }
 
-  async continueAlarm(req: Request, res: Response) {
+  async resumeAlarm(req: Request, res: Response) {
     try {
       const { id } = req.params;
       if (!id) return res.sendStatus(400);

@@ -15,7 +15,7 @@ class Alarm extends Model<InferAttributes<Alarm>, InferCreationAttributes<Alarm>
   declare stationId: string;
   declare silent: boolean;
   declare interval: number;
-  declare autoremove: boolean;
+  declare autodelete: boolean;
   declare telegram: boolean;
   declare discord: boolean;
   declare paused: boolean;
@@ -50,7 +50,7 @@ Alarm.init(
         is: /^[0-7]$/g
       }
     },
-    autoremove: {
+    autodelete: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },

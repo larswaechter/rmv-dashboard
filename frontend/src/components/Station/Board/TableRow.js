@@ -22,20 +22,10 @@ import Snackbar from '@mui/material/Snackbar';
 
 import { orange } from '@mui/material/colors';
 
+import { ModalStyle } from '../../../utils/helper';
 import JourneyDetails from '../../Journey/Details';
-import { categoryToIcon } from '.';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 600,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4
-};
+import { categoryToIcon } from '.';
 
 const StationBoardTableRow = ({ row }) => {
   const [open, setOpen] = useState(false);
@@ -101,7 +91,7 @@ const StationBoardTableRow = ({ row }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={ModalStyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {direction}
           </Typography>

@@ -47,7 +47,7 @@ describe('Alarms component', () => {
         expect(alarm.stationId).eq(factory.dummyAlarm.stationId);
         expect(alarm.silent).eq(factory.dummyAlarm.silent);
         expect(alarm.interval).eq(factory.dummyAlarm.interval);
-        expect(alarm.autoremove).eq(factory.dummyAlarm.autoremove);
+        expect(alarm.autodelete).eq(factory.dummyAlarm.autodelete);
         expect(alarm.telegram).eq(factory.dummyAlarm.telegram);
         expect(alarm.discord).eq(factory.dummyAlarm.discord);
         expect(alarm.paused).eq(factory.dummyAlarm.paused);
@@ -74,11 +74,71 @@ describe('Alarms component', () => {
         expect(alarm.stationId).eq(factory.dummyAlarm.stationId);
         expect(alarm.silent).eq(factory.dummyAlarm.silent);
         expect(alarm.interval).eq(factory.dummyAlarm.interval);
-        expect(alarm.autoremove).eq(factory.dummyAlarm.autoremove);
+        expect(alarm.autodelete).eq(factory.dummyAlarm.autodelete);
         expect(alarm.telegram).eq(factory.dummyAlarm.telegram);
         expect(alarm.discord).eq(factory.dummyAlarm.discord);
         expect(alarm.paused).eq(factory.dummyAlarm.paused);
         expect(alarm.active).eq(factory.dummyAlarm.active);
+
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('PATCH /api/alarms/1/pause', (done) => {
+    factory.app
+      .patch('/api/alarms/1/pause')
+      .expect(204)
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('GET /api/alarms/1', (done) => {
+    factory.app
+      .get('/api/alarms/1')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        const alarm: Alarm = res.body;
+
+        expect(alarm).to.be.an('object');
+        expect(alarm.paused).eq(true);
+
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('PATCH /api/alarms/1/resume', (done) => {
+    factory.app
+      .patch('/api/alarms/1/resume')
+      .expect(204)
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('GET /api/alarms/1', (done) => {
+    factory.app
+      .get('/api/alarms/1')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        const alarm: Alarm = res.body;
+
+        expect(alarm).to.be.an('object');
+        expect(alarm.paused).eq(false);
 
         done();
       })

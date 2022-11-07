@@ -9,9 +9,9 @@ A self-hosted web app for displaying public transport information like train & b
 
 ## 📍 Description
 
-rmv-dashboard is a web application for displaying public transport information for the [Frankfurt Rhine-Main Region](https://en.wikipedia.org/wiki/Frankfurt_Rhine-Main) based on the data provided by the RMV Open Data API. The core features are departure boards for stops and intelligent delay alarms for journeys. The applications display real-time data when provided by the API.
+rmv-dashboard is a web application for displaying public transport information for the [Frankfurt Rhine-Main Region](https://en.wikipedia.org/wiki/Frankfurt_Rhine-Main) based on the data provided by the RMV Open Data API. The core features are departure boards for stops and intelligent delay alarms for journeys. The application displays real-time data when provided by the API. Keep in mind that the timetables might differ from the actual ones.
 
-Keep in mind that the actual timetables might differ from the ones provided by the API. Read more in the [Wiki](https://github.com/larswaechter/rmv-dashboard/wiki).
+Read more in the [Wiki](https://github.com/larswaechter/rmv-dashboard/wiki).
 
 ## 💻 Technology
 

@@ -144,7 +144,7 @@ const StationBoard = ({ station, afterDelete }) => {
     let clone = departures.slice();
     const lSearch = search.toLowerCase();
 
-    if (category) clone = departures.filter((dep) => dep.category === category);
+    if (category) clone = departures.filter((dep) => dep.products[0].catOut === category);
     if (lSearch)
       clone = clone.filter(
         (dep) =>

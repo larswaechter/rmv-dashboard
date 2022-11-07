@@ -5,20 +5,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
-import StationSearch from './Search';
 import { createStation } from '../../services/station';
+import { ModalStyle } from '../../utils/helper';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4
-};
+import StationSearch from './Search';
 
 const StationAdd = ({ handleClose }) => {
   const [station, setStation] = useState(null);
@@ -34,7 +24,7 @@ const StationAdd = ({ handleClose }) => {
   };
 
   return (
-    <Box sx={style} component="form">
+    <Box sx={ModalStyle} component="form">
       <Typography id="modal-modal-title" variant="h6" component="h2" marginBottom={'16px'}>
         Add station
       </Typography>

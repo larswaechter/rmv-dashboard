@@ -68,7 +68,7 @@ export class Journey {
     return idx;
   }
 
-  async getContinualDeparture(stationId: string, days: number) {
+  async getNextSerieDeparture(stationId: string, days: number) {
     const station = this.getStopByID(stationId);
     if (!station) return undefined;
 

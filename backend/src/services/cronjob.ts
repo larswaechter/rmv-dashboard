@@ -26,7 +26,7 @@ export interface IScheduleChange {
 /**
  * Job for sending schedule changes via WS
  */
-cron.schedule('*/15 * * * *', async () => {
+cron.schedule('*/10 * * * *', async () => {
   try {
     Logger.info('[CRONJOB] Starting');
 
@@ -39,7 +39,7 @@ cron.schedule('*/15 * * * *', async () => {
     });
 
     for (const alarm of alarms) {
-      const { id, journeyRef, stationId, autoremove, silent, interval, telegram, discord } =
+      const { id, journeyRef, stationId, autodelete, silent, interval, telegram, discord } =
         alarm.get();
 
       const journeyDetails = await RMVApi.getJourneyDetails(journeyRef);
@@ -57,9 +57,9 @@ cron.schedule('*/15 * * * *', async () => {
       if (stop.wasReached()) {
         // Interval set && stop is in future
         if (interval > 0 && dayjs(stopDate).isAfter(dayjs())) {
-          Logger.debug(`[CRONJOB] Searching continual departure: ${stop.id}`);
+          Logger.debug(`[CRONJOB] Searching next serie departure: ${stop.id}`);
 
-          const next = await journey.getContinualDeparture(stationId, interval);
+          const next = await journey.getNextSerieDeparture(stationId, interval);
           if (next) {
             const existing = await Alarm.findOne({
               where: {
@@ -68,25 +68,25 @@ cron.schedule('*/15 * * * *', async () => {
               }
             });
             if (!existing) {
-              Logger.info(`[CRONJOB] Saving continual departure: ${stop.id}`);
+              Logger.info(`[CRONJOB] Saving next serie departure: ${stop.id}`);
               await Alarm.create({
                 journeyRef: next.journeyRef,
                 stationId,
-                autoremove,
+                autodelete,
                 telegram,
                 discord,
                 interval
               });
             }
-          } else Logger.info(`[CRONJOB] No continual departure found: ${stop.id}`);
+          } else Logger.info(`[CRONJOB] No next serie departure found: ${stop.id}`);
         }
 
         // Delete / Set inactive
-        if (autoremove)
+        if (autodelete)
           await Alarm.destroy({
             where: {
               id,
-              autoremove: true
+              autodelete: true
             }
           });
         else {
