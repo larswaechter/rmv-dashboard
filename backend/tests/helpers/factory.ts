@@ -1,14 +1,16 @@
-require("dotenv").config();
-require("source-map-support").install();
+import { config } from 'dotenv';
+import { install } from 'source-map-support';
 
-process.env.DB_NAME = "db.test.sqlite";
+config();
+install();
 
-import supertest from "supertest";
-import { createServer, Server as HttpServer } from "http";
+process.env.DB_NAME = 'db.test.sqlite';
 
-import { Server } from "../../src/server";
-import db from "../../src/config/db";
-import { Alarm } from "../../src/components/alarms/model";
+import supertest from 'supertest';
+import { createServer, Server as HttpServer } from 'http';
+
+import { Server } from '../../src/server';
+import db from '../../src/config/db';
 
 export class TestFactory {
   private readonly server: Server;
@@ -24,27 +26,27 @@ export class TestFactory {
   }
 
   dummyAlarm = {
-    journeyRef: "MyJourneyRef",
-    stationId: "MyStationID",
+    journeyRef: 'MyJourneyRef',
+    stationId: 'MyStationID',
     smartmode: false,
     interval: 5,
     autoremove: false,
     telegram: false,
     discord: false,
-    active: false,
+    active: false
   };
 
   dummyStation = {
-    name: "Frankfurt Hauptbahnhof",
-    stationId: "MyStationID",
+    name: 'Frankfurt Hauptbahnhof',
+    stationId: 'MyStationID'
   };
 
   dummySetting = {
-    key: "MY_KEY",
-    value: "HelloWorld",
-    default: "MyDefaultVal",
-    description: "This is a description",
-    group: "testing",
+    key: 'MY_KEY',
+    value: 'HelloWorld',
+    default: 'MyDefaultVal',
+    description: 'This is a description',
+    group: 'testing'
   };
 
   prepare(cb: (err?: Error) => void) {
