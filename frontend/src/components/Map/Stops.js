@@ -34,8 +34,8 @@ const MapStops = ({ stops, activeStopIdx }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {stops.map((stop, i) => (
-        <Marker key={i} position={[stop.lat, stop.lon]}>
+      {stops.map((stop) => (
+        <Marker key={stop.id} position={[stop.lat, stop.lon]}>
           <Popup>{stop.name}</Popup>
         </Marker>
       ))}

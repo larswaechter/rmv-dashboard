@@ -102,7 +102,7 @@ const StationBoard = ({ station, afterDelete }) => {
 
   useEffect(() => {
     fetchData();
-  }, [station]);
+  }, [station.id]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';

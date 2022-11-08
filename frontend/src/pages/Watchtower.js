@@ -87,8 +87,8 @@ const PagesWatchtower = () => {
       </Typography>
       {alarms.length > 0 ? (
         <Grid container spacing={2}>
-          {alarms.map((alarm, i) => (
-            <Grid key={i} xs={4}>
+          {alarms.map((alarm) => (
+            <Grid key={alarm.id} xs={4}>
               <AlarmCard alarm={alarm} afterDelete={handleDelete} afterUpdate={handleUpdate} />
             </Grid>
           ))}

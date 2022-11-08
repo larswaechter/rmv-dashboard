@@ -41,13 +41,10 @@ const PagesDashboard = () => {
     setShowModal(false);
   };
 
-  const handleDelete = useCallback(
-    (id) => {
-      setStations(stations.filter((dept) => dept.id !== id));
-      setShowSnack(true);
-    },
-    [stations]
-  );
+  const handleDelete = useCallback((id) => {
+    setStations((stations) => stations.filter((dept) => dept.id !== id));
+    setShowSnack(true);
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -80,8 +77,8 @@ const PagesDashboard = () => {
         Dashboard
       </Typography>
       {stations.length ? (
-        stations.map((station, i) => (
-          <Stationboard key={i} station={station} afterDelete={handleDelete} />
+        stations.map((station) => (
+          <Stationboard key={station.id} station={station} afterDelete={handleDelete} />
         ))
       ) : (
         <Alert
