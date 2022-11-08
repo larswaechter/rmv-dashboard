@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import Typography from '@mui/material/Typography';
-import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
+import { Stack } from '@mui/system';
 
-import { getSettings, updateSetting } from '../services/settings';
 import SettingsTelegram from '../components/Settings/Telegram';
 import SettingsDiscord from '../components/Settings/Discord';
-import { Stack } from '@mui/system';
+import PageWrapper from '../components/Utils/PageWrapper';
+
+import { getSettings, updateSetting } from '../services/settings';
 
 const PagesSettings = () => {
   const [settings, setSettings] = useState([]);
@@ -76,60 +75,41 @@ const PagesSettings = () => {
     fetchData();
   }, []);
 
-  if (isLoading)
-    return (
-      <div style={{ textAlign: 'center', padding: '20vh 0px' }}>
-        <CircularProgress />
-      </div>
-    );
-
-  if (error)
-    return (
-      <Alert
-        severity="error"
-        action={
-          <Button color="inherit" size="small" onClick={() => fetchData()}>
-            Retry
-          </Button>
-        }
-      >
-        {error}
-      </Alert>
-    );
-
   return (
-    <div className="PagesSettings">
-      <Typography variant="h5" component="h1" marginBottom={'16px'}>
-        Settings
-      </Typography>
-      <Box
-        component="form"
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' }
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <Stack spacing={2}>
-          <SettingsDiscord
-            settings={settings.filter(({ group }) => group === 'discord')}
-            onInputChange={handleInputChange}
-            onSettingUpdate={handleSettingUpdate}
-          />
-          <SettingsTelegram
-            settings={settings.filter(({ group }) => group === 'telegram')}
-            onInputChange={handleInputChange}
-            onSettingUpdate={handleSettingUpdate}
-          />
-        </Stack>
-      </Box>
-      <Snackbar
-        open={showSnack}
-        onClose={handleSnackClose}
-        message={updateError ? updateError : 'Settings updated'}
-        autoHideDuration={3000}
-      />
-    </div>
+    <PageWrapper isLoading={isLoading} error={error} onRetry={fetchData}>
+      <div className="PagesSettings">
+        <Typography variant="h5" component="h1" marginBottom={'16px'}>
+          Settings
+        </Typography>
+        <Box
+          component="form"
+          sx={{
+            '& .MuiTextField-root': { m: 1, width: '25ch' }
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <Stack spacing={2}>
+            <SettingsDiscord
+              settings={settings.filter(({ group }) => group === 'discord')}
+              onInputChange={handleInputChange}
+              onSettingUpdate={handleSettingUpdate}
+            />
+            <SettingsTelegram
+              settings={settings.filter(({ group }) => group === 'telegram')}
+              onInputChange={handleInputChange}
+              onSettingUpdate={handleSettingUpdate}
+            />
+          </Stack>
+        </Box>
+        <Snackbar
+          open={showSnack}
+          onClose={handleSnackClose}
+          message={updateError ? updateError : 'Settings updated'}
+          autoHideDuration={3000}
+        />
+      </div>
+    </PageWrapper>
   );
 };
 

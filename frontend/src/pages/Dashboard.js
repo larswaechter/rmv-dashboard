@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
-import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Fab from '@mui/material/Fab';
@@ -10,6 +9,7 @@ import Button from '@mui/material/Button';
 
 import Stationboard from '../components/Station/Board';
 import StationAdd from '../components/Station/Add';
+import PageWrapper from '../components/Utils/PageWrapper';
 
 import { getStations } from '../services/station';
 
@@ -50,73 +50,54 @@ const PagesDashboard = () => {
     fetchData();
   }, []);
 
-  if (isLoading)
-    return (
-      <div style={{ textAlign: 'center', padding: '20vh 0px' }}>
-        <CircularProgress />
-      </div>
-    );
-
-  if (error)
-    return (
-      <Alert
-        severity="error"
-        action={
-          <Button color="inherit" size="small" onClick={() => fetchData()}>
-            Retry
-          </Button>
-        }
-      >
-        {error}
-      </Alert>
-    );
-
   return (
-    <div className="PagesDashboard">
-      <Typography variant="h5" component="h1" marginBottom={'16px'}>
-        Dashboard
-      </Typography>
-      {stations.length ? (
-        stations.map((station) => (
-          <Stationboard key={station.id} station={station} afterDelete={handleDelete} />
-        ))
-      ) : (
-        <Alert
-          severity="info"
-          action={
-            <Button color="inherit" size="small" onClick={() => setShowModal(true)}>
-              Add
-            </Button>
-          }
+    <PageWrapper isLoading={isLoading} error={error} onRetry={fetchData}>
+      <div className="PagesDashboard">
+        <Typography variant="h5" component="h1" marginBottom={'16px'}>
+          Dashboard
+        </Typography>
+        {stations.length ? (
+          stations.map((station) => (
+            <Stationboard key={station.id} station={station} afterDelete={handleDelete} />
+          ))
+        ) : (
+          <Alert
+            severity="info"
+            action={
+              <Button color="inherit" size="small" onClick={() => setShowModal(true)}>
+                Add
+              </Button>
+            }
+          >
+            No station created yet!
+          </Alert>
+        )}
+        <Fab
+          color="primary"
+          aria-label="add"
+          sx={{ position: 'fixed', bottom: 16, right: 16 }}
+          onClick={() => setShowModal(true)}
         >
-          No station created yet!
-        </Alert>
-      )}
-      <Fab
-        color="primary"
-        aria-label="add"
-        sx={{ position: 'fixed', bottom: 16, right: 16 }}
-        onClick={() => setShowModal(true)}
-      >
-        <AddIcon />
-      </Fab>
-      <Modal
-        open={showModal}
-        onClose={() => handleCloseModal()}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <>
-          <StationAdd handleClose={handleCloseModal} />
-        </>
-      </Modal>
-      <Snackbar
-        open={showSnack}
-        onClose={() => setShowSnack(false)}
-        autoHideDuration={3000}
-        message="Station deleted"
-      />
-    </div>
+          <AddIcon />
+        </Fab>
+        <Modal
+          open={showModal}
+          onClose={() => handleCloseModal()}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <>
+            <StationAdd handleClose={handleCloseModal} />
+          </>
+        </Modal>
+        <Snackbar
+          open={showSnack}
+          onClose={() => setShowSnack(false)}
+          autoHideDuration={3000}
+          message="Station deleted"
+        />
+      </div>
+    </PageWrapper>
   );
 };
 
