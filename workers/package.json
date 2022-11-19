@@ -1,0 +1,24 @@
+{
+  "name": "rmv-workers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./dist/index.js",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
+    "prettier": "prettier --config ../.prettierrc --write './src/**/*.ts'",
+    "prettier:ci": "prettier --config ../.prettierrc --check './src/**/*.ts'",
+    "lint": "eslint . --ext .ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "nodemon": "^2.0.20",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "bullmq": "^3.2.2"
+  }
+}

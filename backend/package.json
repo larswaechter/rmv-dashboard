@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/larswaechter/rmv-dashboard#readme",
   "dependencies": {
+    "bullmq": "^3.2.2",
     "cors": "^2.8.5",
     "dayjs": "^1.11.6",
     "discord.js": "^14.6.0",
